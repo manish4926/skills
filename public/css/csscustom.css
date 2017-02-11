@@ -224,8 +224,8 @@ span.animated {
   padding:0px;
   position: absolute;
   right: 0;
-  top: 50%;
-  margin: 0;
+  margin-top : 10%;
+  
   -webkit-transform:translateY(-50%);
   -moz-transform:translateY(-50%);
   transform:translateY(-50%);

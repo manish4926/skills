@@ -24,6 +24,6 @@
   </div>
 </section>
 <!--End-Middle-5-Blocks-->
-@include('partials.header_modals')
+
 
 @endsection

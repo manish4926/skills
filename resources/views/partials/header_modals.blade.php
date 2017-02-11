@@ -44,7 +44,7 @@
         {!! Form::close() !!}
         <div class="gap gap-small"></div>
         <ul class="list-inline">
-            <li><a href="#nav-account-dialog" class="popup-text">Not Member Yet</a>
+            <li><a data-toggle="modal" data-target="#nav-signup-dialog" onclick="$('#nav-login-dialog').modal('hide');">Not Member Yet</a>
             </li>
             <li><a  href="{{ route('forgotpasswordreset') }}">Forgot Password?</a>
             </li>
@@ -123,7 +123,7 @@
         {!! Form::close() !!}
         <div class="gap gap-small"></div>
         <ul class="list-inline">
-            <li><a href="#nav-login-dialog" class="popup-text">Already Memeber ? Login Now</a>
+            <li><a data-toggle="modal" data-target="#nav-login-dialog" onclick="$('#nav-signup-dialog').modal('hide');">Already Memeber ? Login Now</a>
             </li>
         </ul>
       </div>
@@ -132,6 +132,60 @@
 </div>
 
 <!-- /Popup: Register -->
+
+<!-- Create Gorup -->
+
+<div class="modal fade" id="CreateGroupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+
+  {!! Form::open(['route' => 'creategroup', 'method' => 'post', 'id' => 'frmchange', 'files'=> true, 'form-horizontal', 'class' => '']) !!}
+
+  <div class="modal-dialog" role="document">
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="myModalLabel">Create Group</h4>
+        </div>
+
+        <div class="modal-body">
+            <div class="form-group">
+                <label>Group Name</label>
+                <input name="group_name" type="text" value="" class="form-control">
+            </div>
+            <div class="form-group">
+                <label>Group Description</label>
+                <textarea name="description" rows=5 cols=20 class="form-control"></textarea>
+            </div>
+            <div class="form-group">
+                <label>Group Image:</label>
+                <input name="image1" type="file">
+                <input name="id" type="hidden" value="">
+            </div>
+            <div class="form-group">
+                <label>Allow users to join the group without confirm?</label>
+                <input name="allow_join" type="checkbox" value="1">
+            </div>
+            <div class="form-group">
+                <label>Allow group users to add posts without review?</label>
+                <input name="allow_post_public" type="checkbox" value="1">
+            </div>
+        </div>
+
+        <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Create Group</button>
+        </div>
+    </div>
+
+  </div>
+
+   {!! Form::close() !!}
+
+</div>
+
+<!-- Modal -->
 
 @push('topscripts')
 

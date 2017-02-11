@@ -400,7 +400,7 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
 
         <div class="col-md-3">
 
-          <a href="@if (Auth::guest()) {{url('/')}} @else {{url('edunewsfeed')}} @endif" class="navbar-brand"><img style="margin-left: 5px;" src="{{ asset('img/logo.png') }}" alt="" border="0"></a>
+          <a href="{{ route('dashboard') }}" class="navbar-brand"><img style="margin-left: 5px;" src="{{ asset('img/logo.png') }}" alt="" border="0"></a>
 
         </div>
 
@@ -448,35 +448,34 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
             $(".query").focus();
             $('#imgnav').attr("src", "{{asset('img/icons/')}}/"+id+".png");
             }
-
          </script>
-
-            <li class="pull-right">
-                 <div class="light-em-up">
-                  {{--
-                  <div class="liem-content">
-                     <div class="avatar-wrapper" id="nav1">
-                       <a href="{{url('profile')}}/u{!! $user->id !!}">
-                         <img class="img-rounded" src="{{asset('uploads/profile_pics_small')}}/{{$user->account_image}}">
-                       </a>
-                     </div>
-                      <div class="opensans block-links" id="nav2">
-                       <a href="{{url('profile')}}/u{!! $user->id !!}">{!! $user->first_name !!} {!! $user->last_name !!}</a>
-                       <a href="{{url('auth/logout')}}">Logout</a>
+            <ul>
+              <li class="pull-right">
+                  @if (Auth::check()) 
+                    <div class="light-em-up">
+                      <div class="liem-content">
+                         <div class="avatar-wrapper" id="nav1">
+                           <a href="#">
+                             <img class="img-rounded" src="{{asset('img/profile')}}/{{ $user->account_image ? $user->account_image : "blank.png" }}">
+                           </a>
+                         </div>
+                          <div class="opensans block-links" id="nav2">
+                           <a href="#">{{ $user->name }}</a>
+                           <a href="{{ route('logoutMethod') }}">Logout</a>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                 </div>
-                 --}}
-                 <div id="mainlogin" class="text-right header-buttons light-em-up">
-                   <a class="btn btn-default btn-sm btn_login" data-toggle="modal" data-target="#nav-login-dialog">Login</a>
-                   <a class="btn btn-default btn-sm btn_sign_up" data-toggle="modal" data-target="#nav-signup-dialog">Sign Up</a>
-                 </div>
+                  @else
+                    <div id="mainlogin" class="text-right header-buttons light-em-up">
+                      <a class="btn btn-default btn-sm btn_login" data-toggle="modal" data-target="#nav-login-dialog">Login</a>
+                      <a class="btn btn-default btn-sm btn_sign_up" data-toggle="modal" data-target="#nav-signup-dialog">Sign Up</a>
+                    </div>                  
+                  @endif
               </li>
             </ul>
           </div>
         </div>
       </div>
-    </div>
   </nav>
 </span>
 
@@ -484,7 +483,7 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
 {{-- End Of Header--}}
 @yield('content')
 {{-- Start Of Footer--}}
-
+@include('partials.header_modals')
 
         <!-- Bottom Scripts -->
         <script src="{{ asset('js/jquery.min.js') }}"></script>

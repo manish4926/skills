@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+
+body {
+  font-family: 'PT Sans';
+}
+
+ul {
+  list-style-type: none;
+}
+
 .search_bar ul {
 	padding: 0;
 	background-color: #005baa;
@@ -22,18 +32,259 @@
 	white-space: nowrap;
 }
 
-nav.navbar.navbar-default.navbar-fixed-top {
+nav.navbar.navbar-default {
 	background: rgba(255, 255, 255, 0.5 );
 }
 
+/* Register Form*/
+.modal span.opensans {
+	display: inline-block;
+	padding: 15px;
+}
+
+.opensans input {
+	margin: auto;
+	display: block;
+}
+
 /* Modal Design */
-.tdiv{
+#tdiv{
 	display: none;
 }
 
+/* Social Logins*/
+.social-login{
+  position:relative;
+  float: left;
+  width: 100%;
+  height:auto;
+  padding: 10px 0 25px 0;
+  border-bottom: 1px solid #eee;
+}
+.social-login a{
+  position:relative;
+  float: left;
+  width:calc(45% - 8px);
+  text-decoration: none;
+  color: #fff;
+  border: 1px solid rgba(0,0,0,0.05);
+  padding: 12px;
+  border-radius: 2px;
+  font-size: 12px;
+  text-transform: uppercase;
+  margin: 0 3%;
+  text-align:center;
+}
+.social-login a i{
+  position: relative;
+  float: left;
+  width: 20px;
+  top: 2px;
+}
+.social-login a:first-child{
+  background-color: #49639F;
+}
+.social-login a:last-child{
+  background-color: #DF4A32;
+}
+
+.or_option{
+  border-top:1px solid #808080;
+  position:relative;
+  clear: both;
+}
+
+.or_option span{
+  font-size:16px;
+  color:#808080;
+  background: #fff;
+  text-align:center;
+  padding:2px 5px;
+  width: 40px;
+  display: block;
+  margin: auto;
+  margin-top: -12px;
+}
+
+/*End Social Logins*/
+
+/* Side Nav Bar*/
+.leftnav .profile {
+  margin: auto;
+  display: inline-block;
+}
+
+.leftnav .profile img{
+  width: 70px;
+  height: 70px;
+  display: inline;
+  margin: auto;
+}
+
+.leftnav .opensans {
+  display: inline-block;
+  margin: auto;
+
+}
+
+.sidenav {
+  margin-top: 20px;
+}
+
+.sidenav .navbar ul li {
+  padding: 10px 5px;
+  margin-bottom :10px;
+  background-color: #29af97;
+  color: #fff !important;
+}
+
+.sidenav .navbar ul li:hover {
+  background-color: #0b8f77;
+  
+}
+
+.sidenav .navbar ul li a{
+  color: #fff !important;
+}
+
+.sidenav .navbar ul li a:hover{
+  background: transparent;
+}
+
+/* End Side Nav Bar*/
+
+/* Group */
+.groupbtn {
+  width: 116px;
+  border-radius: 3px;
+  font-size: 13px;
+  margin-top:6px;
+  font-family: tahoma;
+}
+
+.profileGreen{
+  color:#0d9980;
+}
+
+.profileGray{
+  color:#9F9F9F;
+}
+
+.profileBlocks{
+  border-top:5px solid #16a085;
+  padding:10px;
+  margin-bottom:25px;
+}
+
+.profileBlockHr{
+  color:#6e6e6e;
+  margin-top:-2px;
+}
+
+.ProfileChangeImage{
+  font-family: tahoma;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer;  
+  background: black none repeat scroll 0% 0%; 
+  width: 161px; 
+  margin-top: 5px; 
+  padding: 5px; 
+  color: white; 
+  font-size: 13px; 
+  opacity: 0.8;
+}
+
+.ProfileChangeImage:hover{
+  font-family: tahoma;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer; 
+  background: #29af97 none repeat scroll 0% 0%; 
+  width: 161px; 
+  margin-top: 5px; 
+  padding: 5px; 
+  color: white; 
+  font-size: 13px; 
+  opacity: 0.8;}
+
+.ProfileChangeImageActive{
+  font-family: tahoma;
+  text-align: center;
+  border-radius: 3px;
+  cursor: pointer; 
+  background: #29af97 none repeat scroll 0% 0%; 
+  width: 161px; 
+  margin-top: 5px; 
+  padding: 5px; 
+  color: white; 
+  font-size: 13px; 
+  opacity: 0.8;
+  }
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+  background-color: #29af97;
+  border-color: #29af97;
+  color: #fff;
+  cursor: default;
+  z-index: 2;
+
+}
+
+.pagination > li > a, .pagination > li > span {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  color: #29af97;
+  float: left;
+  line-height: 1.42857;
+  margin-left: -1px;
+  padding: 6px 12px;
+  position: relative;
+  text-decoration: none;
+}
+
+.btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle) {
+  border-radius: 5px 5px 0 0;
+}
+
+.btn-group > .btn:last-child:not(:first-child), .btn-group > .dropdown-toggle:not(:first-child) {
+  border-radius: 5px 5px 0 0;
+}
+
+.tabtech{
+  background-color: #2bbba1;
+  border-radius: 5px 5px 0 0;
+  color: white;
+  float: left;
+  padding: 7px;
+  text-align: center;
+  }
+
+.tabtechactive{
+  background-color: #e8e8e8;
+  border-radius: 5px 5px 0 0;
+  color: black;
+  float: left;
+  padding: 7px;
+  text-align: center;
+}
+
+.imgContain {
+    display: table;
+    position: relative;
+    margin-top: -16px;
+    float: left;
+}
+
+.imgContain:hover .textHover {
+    display:block;
+}
+/* End Group */
+
+
 /* Side Nav Bar*/
 @media (min-width: 768px) {
-  .navbar-collapse {
+  .sidenav .navbar-collapse {
     height: auto;
     border-top: 0;
     box-shadow: none;
@@ -41,7 +292,7 @@ nav.navbar.navbar-default.navbar-fixed-top {
     padding-left:0;
     padding-right:0;
   }
-  .navbar-collapse.collapse {
+  .sidenav .navbar-collapse.collapse {
     display: block !important;
     width: auto !important;
     padding-bottom: 0;
@@ -51,22 +302,34 @@ nav.navbar.navbar-default.navbar-fixed-top {
     overflow-x: visible;
   }
 
-.navbar
+.sidenav .navbar
 {
 	max-width:300px;
 	margin-right: 0;
 	margin-left: 0;
 }	
 
-.navbar-nav,
-.navbar-nav > li,
-.navbar-left,
-.navbar-right,
-.navbar-header
+.sidenav .navbar-nav,
+.sidenav .navbar-nav > li,
+.sidenav .navbar-left,
+.sidenav .navbar-right,
+.sidenav .navbar-header
 {float:none !important;}
 
-.navbar-right .dropdown-menu {left:0;right:auto;}
-.navbar-collapse .navbar-nav.navbar-right:last-child {
+.sidenav .navbar-right .dropdown-menu {left:0;right:auto;}
+.sidenav .navbar-collapse .navbar-nav.navbar-right:last-child {
     margin-right: 0;
 }
+
+
+}
+
+
+@media (max-width: 768px) {
+	.modal.fade.in {
+		padding-left: 0 !important;
+	}
+	.modal-dialog {
+		margin: 0 !important;
+	}
 }

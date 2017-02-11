@@ -80,15 +80,13 @@ class AuthController extends Controller
         ]);
         if (Auth::attempt(['email' => $request['email'], 'password' => $request['pass']],true)) {
         		$user = Auth::user();
-        		Cart::where('userid', $request->cookie('cartid'))
-            			->update(['userid' => $user->email]);
 	        	if($request->ajax()){
 	                return "Success";
 	            }
                 if($user->hasRole('Admin') == true){
-                    return redirect()->route('adminactiveorders');
+                    return redirect()->route('home');
                 }
-	            return redirect()->route('home');	//In this true will remember your password
+	            return redirect()->route('dashboard');	//In this true will remember your password
 	        }
 	    if($request->ajax()){
             return "Failed";

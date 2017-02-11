@@ -49,5 +49,17 @@ Route::get('/googlecallback', [ 'as' => 'googlecallback',
 Route::get('/contact', ['as' => 'contact', 'uses' => 'MainController@contact']);	//Contact Page
 
 Route::group(['middleware' => 'auth'], function () {
-	Route::get('/dashboard', ['as' => 'dashboard', 'uses' =>'MainController@dashboard']);	//Home Page Without Login
+	Route::get('/dashboard', ['as' => 'dashboard', 'uses' =>'MainController@dashboard']);	//Home Page After Login
+
+	Route::get('/groups', ['as' => 'groups', 'uses' =>'MainController@groups']);	//View Groups
+
+	Route::post('/groups/create', ['as' => 'creategroup', 'uses' =>'MainController@createGroup']);	//Create Groups
+
+	Route::post('/groups/groupfollow', ['as' => 'groupfollow', 'uses' =>'MainController@groupFollow']);	//Create Groups
+
+	Route::post('/groups/groupunfollow', ['as' => 'groupunfollow', 'uses' =>'MainController@groupunfollow']);	//Create Groups
+
+	Route::get('/groups/g{id}', ['as' => 'groupdetail', 'uses' =>'MainController@groupDetail']);	//Create Groups
+
 });
+
