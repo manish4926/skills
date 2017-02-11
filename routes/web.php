@@ -49,17 +49,33 @@ Route::get('/googlecallback', [ 'as' => 'googlecallback',
 Route::get('/contact', ['as' => 'contact', 'uses' => 'MainController@contact']);	//Contact Page
 
 Route::group(['middleware' => 'auth'], function () {
+
 	Route::get('/dashboard', ['as' => 'dashboard', 'uses' =>'MainController@dashboard']);	//Home Page After Login
-
-	Route::get('/groups', ['as' => 'groups', 'uses' =>'MainController@groups']);	//View Groups
-
-	Route::post('/groups/create', ['as' => 'creategroup', 'uses' =>'MainController@createGroup']);	//Create Groups
-
-	Route::post('/groups/groupfollow', ['as' => 'groupfollow', 'uses' =>'MainController@groupFollow']);	//Create Groups
-
-	Route::post('/groups/groupunfollow', ['as' => 'groupunfollow', 'uses' =>'MainController@groupunfollow']);	//Create Groups
-
-	Route::get('/groups/g{id}', ['as' => 'groupdetail', 'uses' =>'MainController@groupDetail']);	//Create Groups
 
 });
 
+//----------------------GroupController----------------------------------------------
+Route::group(['middleware' => 'auth'], function () {
+
+        Route::get('/groups', ['as' => 'groups', 'uses' =>'GroupController@groups']);   //View Groups
+
+        Route::post('/groups/create', ['as' => 'creategroup', 'uses' =>'GroupController@createGroup']); //Create Groups
+
+        Route::post('/groups/groupfollow', ['as' => 'groupfollow', 'uses' =>'GroupController@groupFollow']);    //Follow Groups
+
+        Route::post('/groups/groupunfollow', ['as' => 'groupunfollow', 'uses' =>'GroupController@groupunfollow']);      //Unfollow Groups
+
+        Route::get('/groups/g{id}', ['as' => 'groupdetail', 'uses' =>'GroupController@groupDetail']);   //View  Groups Detail
+
+});
+
+
+//----------------------MarketController----------------------------------------------
+Route::group(['middleware' => 'auth'], function () {
+
+        Route::get('market/add', ['as' => 'addMarket', 'uses' =>'MarketController@add']);   //Add New Product to Market
+
+        Route::post('market/add/submit', ['as' => 'addMarketSubmit', 'uses' =>'MarketController@addSubmit']);   //Add Product Submit
+
+
+});

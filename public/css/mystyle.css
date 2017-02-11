@@ -270,16 +270,45 @@ nav.navbar.navbar-default {
 }
 
 .imgContain {
-    display: table;
-    position: relative;
-    margin-top: -16px;
-    float: left;
+  display: table;
+  position: relative;
+  margin-top: -16px;
+  float: left;
 }
 
 .imgContain:hover .textHover {
-    display:block;
+  display:block;
 }
 /* End Group */
+
+.postprofile {
+  width: 64px; 
+  height: 64px;
+  display: inline-block;
+}
+
+.posttextarea {
+  height: 63px !important; 
+  overflow: hidden;
+  width: 85%;
+  display: inline-block;
+}
+
+.postimageuploadicon {
+  float: left;
+  margin-left: 100px;
+  margin-top: -46px;
+  width: 373px; 
+  position: relative;
+}
+
+.notemessage {
+  color: black;
+  font-size: 11px;
+  font-weight: bold;
+  margin-left: 15px;
+  display: block;
+}
 
 
 /* Side Nav Bar*/

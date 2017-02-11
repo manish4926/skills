@@ -27,7 +27,7 @@
         
         
         <!-- Scripts -->
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        @include('partials.myjs')
         @stack('topscripts')
     </head>
     <body>
@@ -500,7 +500,7 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
 
         <!-- End Pre Template Theme -->
 
-        <script src="{{ asset('js/myjs.js') }}"></script>
+        
         @include('partials.analyticstracking')
         @stack('bottomscripts')
         <script>

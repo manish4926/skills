@@ -65,9 +65,9 @@ a:focus {
               </div>
 
               <div  class="col-md-3 mob-al-r">
-  				      <button class="btn btn-sm btn-success groupbtn" type="button" onclick="$post_follow()" data-id="{{ $cgroups->group_id }}"><i class="glyphicon glyphicon-plus"></i> Join Group</button>
+  				      <button class="btn btn-sm btn-success groupbtn" type="button" onclick="$post_follow.call(this)" data-id="{{ $cgroups->group_id }}"><i class="glyphicon glyphicon-plus"></i> Join Group</button>
 
-  				      <button class="btn btn-sm btn-default groupbtn" type="button" data-id="{{ $cgroups->group_id }}><i class="glyphicon glyphicon-check"></i> Leave Group</button>
+  				      <button class="btn btn-sm btn-default groupbtn" type="button" onclick="$post_unfollow.call(this)" data-id="{{ $cgroups->group_id }}><i class="glyphicon glyphicon-check"></i> Leave Group</button>
               </div>
           </div>
           @endforeach

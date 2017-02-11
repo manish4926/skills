@@ -11,4 +11,10 @@ class Group extends Model
     {
         return $this->hasMany('App\Model\GroupMember','group_id','group_id');
     }
+
+    public function groupmembers()
+    {
+        $query = $this->members()->orderBy('id', 'desc')->first();
+        return $query;
+    }
 }
