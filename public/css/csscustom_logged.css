@@ -1,0 +1,172 @@
+.navbar{background-color:#f9f9f9;border-bottom: 2px solid #29af97;}
+.headerpadding {
+    padding: 5px 0;
+}
+.navbar-brand{padding:0px;}
+.edu-green{color:#29af97;}
+.btn-secondary          { color: #ffffff; background-color: #777; border-color: #555; }
+.btn-secondary:hover, .btn-secondary:focus, .btn-secondary:active, .btn-secondary.active, .open .dropdown-toggle.btn-secondary
+                        { color: #ffffff; background-color: #888; border-color: #444; }
+.edu-bg-blue{background-color:#005bab; color:#fff;}
+.edu-bg-blue:hover{color:#fff;}
+.edu-bg-green{background-color:#29af97;}
+.btn.edu-bg-green {
+    color: #fff;
+}
+.search_icon{float:left;height:35px;padding:4px 4px 4px 9px;width:45px;}
+.opensans{font-family: 'PT Sans'}
+.form-control-nc{
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+          height:35px;
+          font-size:12px;
+}
+a {
+    color: #29af97;
+    text-decoration: none;
+}
+
+.footer {
+    background-color: #3d4344;
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+
+
+
+}
+.copyright{color:white;font-family: 'PT Sans';}
+.fotterlinks{float:right;font-family: 'PT Sans';}
+.nav-menu {
+    list-style: none;
+    text-align: center;
+    text-transform: uppercase;
+}
+.nav-menu > li {
+    display: inline-block;
+    vertical-align: top;
+    font-family: 'PT Sans';
+    font-size: 15px;
+    margin-top: 8px;
+    float: none;
+}
+.sign_in_body{width:729px; height:277px;background-image: url("../images/sign_in_body.png") }
+.sign_in{width:729px;float:left; position:absolute; z-index:999; right:5%; }
+.input_email{font-family: 'PT Sans';font-size: 16px;background: #f7f7f7 url("../images/input_email.png") no-repeat scroll 211px 12px;height: 47px; -webkit-border-radius: 0 !important;-moz-border-radius: 0 !important;border-radius: 0 !important;}
+.input_password{font-family: 'PT Sans';font-size: 16px;background:#f7f7f7 url("../images/input_password.png") no-repeat scroll 200px 17px;height: 47px; -webkit-border-radius: 0 !important;-moz-border-radius: 0 !important;border-radius: 0 !important;}
+.social {direction: rtl;border-radius: 8px 0 0 8px;background-image:url('../images/navbackground.png');margin-top:100px;float:right;height:70px;width:475px;}
+.page-social{list-style:none;}
+.page-social li{ float: left;margin-left: 12px;padding-top:9px;}
+
+#div_f068_0{padding:5px;}
+#div_f068_1{margin-top:65px;}
+#div_f068_2{margin-right:50px;}
+#h4_f068_0{color:white;font-family: 'PT Sans';text-shadow: 2px 2px #9D9D9D;}
+#div_f068_3{padding-top:116px;padding-left:70px;}
+#div_f068_4{margin-right:125px;font-family: 'PT Sans';}
+#div_f068_5{font-family: 'PT Sans';margin-top:-5px;}
+#div_f068_6{font-family: 'PT Sans';margin-top:-5px;}
+#div_f068_7{padding-left:50px;}
+
+
+.sign_in_bodypopup {
+    background-image: url("../images/sign_in_popup.jpg");
+    height: 343px;
+    width: 550px;
+}
+@media (max-width: 767px) {
+    .sign_in_bodypopup {
+        background-image: none;
+        height: auto;
+        width: auto;
+    }
+}
+
+.input_emailpopup {
+    background: #f7f7f7 url("../images/input_email.png") no-repeat scroll 342px 12px;
+    border-radius: 0 !important;
+    font-family: "PT Sans";
+    font-size: 16px;
+    height: 47px;
+}
+
+.input_passwordpopup {
+    background: #f7f7f7 url("../images/input_password.png") no-repeat scroll 328px 17px;
+    border-radius: 0 !important;
+    font-family: "PT Sans";
+    font-size: 16px;
+    height: 47px;
+}
+
+
+.borderFrame{
+    border-width: 2px;
+    border-style: solid;
+    border-color: #CCCCCC;
+    margin-bottom: 20px;
+    padding: 5px;
+}
+
+
+.sectionTitle{
+    font-size: 17px;
+    font-weight: normal;
+    color: #6e6e6e;
+    font-family: 'PT Sans';
+    background-color: #ffffff;
+    width: 100%;
+    min-width: 100%;
+    padding: 10px;
+    display: inline-block;
+
+}
+
+.sectionBody{
+    background-color: #ffffff;
+    width: 100%;
+    margin-top: 1px;
+    padding: 10px 10px 10px 10px;
+}
+
+.gray{
+    background-color: #F9F9F9;
+}
+
+.margintop{
+    margin-top: 5px;
+    text-align: center;
+}
+
+
+/*-----------------------Middle-5-Blocks---------------------------*/
+.main-middle-blocks{margin:60px 0 0 0; padding:0px;}
+.main-middle-blocks ul{float:left; width:100%; margin:0px; padding:0px;}
+.main-middle-blocks ul li{float:left; border-radius:50%; padding:0px; margin:0 16px; list-style:none; display:inline;}
+.main-middle-blocks ul li:nth-child(odd){background:#005bab;}
+.main-middle-blocks ul li:nth-child(even){background:#febf00;}
+.main-middle-blocks ul li a{padding:40px 0px; width:100%; float:left;}
+span.block_icon{float:left; width:100%; margin:-20px 0 0 0; padding:0px; text-align:center; font-size: 65px;}
+span.block_text{float:left; width:100%; margin:0px; padding:0px; text-align:center; color:#fff; font-size:13px; font-weight:normal; text-transform:uppercase; text-shadow: 1px 1px 0px #000;}
+span.block_text_2{float:left; width:100%; margin:0px; padding:0px; text-align:center; color:#fff; font-size:13px; font-weight:normal; text-transform:uppercase; text-shadow: 1px 1px 1px #000;}
+
+.banner_text{float: left; width:430px;  margin:110px 0 50px -20px; padding:0px;}
+span.large_text{float: left; width:100%; margin: 0 0 10px; padding: 0px; color: #fff ; font-size: 35px; text-align: left; line-height:45px; text-shadow: 1px 1px 0px #005baa; text-transform:uppercase;}
+span.small_text{float: left; width:100%; margin: 0px; padding: 0px; color: #fff ; font-size: 16px; text-align: left; text-shadow: 1px 1px 0px #005baa; text-transform:uppercase;}
+
+
+ul.top_social{float:left; width:auto; margin:5px 0; padding:0px;}
+ul.top_social li{float:left; width:auto; margin:0 15px 0 0; padding:0px; list-style:none;}
+ul.top_social li.last{margin:0;}
+ul.top_contact{float:left; width:auto; margin:10px 0 0 30px; padding:0px;}
+ul.top_contact li{float:left; width:auto; margin:0 15px 0 0; padding:0px; list-style:none; color:#fff; font-size:14px; text-shadow: 1px 1px 0px #005baa;}
+span.copyrights{float: right; width: auto; margin: 10px 0 0 0; padding:0; color: #fff; font-size: 12px;}
+
+@media (max-width: 767px) {
+.banner_text{display:none;}
+.main-middle-blocks{display:none;}
+ul.top_social{margin:10px 28% 0;}
+ul.top_contact{margin:15px 0;}
+ul.top_contact li{width:100%; text-align:center;}
+span.copyrights{margin:0px;}
+	}
