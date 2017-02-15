@@ -107,7 +107,7 @@
 	<h4 class="sectionhead"><i class="glyphicon glyphicon-user"></i> Contact Details</h4>
 	<div class="form-group">
 	Select State
-        <select size="1" name="category" id="category" class="form-control input-sm">
+        <select size="1" name="location" id="location" class="form-control input-sm">
             <option selected="" disabled="">*Please Select State</option>
             @foreach(state() as $key =>$states) 
                 
@@ -125,7 +125,7 @@
     <div class="form-group">
 	    <input name="address" id="address" type="text"  placeholder="*Address" value="" class="form-control input-sm">
 	    <br /><p class="opensans">Note: Your contact details will be published with the ad.<br />
-	    <input name="show" type="checkbox" value="ON" style="display: inline;"> Allow visitors to see my phone number and email address.
+	    <input name="show" type="checkbox" value="1" style="display: inline;"> Allow visitors to see my phone number and email address.
 	    </p>
     </div>
 
@@ -137,4 +137,100 @@
     </div>
     <br />
 {!! Form::close() !!}
+
+<!--IMAGE UPLOAD-->
+<div class="upload_div">
+
+{!! Form::open(['url' => '/upimages_market', 'id' => 'multiple_upload_form' , 'name' => 'multiple_upload_form', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
+
+<input type="hidden" name="image_form_submit" value="1"/>
+
+<input type="file" name="images[]" accept=".jpg, .jpeg, .png" id="images" style="visibility: hidden; width: 1px; height: 1px"  multiple >
+
+{!! Form::close() !!}
+</div>
+
+@push('bottomscripts')
+<script>
+function control_validate(id)
+{
+    var values = $("input[name='images_ids[]']").map(function(){return $(this).val();}).get();
+    $("#images_uploaded").val(""+values+"");
+    var theval = $('input[name="images_ids[]"]').length;
+    if($("#title").val() == "")
+    {
+        alert("Please enter the item title.");
+        $("#title").focus();
+        $(window).scrollTop(0);
+    }
+    else if($("#body").val() == "")
+    {    
+        alert("Please enter the item body.");
+        $("#body").focus();
+        $(window).scrollTop(0);
+    }
+    else if($("#price").val() == "")
+    {
+        alert("Please enter the item price.");
+        $("#price").focus();
+        $(window).scrollTop(0);
+    }
+    else if($("#discount").val() != "" && isNaN($("#discount").val()))
+    {
+        alert("Please enter the numeric value.");
+        $("#discount").focus();
+        $(window).scrollTop(0);
+    }
+    else if($("#category :selected").val() == 0)
+    {
+        alert("Please choose the item category.");
+        $("#category").focus();
+        $(window).scrollTop(0);
+    }
+    else if(theval == "0")
+    {
+        alert("Please choose the item images.");
+        $(window).scrollTop(0);
+    }
+    else if (theval > 5){
+        alert("You can only upload a maximum of 5 images");
+    }
+    else if($("#phone").val() == "")
+    {
+        alert("Please enter your phone number.");
+    }
+    else if($("#email").val() == "")
+    {
+        alert("Please enter your email address.");
+    }
+    else if($("#address").val() == "")
+    {
+        alert("Please enter your address.");
+    }
+    else
+    {
+        $("#post_status").val(id);
+        $("#frmpost").submit();
+    }
+}
+
+$(document).ready(function(){
+    $('#images').on('change',function(){
+        $('#multiple_upload_form').ajaxForm({
+            target:'#images_preview',
+            beforeSubmit:function(e){
+                $('.uploading').show();
+                //$("#mypostbutton").prop('disabled', true);
+            },
+            success:function(e){
+                $('.uploading').hide();
+                //$("#mypostbutton").prop('disabled', false);
+            },
+            error:function(e){
+            }
+        }).submit();
+    });
+});
+</script>
+@endpush
 @endsection

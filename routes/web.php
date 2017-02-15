@@ -77,5 +77,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('market/add/submit', ['as' => 'addMarketSubmit', 'uses' =>'MarketController@addSubmit']);   //Add Product Submit
 
+        Route::post('market/add/imageupload', ['as' => 'addMarketImageSubmit', 'uses' =>'MarketController@addImageSubmit']);   //Add Product Submit
+
 
 });
