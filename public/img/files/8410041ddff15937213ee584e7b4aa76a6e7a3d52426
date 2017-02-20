@@ -1,0 +1,487 @@
+<style>
+.col-md-4 .thumbnail .media,.col-md-3 .thumbnail .media{
+	background-image: url('http://localhost:8000/img/media-back.jpg');
+	background-size: contain;
+}
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+    
+    {{--
+	Default Image Error Function
+    --}}
+    $('img').error(function(){					 
+        $(this).attr('src', '{{ asset('img/No-image-found.jpg') }}');
+    });
+    getNavCart();
+    {{--
+	Ajax Function in User-ProductDetail
+	Check COD Avaibility with Checking Pincode Table
+	This Submit Method is used for Parsley.js Validation
+    --}}
+    $("#checkcod").submit(function(event){		
+		event.preventDefault();
+		var pincode = $('#pincode').val();
+		$.ajax({
+		    type	: 'POST',
+		    url		: '{{ route('getpincode') }}',
+		    data : {pincode: pincode, '_token': $('input[name=_token]').val()},
+			success: function(result){
+				//console.log(result);
+				if(result == 'true') {
+					$('#codmessage').css("color", "green");
+					$('#codmessage').text('COD available at your pincode');
+				} 
+				else {
+					$('#codmessage').css("color", "red");
+					$('#codmessage').text('COD not available at your pincode');
+				}
+			}           
+		});
+	});
+
+	$("#cart-login").submit(function(event){		
+		event.preventDefault();
+		var email = $('#login-email').val();
+		var password = $('#login-password').val();
+		$.ajax({
+		    type	: 'POST',
+		    url		: '{{ route('loginMethod') }}',
+		    data : {email: email, pass: password, '_token': $('input[name=_token]').val()},
+			success: function(result){
+				//console.log(result);
+				if(result == 'Success') {
+					location.reload();
+				} 
+				else {
+					$('#loginmessage').css("color", "red");
+					$('#loginmessage').text('Invalid Username or Password');
+				}
+			} ,
+			error: function(data){
+		        var errors = data.responseJSON;
+		        //console.log(errors);
+		        // Render the errors with js ...
+				$('#loginmessage').css("color", "red");
+				$.each(errors, function(index, value){
+				    $('#loginmessage').append( value +"<br>");
+				});
+		      }          
+		});
+	});
+
+	$("#cart-register").submit(function(event){		
+		event.preventDefault();
+		var fname = $('#regfirstname').val();
+		var lname = $('#reglastname').val();
+		var email = $('#regemail').val();
+		var phone = $('#regphone').val();
+		var password = $('#pass').val();
+		var repassword = $('#repass').val();
+		$.ajax({
+		    type	: 'POST',
+		    url		: '{{ route('registerMethod') }}',
+		    data : {fname:fname, lname:lname,phone:phone, email:email, password: password, password_confirmation:repassword, '_token': $('input[name=_token]').val()},
+			success: function(result){
+				//console.log(result);
+				if(result == 'Success') {
+					location.reload();
+				} 
+				else {
+					var errors = data.responseJSON;
+					$('#registermessage').css("color", "red");
+					$('#registermessage').text('Something Wents Wrong. Try Again later.'+errors);
+				}
+			} ,
+			error: function(data){
+		        var errors = data.responseJSON;
+		        //console.log(errors);
+		        // Render the errors with js ...
+				$('#registermessage').css("color", "red");
+				$.each(errors, function(index, value){
+				    $('#registermessage').append( value +"<br>");
+				});
+		      }
+		});
+	});	
+});
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+
+function imgError(image) {
+    image.onerror = "";
+    image.src = "{{ asset('img/No-image-found.jpg') }}";
+    return true;
+}
+
+function Reloadfun() {
+	regmodal.style.display = 'none';   
+}
+
+function addtocart(pcode,qty) {
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('addtocart') }}',
+	    data : {pcode: pcode, qty:qty },
+		success: function(result){
+			//console.log(result);
+			if(result == 'Success')
+			{
+				getNavCart();
+				toastr["success"]("Product Added To Cart");
+			}
+			else if(result == 'OutofStock')
+			{
+				toastr["warning"]("Product Out Of Stock");
+			}
+			else
+			{
+				toastr["warning"]("Product Already Added");
+			}
+		}           
+	});
+}
+
+function addmywish(pcode) {
+	$(this).addClass('wishlist-active'); // will work
+	$(this).find('i').removeClass('fa-heart-o'); // will work
+	$(this).find('i').addClass('fa-heart'); // will work
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('addtowishlist') }}',
+	    data : {pcode: pcode },
+		success: function(result){
+			//console.log(result);
+			if(result == 'Success')
+			{
+				toastr["success"]("Product Added To Wishlist");
+			}
+			else
+			{
+				toastr["warning"]("Product Already Added");
+			}
+			
+		}           
+	});
+}
+
+function removemywish(pcode) {
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('removefromwishlist') }}',
+	    data : {pcode: pcode },
+		success: function(result){
+			//console.log(result);
+			if(result == 'Success')
+			{
+				toastr["success"]("Product Removed To Wishlist");
+
+			}
+		}           
+	});
+}
+
+function addcookies() {
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('addcookies') }}',
+	    data : {type: 'recent' },
+		success: function(result){
+		}           
+	});
+
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('addcookies') }}',
+	    data : {type: 'wishlist' },
+		success: function(result){
+		}           
+	});
+
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('addcookies') }}',
+	    data : {type: 'cart' },
+		success: function(result){
+		}           
+	});
+}
+
+function delcart(pcode) {
+	{{-- Delete Product from Shopping Cart--}}
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('delfromcart') }}',
+	    data : {pcode: pcode },
+		success: function(result){
+			//console.log(result);
+			if(result == 'Success')
+			{
+				toastr["success"]("Product Removed To Cart");
+				cartCalculator();
+				var countRows = $('#carttable tbody').children('tr').length;    //Countr total no. of products in cart
+				if(countRows <= 0)
+				{
+					$.alert({
+					    title: 'Message',
+					    content: 'No Items in the Cart',
+					    confirm: function(){
+					        window.location.href = "{{ route('home') }}";
+					    }
+					});
+				}
+			}
+		}           
+	});
+}
+
+
+function applyCoupon()
+{
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+
+	var couponcode = $('#couponcode').val();
+	if(couponcode != ""){
+		$.ajax({
+		    type	: 'POST',
+		    url		: '{{ route('applycouponcode') }}',
+		    data : {couponcode: couponcode },
+		    async: false, 
+			success: function(result){
+				if(result['message'] == "Coupon Successfully Added")
+				{
+					$('#coupon-message').text(result['message']);
+					$('#coupon-message').css("color", "green");
+					$('#discount .value').text('Rs. '+result['couponprice']);
+					$('#discount').show();
+					
+				}
+				else
+				{
+					$('#coupon-message').text(result['message']);
+					$('#discount .value').text('Rs. 0');
+					$('#coupon-message').css("color", "red");
+				}
+			}           
+		});
+	}
+}
+
+function emptyAddressInputs()
+{
+    $('#checkout-address-confirm').find('input:text').val(''); 	//Enpty all inputs if reseller selects customer
+    if($('#addressoption').is(":checked")){
+    	$('#payment-amount').attr('data-address', 'self');
+    }
+    else
+    {
+    	$('#payment-amount').attr('data-address', 'customer');
+    }
+}
+
+function cancelorder(orderid)
+{
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('cancelorder') }}',
+	    data : {orderid: orderid },
+		success: function(result){
+			if(result == 'Success')
+			{
+				toastr["success"]("Order sucessfully cancelled.");
+
+			}
+			else{
+				toastr["error"]("Cancellation Failed. Please Try Again");
+			}
+		}           
+	});
+}
+
+
+function sendinvoicetouser(email,invoiceid){
+	$('#sendmailtouser').text('Please Wait...');
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('sendinvoicetouser') }}',
+	    data : {email: email,invoiceid: invoiceid  },
+		success: function(result){
+			if(result == 'Success')
+			{
+		        $.jGrowl("Mail Successfully Send.",
+		            {sticky:!1,position:"top-right",theme:"bg-green"});
+		        $('#sendmailtouser').hide();
+			}
+			else{
+				$.jGrowl("Failed. Try Again",
+		            {sticky:!1,position:"top-right",theme:"bg-danger"});
+			}
+		}           
+	});
+}
+
+function getNavCart()
+{
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'GET',
+	    url		: '{{ route('getnavcart') }}',
+	    data 	: {  },
+		success: function(result){
+			var plength = result['products'].length;
+			var output = "";
+			if(plength <= 0)
+			{
+				//No Items in Cart
+				output += '<div class="media"><a class="pull-left" href="#"><img class="media-object item-image" src="{{ asset('img/') }}/order-1s.jpg" alt=""></a><p class="pull-right item-price" >Rs. 0</p><div class="media-body"><h4 class="media-heading item-title"><a href="#">No Stock in Cart</a></h4><p class="item-desc"></p></div></div>'; 
+			}
+			else
+			{
+				for (var i = 0; i < plength; i++) {
+					var list = result['products'][i];
+					$images = $.parseJSON(list['image']);
+					output += '<div class="media"><a class="pull-left" href=""><img class="media-object item-image" src="{{ asset('img/thumb/') }}/'+$images[0]+'" alt="'+list['pname']+'"></a><span class="pull-right cancellbtn" onclick="delNavCart.call(this,'+"'"+list['pcode']+"'"+');"><i class="fa fa-times" aria-hidden="true"></i></span><p class="pull-right item-price">Rs. '+list['sellingprice']+'</p><div class="media-body"><h4 class="media-heading item-title">'+list['qty']+' x '+list['pname']+'</h4><p class="item-desc">'+list['ptype']+'</p></div></div>';
+				}
+			}
+
+			output += '<div class="media"><p class="pull-right item-price">Rs. '+result['shipping']+'</p><div class="media-body"><h4 class="media-heading item-title summary">(+) Shipping Charges</h4></div></div>';
+
+			if(result['coupondiscount'] != 0)
+			{
+				output += '<div class="media"><p class="pull-right item-price">Rs. '+result['coupondiscount']+'</p><div class="media-body"><h4 class="media-heading item-title summary">(-) Coupon Discount</h4></div></div>';
+			}
+
+			if(result['extradiscount'] != 0)
+			{
+				output += '<div class="media"><p class="pull-right item-price">Rs. '+result['extradiscount']+'</p><div class="media-body"><h4 class="media-heading item-title summary">(-) Extra Discount</h4></div></div>';
+			}
+
+            output += '<div class="media"><p class="pull-right item-price">Rs. '+result['total']+'</p><div class="media-body"><h4 class="media-heading item-title summary">Total</h4></div></div>';
+
+            output += '<div class="media"><div class="media-body"><div><a href="#" class="btn btn-theme btn-theme-dark" data-dismiss="modal">Close</a>';
+
+            if(plength > 0)
+            {
+            	output += '<a href="{{ route('cart') }}" class="btn btn-theme btn-theme-transparent btn-call-checkout">Checkout</a>';
+            }
+            output += '</div></div></div>';
+			$("#navcartitems").html(output);	
+			$("#modalcarttotalprice").html(plength+' item(s) - Rs. '+result['total']);		
+		}           
+	});
+}
+
+function delNavCart(pcode){
+	{{-- Delete Product from Shopping Cart--}}
+	$(this).closest('div.media').hide(); // will work
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('delfromcart') }}',
+	    data : {pcode: pcode },
+		success: function(result){
+			if(result == 'Success')
+			{
+				toastr["success"]("Product Removed To Cart");
+				getNavCart();
+			}
+		}           
+	});
+}
+
+function showAllReviews(pcode)
+{
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'POST',
+	    url		: '{{ route('showallreviews') }}',
+	    data : {pcode: pcode },
+		success: function(result){
+			var output= '';
+			for (var i = 0; i <= result.length - 1; i++)
+	        {
+	        	var list = result[i];
+	        	var postedat = list['postedDaysAgo'] != 0 ? list['postedDaysAgo'] : "today";
+				output += '<div class="media comment"><a href="#" class="pull-left comment-avatar"><img src="{{ asset('img/default-user.png') }}" class="media-object" onerror="imgError(this);"/></a><span class="comment-date">'+ postedat +'<i class="fa fa-flag"></i></span><div class="media-body"><p class=""><span class="comment-author"><a href="#">'+list['name']+'</a> </span></p><p class="comment-text">'+list['review']+'</p></div></div>';
+			}
+			$('#showreview').hide();
+			$('#customer-reviews').append(output);
+
+		}           
+	});
+}
+
+function updateonlineusers(){
+	$.ajaxSetup({
+	    headers: {
+	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	    }
+	});
+	$.ajax({
+	    type	: 'GET',
+	    url		: '{{ route('addonlineusers') }}',
+	    data : {},
+		success: function(result){
+
+		}           
+	});
+}
+</script>

@@ -39,6 +39,25 @@ class MainController extends Controller
 		
 	}
 
+	public static function uploadFiles(Request $request){
+		$path = base_path() . '/public/img/files/';
+		$file = $request->file('file');
+
+		$file1 = array();
+		$file1['extension'] = $file->getClientOriginalExtension();
+		$file1['name'] 		= $file->getClientOriginalName();
+		$file1['mime'] 		= $file->getClientMimeType();
+		$file1['path'] 		= dechex((int)(microtime(true)*10000)).md5($file->getClientOriginalName().$file->getSize()).dechex(rand());
+
+		$filename = $file1['path'];
+
+		$file1 = json_encode($file1);
+
+	    $request->file('file')->move($path, $filename); //Upload File
+
+		return $file1;
+	}
+
 
 	
 }

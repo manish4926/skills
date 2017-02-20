@@ -2,19 +2,27 @@
 
 @section('basecontent')
 
-
-{!!Form::open(array('enctype'=>'multipart/form-data'))!!}
-
+{!! Form::open(['route' => 'addScholarshipSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '', 'enctype'=>'multipart/form-data']) !!}
+<input name="post_status" id="post_status" type="hidden" value="1">
 <div style=" width: 100%; min-height:200px; margin-top: 20px;">
+	@if($type == 'new')
 	<h4 class="sectionhead">SUBMIT A NEW SCHOLARSHIP</h4>
+	@elseif($type == 'linked')
+	<h4 class="sectionhead">SUBMIT A LINKED SCHOLARSHIP</h4>
+	@endif
 	<h4 class="sectionhead"><i class="glyphicon glyphicon-file"></i>Scholarship Summary</h4>
 <div>
 
 <div class="form-group">
 	<input type="text" name="title" placeholder="*Scholarship Title" class="form-control input-sm">
 </div>
-								
-<input type="hidden" name="stype" id="stype" value="1"/>
+@if($type == 'new')
+<input type="hidden" name="link">
+@elseif($type == 'linked')
+<div class="form-group">
+	<input type="text" name="link" placeholder="Scholarship Link" class="form-control input-sm">
+</div>
+@endif
 
 <div class="form-group">
     <input name="location" id="city" type="text" value="" placeholder="*City" class="form-control input-sm">
@@ -39,22 +47,18 @@
 
 					
 <!--Start-Application Submission Dead Line Date-->
-<div style="margin-bottom: 55px; width: 100%;"><div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Application Submission Dead Line Date</h4></div><br/>
+<div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Application Submission Dead Line Date</h4></div><br/>
 	<div class="form-group">
-    	<input name="submitstartdate" id="submitstartdate" type="text" value="" placeholder="Start Date " class="form-control input-sm"><br>
-    	<input name="submitenddate" id="submitenddate" type="text" value="" placeholder="End Date " class="form-control input-sm">
+    	<input name="last_date" id="last_date" type="text" value="" placeholder="End Date " class="form-control input-sm">
 	</div>
-</div>
 <!--End-Application Submission Dead Line Date-->
 
-<div style="margin-bottom: 55px; width: 100%;"><div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Scholarship Duration</h4></div><br/>
-
-	<div class="form-group">
-    	<input name="coursestartdate" id="coursestartdate" type="text" value="" placeholder="Scholarship Start Date " class="form-control input-sm"><br>
-    	<input name="courseenddate" id="courseenddate" type="text" value="" placeholder="Scholarship End Date " class="form-control input-sm">
-	</div>
-
+<div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Scholarship Duration</h4></div><br/>
+<div class="form-group">
+	<input name="coursestartdate" id="coursestartdate" type="text" value="" placeholder="Scholarship Start Date " class="form-control input-sm"><br>
+	<input name="courseenddate" id="courseenddate" type="text" value="" placeholder="Scholarship End Date " class="form-control input-sm">
 </div>
+
 
 <div class="form-group" >
 	<textarea name="description" id="description" class="form-control input-sm" placeholder="*Brief Summary" style="height:190px;"></textarea>
@@ -87,7 +91,26 @@
 	<div class="form-group"> <h4 class="sectionhead">Attachment Files </h4>
 
 	File Upload Form 
+	
+<!-- File Upload Start -->
+	<table><tr> <td style="vertical-align: top;">
+	        
+			<input type="hidden" name="files_uploaded" id="__files_uploaded" value="">
 
+			<input type="file" name="file" class="upload-file-input" id="__files" onchange="filesChanged()" style="float: left; visibility: hidden; max-width: 0;" multiple>
+
+			<a href="" class="btn btn-default upload-icon-a" onclick="uploadButtonPressed(); return false;"  style="float: left; margin-right: 15px;"><i style="font-size: 18px;" class="glyphicon glyphicon-upload"></i></a>
+
+	        </td> <td><div id="__filescontentold" style="max-width: 700px; float: left;">
+		   
+		</div><br/>
+
+		<div id="__filescontent" style="max-width: 700px; float: left;"></div>
+
+		</td></tr></table>
+
+	</div>
+<!-- End File Upload-->
 	</div>
 
 	<div class="form-group">
@@ -134,66 +157,43 @@
 
 
 <div style="margin-top: 15px; align:center">
-	<input id="submit" class="btn rightNavActive" type="submit" value="Submit Scholarship" onclick="return validate(); checkDOB();checkDOB1(); setAsNonDraft(); " style="color: #ffffff;"/>
-		<input id="submit" class="btn rightNavActive" type="submit" value="Save as Draft" onclick="checkDOB();checkDOB1(); setAsDraft(); return true;" style=" margin-left: 20px;"/>
+	<input id="submit" class="btn rightNavActive" type="submit" value="Submit Scholarship" onclick="submit(id);"/>
+		<input id="submit" class="btn rightNavActive" type="submit" value="Save as Draft" onclick="submit(id);" style=" margin-left: 20px;"/>
 </div>
 {!!Form::close()!!}
 
 @push('bottomscripts')
 <script>
 $(function() {
-    $('#submitstartdate').datepicker( {
-        changeMonth: true,
+    $('#last_date').datepicker({
+    	changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
-        dateFormat: 'dd MM yy',
-        yearRange: '2016:2018',
-        onClose: function(dateText, inst) {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month, month));
-        }
-    });
-
-    $('#submitenddate').datepicker( {
-        changeMonth: true,
-        changeYear: true,
-        showButtonPanel: true,
-        dateFormat: 'dd MM yy',
-        yearRange: '2016:2018',
-        onClose: function(dateText, inst) {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month, month));
-        }
+        yearRange: '2017:2019',
+        dateFormat: 'yy-mm-dd'
     });
 
     $('#coursestartdate').datepicker( {
         changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
-        dateFormat: 'dd MM yy',
-        yearRange: '2016:2018',
-        onClose: function(dateText, inst) {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month, month));
-        }
+        yearRange: '2017:2019',
+        dateFormat: 'yy-mm-dd'
     });
 
     $('#courseenddate').datepicker( {
         changeMonth: true,
         changeYear: true,
         showButtonPanel: true,
-        dateFormat: 'dd MM yy',
-        yearRange: '2016:2018',
-        onClose: function(dateText, inst) {
-            var month = $("#ui-datepicker-div .ui-datepicker-month :selected").val();
-            var year = $("#ui-datepicker-div .ui-datepicker-year :selected").val();
-            $(this).datepicker('setDate', new Date(year, month, month));
-        }
+        yearRange: '2017:2019',
+        dateFormat: 'yy-mm-dd'
     });
 });
+
+function submit(id){
+	$("#post_status").val(id);
+    $("#frmpost").submit();
+}
 </script>
 @endpush
 @endsection

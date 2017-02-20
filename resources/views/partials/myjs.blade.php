@@ -151,7 +151,7 @@ fileUploader.dispatch = function(file,thread_id){
     data.append("_token","{{ csrf_token() }}");
 
     var http = new XMLHttpRequest();
-    var url = "/upload";
+    var url = '{{ route('uploadFiles') }}';
     http.open("POST", url, true);
     console.log(data.length);
     //http.setRequestHeader("Content-Length",file.size);
@@ -263,7 +263,7 @@ fileUploader.resetId = function(){
 
 function uploadFiles(__files){
   //fileUploader.dispatch(__files,"file");
-  console.log(__files);
+  //console.log(__files);
   var txt = "";
   if (__files.length == 0) {
     txt = "Select one or more files.";

@@ -56,7 +56,6 @@
 
 {!! Form::open(['route' => 'addMarketSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '']) !!}
 <input name="post_status" id="post_status" type="hidden" value="1">
-<input name="images_uploaded" id="images_uploaded" type="hidden" value="">
 <br />
 
 <h4 class="sectionhead">Sell your own Items.</h4>
@@ -96,6 +95,7 @@
 <h4 class="sectionhead"><i class="glyphicon glyphicon-picture"></i> Upload your item photos ( 5 images ) </h4>
 <div id="resultx">   </div>
 <img onclick="document.getElementById('images').click(); return false" style="cursor: pointer;float:left;" src="{{asset('img/icons/upload.png')}}" alt="" border="0">
+<input name="images_uploaded" id="images_uploaded" type="hidden" value="">
 <div class="gallery" id="images_preview" style="float: left;width: 373px;">
 </div>
 <div class="clear clearfix"></div>

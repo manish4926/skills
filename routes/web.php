@@ -54,6 +54,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/message/send', ['as' => 'sendMessage', 'uses' =>'MainController@sendMessage']);   //Send Message
 
+        Route::post('/upload/file', ['as' => 'uploadFiles', 'uses' =>'MainController@uploadFiles']);   //Send Message
+
 });
 
 //----------------------GroupController----------------------------------------------
@@ -103,9 +105,13 @@ Route::group(['prefix' => 'scholarship','middleware' => 'auth'], function () {
 
         Route::get('/', ['as' => 'scholarship', 'uses' =>'ScholarshipController@scholarship']);   //Scholarship Home Page
 
-        Route::get('/add', ['as' => 'addScholarship', 'uses' =>'ScholarshipController@addscholarship']);   //Add Scholarship 
+        Route::get('/{id?}/item/{slug?}', ['as' => 'scholarshipDetail', 'uses' =>'ScholarshipController@scholarshipDetail']);   //Scholarship Details
 
-        Route::get('/add/linked', ['as' => 'addLinkedScholarship', 'uses' =>'ScholarshipController@addLinkedScholarship']);   //Add Linked Scholarship
+        Route::get('/add/{type?}', ['as' => 'addScholarship', 'uses' =>'ScholarshipController@addscholarship']);   //Add Scholarship (Normal and Linked)
 
+        Route::post('/add/submit', ['as' => 'addScholarshipSubmit', 'uses' =>'ScholarshipController@addScholarshipSubmit']);   //Add Scholarship Submit (Normal and Linked)
 
+        Route::get('/edit/{type?}/{id?}', ['as' => 'editScholarship', 'uses' =>'ScholarshipController@editScholarship']);   //Edit Scholarship (Normal and Linked)
+
+        Route::post('/edit/submit', ['as' => 'editScholarshipSubmit', 'uses' =>'ScholarshipController@editScholarshipSubmit']);   //Edit Scholarship Submit (Normal and Linked)
 });

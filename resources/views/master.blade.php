@@ -19,6 +19,7 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">--}}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.css') }}">
 
