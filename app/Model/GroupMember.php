@@ -12,4 +12,27 @@ class GroupMember extends Model
     {
         return $this->belongsToMany('App\Model\Group','group_id','group_id');
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Model\User','id','posted_by');
+    }
+
+    public function userprofile()
+    {
+        return $this->hasOne('App\Model\User','id','posted_by');
+    }
+
+    public function getUser()
+    {
+        $query = $this->user()->first();
+        return $query;
+    }
+
+    public function getUserProfile()
+    {
+        $query = $this->userprofile()->first();
+        return $query;
+    }
+
 }

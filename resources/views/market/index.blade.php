@@ -1,8 +1,9 @@
 @extends('partials.sidebar')
 
 @section('basecontent')
-<div class="col-md-12">
-    <div href="#" class="col-md-4 catbuttons">
+<div class="clear clearfix"></div>
+<div class="col-m-12">
+    <div class="col-md-4 catbuttons">
         <a href="#">
         <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
         <span>Educational DVD/Software</span>
@@ -38,9 +39,9 @@
         <span>Books</span>
         </a>
     </div>
-
 </div>
-<div class="search_bar" style="margin-top: 20px;">
+<div class="clear clearfix"></div>
+<div class="search_bar" style="margin-top: 30px;">
     <div class="">
         <div id="custom-search-input">
             <div class="input-group ">

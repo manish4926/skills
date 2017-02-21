@@ -21,6 +21,8 @@ class MarketController extends Controller
     public function marketplace(Request $request)		//Dashboard
 	{
 		$user = Auth::user();
+
+		//dd(substr(hash('sha256', mt_rand() . microtime()), 0, 20));
 		$market= Market::where('status', '=', 1)
 							->orderBy('priority', 'asc')
 							->orderBy('id', 'desc')

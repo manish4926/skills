@@ -56,6 +56,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/upload/file', ['as' => 'uploadFiles', 'uses' =>'MainController@uploadFiles']);   //Send Message
 
+
+        Route::get('/download/{file?}', ['as' => 'downloadFile', 'uses' =>'MainController@downloadFile']);   //Send Message
+
 });
 
 //----------------------UserController----------------------------------------------
@@ -86,12 +89,21 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/groups/create', ['as' => 'creategroup', 'uses' =>'GroupController@createGroup']); //Create Groups
 
+        Route::post('/groups/changegroupimage', ['as' => 'changeGroupImage', 'uses' =>'GroupController@changeGroupImage']); //Update Group Image
+
+        Route::post('/groups/updategroupinfo', ['as' => 'updateGroupInfo', 'uses' =>'GroupController@updateGroupInfo']); //Update Group Info
+
         Route::post('/groups/groupfollow', ['as' => 'groupfollow', 'uses' =>'GroupController@groupFollow']);    //Follow Groups
 
         Route::post('/groups/groupunfollow', ['as' => 'groupunfollow', 'uses' =>'GroupController@groupunfollow']);      //Unfollow Groups
 
         Route::get('/groups/g{id}', ['as' => 'groupdetail', 'uses' =>'GroupController@groupDetail']);   //View  Groups Detail
 
+        Route::post('/group/imageupload', ['as' => 'addGroupPostImageSubmit', 'uses' =>'GroupController@addGroupPostImageSubmit']);   //Add Image Upload Submit
+
+        Route::post('/group/post/submit', ['as' => 'groupPostSubmit', 'uses' =>'GroupController@groupPostSubmit']);   //Group POst Submit
+
+        Route::get('/group/members/g{id}', ['as' => 'viewGroupMembers', 'uses' =>'GroupController@viewGroupMembers']);   //View Group Members
 });
 
 

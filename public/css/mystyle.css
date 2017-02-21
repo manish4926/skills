@@ -342,9 +342,26 @@ margin: 10px;
   color: #29af97;
 }
 
+.catbuttons {
+  position: relative;
+  margin-top: 10px;
+}
 .catbuttons a{
   background: #29af97;
-  padding: 20px 40px 20px;
+  color: #fff;
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  border-radius: 6px;
+  padding: 15px;
+  width: 100%;
+}
+
+.catbuttons a i{
+  display: block;
+  font-size: 30px;
+  
+  margin-bottom: 10px;
 }
 
 /* Side Nav Bar*/

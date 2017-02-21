@@ -11,13 +11,6 @@ a:focus {
     outline: none;
     outline-offset: -2px;
 }
-
-
-
-
-
-
-
 </style>
 <div class="pull-right" style="margin-top:25px;"><a class="btn btn-sm btn-default" data-toggle="modal" data-target="#CreateGroupModal">Create Group</a></div>
 
@@ -50,7 +43,7 @@ a:focus {
 
 </script>
 
-<div class="tab-content">
+<div class="tab-content"><br>
     <div class="tab-pane active" id="clientes">
         <div class="row">
           @foreach($createdgroups as $cgroups)
@@ -64,11 +57,7 @@ a:focus {
                 <p class="opensans" style="font-size:13px;">{{ substr($cgroups->description,0,100) }}</p>
               </div>
 
-              <div  class="col-md-3 mob-al-r">
-  				      <button class="btn btn-sm btn-success groupbtn" type="button" onclick="$post_follow.call(this)" data-id="{{ $cgroups->group_id }}"><i class="glyphicon glyphicon-plus"></i> Join Group</button>
-
-  				      <button class="btn btn-sm btn-default groupbtn" type="button" onclick="$post_unfollow.call(this)" data-id="{{ $cgroups->group_id }}><i class="glyphicon glyphicon-check"></i> Leave Group</button>
-              </div>
+              
           </div>
           @endforeach
           <hr>

@@ -36,24 +36,21 @@
 	<p class="opensans" style="font-size:16px;"><a style="color:black;" href="#"><i class="glyphicon glyphicon-user"></i> {{$item->post_admin()->name}}</a></p>
 	<p class="opensans" style="font-size:16px;"><i class="glyphicon glyphicon-map-marker"></i> {{$item->address}}.</p>
 </div>
-
+<div class="col-md-12">
 @if ($item->post_user_id != Auth::user()->id)
 
 <h5 class="opensans" style="color:#FF0000;">Contact the Seller</h5>
 
     {!! Form::open(['route' => 'sendMessage', 'id' => 'frmpost', 'form-horizontal', 'class' => '']) !!}
-
-        <input name="subject" type="hidden" value="Book Inquiry">
-        <input name="title" type="hidden" value="{{ $item->title }}">
-        <input name="conversation_id" id="conversation_id" type="hidden" value="0">
+        <input name="title" type="hidden" value="Book Inquiry - {{ $item->title }}">
 	    <input name="to_id" type="hidden" value="{{ $item->posted_by }}">
 			<div class="form-group">
-  			<textarea id="msgbodytxt" class="form-control input-sm" style="height:75px;" placeholder="Share Your Mobile and Email id For Seller to Contact You"></textarea>
+  			<textarea id="msgbodytxt" name="message" class="form-control input-sm" style="height:75px;" placeholder="Share Your Mobile and Email id For Seller to Contact You"></textarea>
   			<span id="msgerr" style="font-weight: bold;font-size: 14px;color: #FF0000;" class="opensans"></span>
      	</div>
         <button type="submit" class="btn btn-secondary btn-sm" style="width:140px;float:right;"s >Send</button>
     {!! Form::close() !!}
 @endif
 </div>
-
+</div>
 @endsection

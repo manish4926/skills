@@ -150,4 +150,22 @@ function deleteFile($path,$filename)
     unlink($path."/".$filename);
 }
 
+function fileDownload($file)
+{
+    //$files = json_decode(json_decode($file));
+    $file = json_decode(json_decode($file,true),true)['files'][0];
+
+    $filename = $file['name'];
+    $fileext = $file['extension'];
+    $filemime = $file['mime'];
+    
+    $filepath = public_path('img/files/' . $file['path']);
+
+
+    $headers = array(
+              'Content-Type: '.$filemime,
+            );
+
+    return response()->download($filepath, $filename.'.'.$fileext, $headers);
+}
 ?>

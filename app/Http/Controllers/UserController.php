@@ -213,4 +213,5 @@ class UserController extends Controller
 		}
 		return 1;	
 	}
+
 }
