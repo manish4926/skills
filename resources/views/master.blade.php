@@ -461,7 +461,7 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
                       <div class="liem-content">
                          <div class="avatar-wrapper" id="nav1">
                            <a href="#">
-                             <img class="img-rounded" src="{{asset('img/profile')}}/{{ $user->account_image ? $user->account_image : "blank.png" }}">
+                             <img class="img-rounded" src="{{asset('img/profile')}}/{{ $user->profile_pic ? $user->profile_pic : "blank.png" }}">
                            </a>
                          </div>
                           <div class="opensans block-links" id="nav2">

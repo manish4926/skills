@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Model\User;
 use App\Model\Group;
 use App\Model\GroupMember;
+use App\Model\IndianCities;
 use Auth;
 use Image;
 use Session;
@@ -26,15 +27,55 @@ class UserController extends Controller
     	return view('user.profile',compact('user','userid'));
 	}
 
-	public function updateProfilePic(Request $request)		//Profile Page
+	public function updateProfilePic(Request $request)		//Update Profile Image
 	{
 		$user = Auth::user();
 
-		$imagename  = base64_encode($pcode).'.jpg';
+		$image     	= $request->file('image1');
+		$imagename  = base64_encode($user->email).'.jpg';
         $path       = public_path('img/profile/' .$imagename);
         Image::make($image->getRealPath())->save($path);
 
         /* Add To Database*/
-    	return view('user.profile',compact('user'));
+        User::where('id', $user->id)
+            		->update(['profile_pic' => $imagename]);
+
+    	return redirect()->back();
+	}
+
+	public function personalInformation(Request $request)		//Edit Personal Information
+	{
+		$user = Auth::user();
+		$states = IndianCities::select('states')->groupBy('states')->get();
+						
+    	return view('user.personalinformation',compact('user','states'));
+	}
+
+	public function updatePassword(Request $request)
+	{	//Update Password Information in My Accounts
+		$this->validate($request, [
+			'old_password' => 'required|min:5|confirmed',
+			'password' => 'required|min:5|confirmed',
+            'password_confirmation' => 'required'
+        ]);
+
+		$user = Auth::user();
+		$old_password = bcrypt($request['old_password']);
+		$checkuser = User::where('email', $user->email)
+						->where('password', $old_password)
+            			->count();
+
+        if($checkuser == 1) {
+        	$password = bcrypt($request['password']);
+			User::where('email', $user->email)
+	            ->update(['password' => $password]);
+	        Session::flash('successMessage', 'Password Updated Successfully');
+        }
+        else {
+        	Session::flash('errorMessage', 'Invalid Password');
+        }
+        
+		
+		return redirect()->back();
 	}
 }

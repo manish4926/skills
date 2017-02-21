@@ -41,6 +41,47 @@ $liststate = [
     return $liststate;
 }
 
+function basic_education() {
+    $list = [
+        '8th class',
+        '9th class',
+        '10th class',
+        '11th class',
+        '12th class',
+        'Under Graduate',
+        'Graduate',
+        'Post graduate',
+        'Phd'
+    ];
+    return $list;
+}
+
+function teaching_exp() {
+    $list = [
+        'PhD',
+        'Post Graduate',
+        'Graduate',
+        'Under Graduate'
+    ];
+    return $list;
+}
+
+function profile_section_array($id) {
+    if($id == 2)
+    {
+        $array = [0,11,12,13,14,15,16,17,18];  //Teachers
+    } 
+    elseif($id == 3) {
+        $array = [0,1,2,3,4,5,6,7,8,9,10];  //Student
+    }
+    elseif($id == 4) {
+        $array = [24,0,19,20,21,22,23,7,8,9,10];  //Institutes
+    }
+    elseif($id == 5) {
+        $array = [24,0,13,21,22];  //Business Associate
+    }
+}
+
 function price_calculator($price,$discount) {
       $newprice = $price-$discount;
       return $newprice;
@@ -100,6 +141,12 @@ function seoUrl($string) {
     //Convert whitespaces and underscore to dash
     $string = preg_replace("/[\s_]/", "-", $string);
     return $string;
+}
+
+
+function deleteFile($path,$filename)
+{
+    unlink($path."/".$filename);
 }
 
 ?>

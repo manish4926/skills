@@ -544,7 +544,7 @@ function do_comment(id)
 		if(comments.res == '1')
 		{
 			$('#commentform_'+id).val("");
-			$('#formcomment_'+id).before('<div id="commentelemnt_'+comments.this_id+'" style="border-bottom: 1px solid #efeeee;margin: 5px 0 0 9px;padding-bottom: 2px;"> <img style="border: 1px solid #e7e7e7;float: left;height: 40px;margin-right: 10px;margin-top: -1px;width: 40px;;" src="{{asset('uploads/profile_pics_small')}}/{{$user->account_image}}"> <p><b class="list-group-item-heading">{{$user->first_name}} {{$user->last_name}}</b> <span style="font-size: 12px;" class="list-group-item-text">'+textcomment+'</span></p><p style="margin-top: -12px;"><span class="commenttime">Just Now</span></p></div>');
+			$('#formcomment_'+id).before('<div id="commentelemnt_'+comments.this_id+'" style="border-bottom: 1px solid #efeeee;margin: 5px 0 0 9px;padding-bottom: 2px;"> <img style="border: 1px solid #e7e7e7;float: left;height: 40px;margin-right: 10px;margin-top: -1px;width: 40px;;" src="{{asset('img/profile')}}/{{$user->profile_pic}}"> <p><b class="list-group-item-heading">{{$user->first_name}} {{$user->last_name}}</b> <span style="font-size: 12px;" class="list-group-item-text">'+textcomment+'</span></p><p style="margin-top: -12px;"><span class="commenttime">Just Now</span></p></div>');
 		}
 
 	});

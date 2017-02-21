@@ -4,14 +4,14 @@
 
 <!--Personal Logo and buttons-->
 <div class="col-md-5 cent-mob">
-	<img src="{{asset('img/profile')}}/{{ $user->account_image ? $user->account_image : "blank.png" }}" style="height: 160px;width: 160px;border: 1px solid #e3e3e3;border-radius: 4px;">
+	<img src="{{asset('img/profile')}}/{{ $user->profile_pic ? $user->profile_pic : "blank.png" }}" style="height: 160px;width: 160px;border: 1px solid #e3e3e3;border-radius: 4px; object-fit: contain;">
 
 	@if($user->id == $userid)
 	
 	<div class="ProfileChangeImage" data-toggle="modal" data-target="#changeModal">
 		<span>Update Profile Image</span>
 	</div>
-	<a href="{{url('account/setting')}}" class="btn btn-sm btn-default ProfileChangeImage" type="button" style="border-radius: 3px;font-size: 13px;margin-top:6px;font-family: tahoma;">Edit Personal Information</a>
+	<a href="{{ route('personalInformation') }}" class="btn btn-sm btn-default ProfileChangeImage" type="button" style="border-radius: 3px;font-size: 13px;margin-top:6px;font-family: tahoma;">Edit Personal Information</a>
 	@else
 		 @if($isfollow == 0)
 
@@ -75,4 +75,281 @@
 </div>
 <!-- Modal -->
 
+@push('bottomscripts')
+<script type="text/javascript">
+function get_section(id)
+{
+	var newDiv;
+	var formData;
+	var addNewLink = "";
+	var OtherLinks = "";
+	var ItemDiv;
+	var tokens = "ABCD";
+	@if($myprofile == 1)
+		addNewLink = '<a onclick="addNewPost('+id+')" style="float: right;margin-right: 9px;margin-top: -44px;cursor: pointer;"><img src="{{asset('layout/images/btn-add.png')}}" border="0"></a>';
+	@endif
+	var url = "{{ url('/profile/sections/') }}/{{ $profile[0]->id }}/"+id;
+	var urlform = "{{ url('/profile/sectionsforms/') }}/{{ $profile[0]->id }}/"+id+"/"+tokens;
+	$.get( url, function( data ) {
+
+	val = JSON.parse(data);
+	if(id == 24)
+	{
+	  x = -1;
+	}
+	else
+	{
+	  x = id;
+	}
+//console.log(val.recs.length);
+newDiv = '<div style="background-color: #f0f2f0;margin-bottom: -19px;margin-left: -15px;margin-right: -15px;padding: 8px 12px 12px;" class="scoreindex" data-index="'+x+'" id="section_'+val.id+'">' +
+      '<h4 class="opensans profileBlockHr" style="background-color: #ffffff;  padding: 5px;"><img src="{{asset('layout/icons/')}}/icon'+id+'.png"> <span class="opensans" style="font-size: 17px;font-weight: normal;">'+val.title+'</span></h4> '+addNewLink+
+      ' <div id="sectioncontent_'+val.id+'" style="margin-top: -9px;">  </div> ';
+
+if(val.recs.length >= 1){
+	newDiv += '<div class="addbtndiv" onclick="addNewPost('+id+')"> <button class="btn btn-success">Add More</button></div>';  
+}        
+  
+newDiv += '<div id="sectioncontentform_'+val.id+'" style="margin-top:-10px;">  </div> <br /></div>';
+
+$("#mysections").append(newDiv);
+
+$.get( urlform, function( dataform ) {
+  $("#sectioncontentform_"+id).html(dataform);
+});
+
+
+jQuery.each(val.recs, function(i, profile) {
+	@if($myprofile == 1)
+	    OtherLinks = '<div class="pull-right"><a onclick="editType'+id+'('+profile.recid+','+id+')" style="cursor: pointer;float: left;margin-right: 7px;margin-top: 6px;"><img src="{{asset('layout/images/btn-edit.png')}}" border="0"></a> '+
+	      '<a onclick="removeItemtype('+profile.recid+','+id+')" class="" style="cursor: pointer;float: right;margin-right: 2px;margin-top: 5px;"> <img src="{{asset('layout/images/btn-remove.png')}}" border="0"></a></div>';
+	@endif
+
+
+	if(id == 0)
+	{
+	  	ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;">' +
+	          ' '+OtherLinks+' <h5 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h5> </div>';
+
+	}
+
+	if(id == 1)
+	{
+	  	ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+	}
+
+	if(id == 2)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>  '+
+	          '<h5 class="opensans"><span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span> - Year: <span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5>'+
+	          '<h5 class="opensans">Degree:<span id="f4_profileitem_'+profile.recid+'">'+profile.list.f4+'</span>%</h5></div>';
+	}
+
+	if(id == 3)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>'+
+	          '<h5 class="opensans"><span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span> - Year: <span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5>'+
+	          '<h5 class="opensans">Degree:<span id="f4_profileitem_'+profile.recid+'">'+profile.list.f4+'</span>%</h5></div>';
+	}
+
+	if(id == 4)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>  '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span> - From: <span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span> To: <span id="f4_profileitem_'+profile.recid+'">'+profile.list.f4+'</span></h5>'+
+	          '<h5 class="opensans"><span id="f5_profileitem_'+profile.recid+'">'+profile.list.f5+'</span></h5> <h5 class="opensans"><span id="f6_profileitem_'+profile.recid+'">'+profile.list.f6+'</span></h5> </div>';
+
+	}
+
+	if(id == 5)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+	}
+
+	if(id == 6)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+' <h5 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h5> </div>';
+
+	}
+
+	if(id == 7)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+' <h5 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h5>  </div>';
+	}
+
+	if(id == 8)
+	{
+
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5> '+
+	          '<h5 class="opensans"><span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span></h5></div>';
+	}
+
+	if(id == 9)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>'+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5> '+
+	          '<h5 class="opensans"><span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span></h5></div>';
+	}
+
+
+
+	if(id == 10)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+	}
+
+
+
+	if(id == 11)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5> '+
+	          '<h5 class="opensans"><span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span></h5></div>';
+	}
+
+
+
+	if(id == 12)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;">'+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+OtherLinks+
+	          '<h5 class="opensans"><span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span> - Year: <span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h6>'+
+	          '<h5 class="opensans">Address: <span id="f4_profileitem_'+profile.recid+'">'+profile.list.f4+'</span></h5> '+
+	          '<h5 class="opensans">Degree: <span id="f5_profileitem_'+profile.recid+'">'+profile.list.f5+'</span></h5></div>';
+	}
+
+
+
+	if(id == 13)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+OtherLinks+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5> '+
+	          '<h5 class="opensans"><span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span></h5></div>';
+	}
+
+	if(id == 14)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5> </div>';
+	}
+
+
+
+	if(id == 15)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+OtherLinks+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+	}
+
+	if(id == 16)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4></div>';
+	}
+
+	if(id == 17)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>  '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+	}
+
+	if(id == 18)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>'+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span> </h5><h5 class="opensans"> From: <span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span> To: <span id="f4_profileitem_'+profile.recid+'">'+profile.list.f4+'</span></h5></div>';
+	}
+
+
+
+	if(id == 19)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>'+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+	}
+
+
+
+	if(id == 20)
+	{
+
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+
+	}
+
+
+
+	if(id == 21)
+	{
+	  ItemDiv = '<div id="profileitem_'+id+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4>'+
+	          '<h5 class="opensans"><span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5></div>';
+	}
+
+	if(id == 22)
+	{
+
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+'  <h5 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h5> </div>';
+
+	}
+
+	if(id == 23)
+	{
+	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+' <h5 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h5>  </div>';
+	}
+
+	if(id == 24)
+	{
+	  ItemDiv = '<div id="profileitem_'+id+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+
+	          '<h4 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h4> '+
+	          '<h5 class="opensans">Contact Person: <span id="f2_profileitem_'+profile.recid+'">'+profile.list.f2+'</span></h5> '+
+	          '<h5 class="opensans">Address: <span id="f3_profileitem_'+profile.recid+'">'+profile.list.f3+'</span> , <span id="f4_profileitem_'+profile.recid+'">'+profile.list.f4+'</span> , <span id="f5_profileitem_'+profile.recid+'">'+profile.list.f5+'</span> <span id="f6_profileitem_'+profile.recid+'">'+profile.list.f6+'</span> </h5> '+
+	          '<h5 class="opensans"><span id="f7_profileitem_'+profile.recid+'">'+profile.list.f7+'</span></h5> '+
+	          '<h5 class="opensans"><span id="f8_profileitem_'+profile.recid+'">'+profile.list.f8+'</span></h5></div>';
+	}
+
+    $("#sectioncontent_"+id).append(ItemDiv);
+  });
+
+
+
+
+
+$('.sortable').each(function(){
+	var $this = $(this);
+  	$this.append($this.find('.scoreindex').get().sort(function(a, b) {
+    return $(a).data('index') - $(b).data('index');
+  }));
+
+});
+
+}
+
+$( document ).ready(function() {	
+	<?php $arr = profile_section_array($user->user_roles()->id) ?>
+	@foreach($arr as $array)
+		get_section({{ $array }});
+	@endforeach
+});
+</script>
+@endpush
 @endsection

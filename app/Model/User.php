@@ -63,4 +63,15 @@ class User extends Authenticatable
         $query = $this->roles()->first();
         return $query;
     }
+
+    public function profile()
+    {
+        return $this->hasOne('App\Model\UserProfile','user_id','id');
+    }
+
+    public function user_profile()
+    {
+        $query = $this->profile()->first();
+        return $query;
+    }
 }

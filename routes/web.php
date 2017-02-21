@@ -65,6 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/profile/changeimage', ['as' => 'updateProfilePic', 'uses' =>'UserController@updateProfilePic']);   //User Profile Page
         
+        Route::get('/profile/info', ['as' => 'personalInformation', 'uses' =>'UserController@personalInformation']);   //User Profile Page
+
+        Route::post('/updatepassword', ['as' => 'updatePassword',   'uses' => 'UserController@updatePassword']);    //Account Information
 
 });
 
@@ -132,4 +135,28 @@ Route::group(['prefix' => 'scholarship','middleware' => 'auth'], function () {
         Route::post('/edit/submit', ['as' => 'editScholarshipSubmit', 'uses' =>'ScholarshipController@editScholarshipSubmit']);   //Edit Scholarship Submit (Normal and Linked)
 
         Route::post('/update/status', ['as' => 'updateScholarshipStatus', 'uses' =>'ScholarshipController@updateScholarshipStatus']);   //Edit Product Submit
+});
+
+//----------------------InternshipController----------------------------------------------
+Route::group(['prefix' => 'internship','middleware' => 'auth'], function () {
+
+        Route::get('/', ['as' => 'internship', 'uses' =>'InternshipController@internship']);   //Internship Home Page
+
+        Route::get('/myinternships', ['as' => 'myInternship', 'uses' =>'InternshipController@myInternship']);   //My Internships (Institutes/Schools)
+
+        Route::get('/{id?}/item/{slug?}', ['as' => 'internshipDetail', 'uses' =>'InternshipController@internshipDetail']);   //Internship Details
+
+        Route::get('/add/{type?}', ['as' => 'addInternship', 'uses' =>'InternshipController@addinternship']);   //Add Internship (Normal and Linked)
+
+        Route::post('/add/submit', ['as' => 'addInternshipSubmit', 'uses' =>'InternshipController@addInternshipSubmit']);   //Add Internship Submit (Normal and Linked)
+
+        Route::get('/edit/{type?}/{id?}', ['as' => 'editInternship', 'uses' =>'InternshipController@editInternship']);   //Edit Internship (Normal and Linked)
+
+        Route::post('/edit/submit', ['as' => 'editInternshipSubmit', 'uses' =>'InternshipController@editInternshipSubmit']);   //Edit Internship Submit (Normal and Linked)
+
+        Route::get('/edit/{id?}', ['as' => 'editInternship', 'uses' =>'InternshipController@editInternship']);   //Edit Internship (Normal and Linked)
+
+        Route::post('/edit/submit', ['as' => 'editInternshipSubmit', 'uses' =>'InternshipController@editInternshipSubmit']);   //Edit Internship Submit (Normal and Linked)
+
+        Route::post('/update/status', ['as' => 'updateInternshipStatus', 'uses' =>'InternshipController@updateInternshipStatus']);   //Edit Product Submit
 });

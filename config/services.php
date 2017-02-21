@@ -35,4 +35,22 @@ return [
         'secret' => env('STRIPE_SECRET'),
     ],
 
+    'facebook' => [
+        'client_id'     => env('FB_CLIENT_ID'),
+        'client_secret' => env('FB_CLIENT_SECRET'),
+        'redirect'      => env('FB_CALLBACK_URL'),
+    ],
+
+    'google' => [
+        'client_id'     => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect'      => env('GOOGLE_CALLBACK_URL'),
+    ],
+
+    'sms' => [
+        'client_id'         => env('SMS_USERNAME'),
+        'client_secret'     => env('SMS_PASSWORD'),
+        'client_senderid'   => env('SMS_SENDERID'),
+    ],
+
 ];
