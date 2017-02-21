@@ -4,9 +4,9 @@
 
 <!--Personal Logo and buttons-->
 <div class="col-md-5 cent-mob">
-	<img src="{{asset('img/profile')}}/{{ $user->profile_pic ? $user->profile_pic : "blank.png" }}" style="height: 160px;width: 160px;border: 1px solid #e3e3e3;border-radius: 4px; object-fit: contain;">
+	<img src="{{asset('img/profile')}}/{{ $getUser->profile_pic ? $getUser->profile_pic : "blank.png" }}" style="height: 160px;width: 160px;border: 1px solid #e3e3e3;border-radius: 4px; object-fit: contain;">
 
-	@if($user->id == $userid)
+	@if($user->id == $getUser->id)
 	
 	<div class="ProfileChangeImage" data-toggle="modal" data-target="#changeModal">
 		<span>Update Profile Image</span>
@@ -25,8 +25,9 @@
 	@endif
 </div>
 <!--Personal Logo and buttons-->
-{{--
+
 <div class="col-md-7">
+{{--
 @if($profile[0]->account_type == 1)
 @include('frontend.socialnetwork.profile_type1')
 @elseif($profile[0]->account_type == 2)
@@ -36,14 +37,15 @@
 @elseif($profile[0]->account_type == 4)
 @include('frontend.socialnetwork.profile_type4')
 @endif
-</div>
 --}}
+</div>
+
 
 <!--Personal Logo and buttons-->
 
 <!-- Info Tab-->
 
-
+<div class="clear clearfix"></div>
 <div  class="profile-content sortable" style="margin-top:25px;min-height:500px;">
 	<h4 class="opensans profileBlockHr"><span style="border-bottom: 1px solid #1d0001;font-size: 22px;font-weight: bold;" class="opensans">Experience</span></h4>
         <div id="mysections"></div>
@@ -62,7 +64,7 @@
 				<div class="form-group">
 					<label>Select image from your PC:</label>
 					<input name="image1" type="file">
-					<input name="id" type="hidden" value="{{$user->id}}">
+					<input name="id" type="hidden" value="{{$getUser->id}}">
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -85,11 +87,11 @@ function get_section(id)
 	var OtherLinks = "";
 	var ItemDiv;
 	var tokens = "ABCD";
-	@if($myprofile == 1)
-		addNewLink = '<a onclick="addNewPost('+id+')" style="float: right;margin-right: 9px;margin-top: -44px;cursor: pointer;"><img src="{{asset('layout/images/btn-add.png')}}" border="0"></a>';
+	@if($user->id == $getUser->id)
+		addNewLink = '<a onclick="addNewPost('+id+')" style="float: right;margin-right: 9px;margin-top: -44px;cursor: pointer;"><img src="{{asset('img/icons/btn-add.png')}}" border="0"></a>';
 	@endif
-	var url = "{{ url('/profile/sections/') }}/{{ $profile[0]->id }}/"+id;
-	var urlform = "{{ url('/profile/sectionsforms/') }}/{{ $profile[0]->id }}/"+id+"/"+tokens;
+	var url = "{{ url('/profile/sections/') }}/{{ $getUser->id }}/"+id;
+	var urlform = "{{ url('/profile/sectionsforms/') }}/{{ $getUser->user_roles()->id }}/"+id+"/"+tokens;
 	$.get( url, function( data ) {
 
 	val = JSON.parse(data);
@@ -103,7 +105,7 @@ function get_section(id)
 	}
 //console.log(val.recs.length);
 newDiv = '<div style="background-color: #f0f2f0;margin-bottom: -19px;margin-left: -15px;margin-right: -15px;padding: 8px 12px 12px;" class="scoreindex" data-index="'+x+'" id="section_'+val.id+'">' +
-      '<h4 class="opensans profileBlockHr" style="background-color: #ffffff;  padding: 5px;"><img src="{{asset('layout/icons/')}}/icon'+id+'.png"> <span class="opensans" style="font-size: 17px;font-weight: normal;">'+val.title+'</span></h4> '+addNewLink+
+      '<h4 class="opensans profileBlockHr" style="background-color: #ffffff;  padding: 5px;"><img src="{{asset('img/icons/')}}/icon'+id+'.png"> <span class="opensans" style="font-size: 17px;font-weight: normal;">'+val.title+'</span></h4> '+addNewLink+
       ' <div id="sectioncontent_'+val.id+'" style="margin-top: -9px;">  </div> ';
 
 if(val.recs.length >= 1){
@@ -114,17 +116,18 @@ newDiv += '<div id="sectioncontentform_'+val.id+'" style="margin-top:-10px;">  <
 
 $("#mysections").append(newDiv);
 
+@if($user->id == $getUser->id)
 $.get( urlform, function( dataform ) {
   $("#sectioncontentform_"+id).html(dataform);
 });
-
+@endif
 
 jQuery.each(val.recs, function(i, profile) {
-	@if($myprofile == 1)
-	    OtherLinks = '<div class="pull-right"><a onclick="editType'+id+'('+profile.recid+','+id+')" style="cursor: pointer;float: left;margin-right: 7px;margin-top: 6px;"><img src="{{asset('layout/images/btn-edit.png')}}" border="0"></a> '+
-	      '<a onclick="removeItemtype('+profile.recid+','+id+')" class="" style="cursor: pointer;float: right;margin-right: 2px;margin-top: 5px;"> <img src="{{asset('layout/images/btn-remove.png')}}" border="0"></a></div>';
+	
+	@if($user->id == $getUser->id)
+	    OtherLinks = '<div class="pull-right"><a onclick="editType'+id+'('+profile.recid+','+id+')" style="cursor: pointer;float: left;margin-right: 7px;margin-top: 6px;"><img src="{{asset('img/icons/btn-edit.png')}}" border="0"></a> '+
+	      '<a onclick="removeItemtype('+profile.recid+','+id+')" class="" style="cursor: pointer;float: right;margin-right: 2px;margin-top: 5px;"> <img src="{{asset('img/icons/btn-remove.png')}}" border="0"></a></div>';
 	@endif
-
 
 	if(id == 0)
 	{
@@ -175,7 +178,6 @@ jQuery.each(val.recs, function(i, profile) {
 	if(id == 6)
 	{
 	  ItemDiv = '<div id="profileitem_'+profile.recid+'" class="profile-content" style="border-bottom: 1px solid #d0d7e6;background-color: white;padding: 8px;"> '+OtherLinks+' <h5 class="opensans"><span id="f1_profileitem_'+profile.recid+'">'+profile.list.f1+'</span></h5> </div>';
-
 	}
 
 	if(id == 7)
@@ -330,22 +332,62 @@ jQuery.each(val.recs, function(i, profile) {
     $("#sectioncontent_"+id).append(ItemDiv);
   });
 
+	$('.sortable').each(function(){
+		var $this = $(this);
+	  	$this.append($this.find('.scoreindex').get().sort(function(a, b) {
+	    return $(a).data('index') - $(b).data('index');
+	  }));
 
-
-
-
-$('.sortable').each(function(){
-	var $this = $(this);
-  	$this.append($this.find('.scoreindex').get().sort(function(a, b) {
-    return $(a).data('index') - $(b).data('index');
-  }));
+	});
 
 });
+}
 
+function addNewPost(id)
+{
+	$("#sectioncontent_"+id).css('display','none');
+	$("#frmtype"+id).css('display','block');
+	$("#id_type"+id).val("0");
+	$("#text_type"+id+"_f1").val("");
+	$("#text_type"+id+"_f2").val("");
+	$("#text_type"+id+"_f3").val("");
+	$("#text_type"+id+"_f4").val("");
+	$("#text_type"+id+"_f5").val("");
+	$("#text_type"+id+"_f6").val("");
+	$("#text_type"+id+"_f7").val("");
+	$("#text_type"+id+"_f8").val("");
+}
+
+function CloseNewPost(id)
+{
+	$("#sectioncontent_"+id).css('display','block');
+	$("#frmtype"+id).css('display','none');
+}
+
+
+
+function removeItemtype(id,type)
+{
+	var r = confirm("Are you sure?");
+	if (r == true) {
+	$.ajax({     
+	type  : 'POST',
+	url   : '{{ route('deleteExperience') }}',
+	data : {id : id, '_token': $('input[name=_token]').val()},
+	beforeSend: function(){
+	},
+	complete: function(){
+	},
+	success: function(result){
+	//console.log(result);
+	}   
+	});
+	$("#profileitem_"+id).remove();
+	}
 }
 
 $( document ).ready(function() {	
-	<?php $arr = profile_section_array($user->user_roles()->id) ?>
+	<?php $arr = profile_section_array($getUser->user_roles()->id); ?>
 	@foreach($arr as $array)
 		get_section({{ $array }});
 	@endforeach

@@ -93,6 +93,7 @@ function $post_unfollow()
 /* Market JS*/
 
 function updatemarketstatus(id,type) {
+  $this = $(this);
   $.ajax({
     type: "POST",
     url: '{{ route('updateMarketStatus') }}',
@@ -105,6 +106,22 @@ function updatemarketstatus(id,type) {
       }
       else {
         toastr["success"](data);
+        if(type == 'publish') {
+          $this.addClass('btn-warning'); 
+          $this.removeClass('btn-success'); 
+          $this.text('Unpublish'); 
+          $this.attr('onclick', "updatemarketstatus.call(this,"+id+",'unpublish')");
+          
+        } else if(type == 'unpublish') {
+          $this.addClass('btn-success'); 
+          $this.removeClass('btn-warning'); 
+          $this.text('Publish'); 
+          $this.attr('onclick', "updatemarketstatus.call(this,"+id+",'publish')");
+          
+        } else if(type == 'delete') {
+          $this.closest('.col-md-12').hide();
+        }
+
       }
       
     }

@@ -342,6 +342,11 @@ margin: 10px;
   color: #29af97;
 }
 
+.catbuttons a{
+  background: #29af97;
+  padding: 20px 40px 20px;
+}
+
 /* Side Nav Bar*/
 @media (min-width: 768px) {
   .sidenav .navbar-collapse {

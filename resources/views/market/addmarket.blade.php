@@ -86,7 +86,6 @@
         <option value="Education stuff">Education stuff</option>
         <option value="Educational DVD/Software">Educational DVD/Software</option>
         <option value="Notes">Notes</option>
-        <option value="Promotion">Promotion</option>
         <option value="Tutorial Hours">Tutorial Hours</option>
 	</select>
 </div>

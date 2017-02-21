@@ -27,15 +27,14 @@
 				<div class="smaller-mob">
 				<a class="btn btn-default" href="{{ route('editMarket', ['id' => $item->id]) }}" role="button">Edit</a>
 
-				<a class="btn btn-danger" onclick="updatemarketstatus({{ $item->id }},'delete')" role="button">Delete</a>
+				<a class="btn btn-danger" onclick="updatemarketstatus.call(this,{{ $item->id }},'delete')" role="button">Delete</a>
 				@if($item->status == 0)
 
-				<a class="btn btn-success" onclick="updatemarketstatus({{ $item->id }},'publish')" role="button">Publish</a>
+				<a class="btn btn-success" onclick="updatemarketstatus.call(this,{{ $item->id }},'publish')" role="button">Publish</a>
 
 				@else
 
-				<a class="btn btn-warning" onclick="updatemarketstatus({{ $item->id }},'unpublish')" role="button">Unpublish </a>
-
+				<a class="btn btn-warning" onclick="updatemarketstatus.call(this,{{ $item->id }},'unpublish')" role="button">Unpublish </a>
 				@endif
 
 

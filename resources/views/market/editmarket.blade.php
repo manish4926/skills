@@ -88,7 +88,6 @@
         <option value="Education stuff" {{ $mymarket->priority == "ducation stuff" ? "selected" : "" }}>Education stuff</option>
         <option value="Educational DVD/Software" {{ $mymarket->priority == "Educational DVD/Software" ? "selected" : "" }}>Educational DVD/Software</option>
         <option value="Notes" {{ $mymarket->priority == "Notes" ? "selected" : "" }}>Notes</option>
-        <option value="Promotion" {{ $mymarket->priority == "Promotion" ? "selected" : "" }}>Promotion</option>
         <option value="Tutorial Hours" {{ $mymarket->priority == "Tutorial Hours" ? "selected" : "" }}>Tutorial Hours</option>
 	</select>
 </div>

@@ -69,6 +69,14 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::post('/updatepassword', ['as' => 'updatePassword',   'uses' => 'UserController@updatePassword']);    //Account Information
 
+        Route::get('/profile/sections/{id}/{section_id}', ['as' => 'profileSection ', 'uses' =>'UserController@profileSection']);   //User Profile Section
+
+        Route::get('/profile/sectionsforms/{id}/{section_id}/{tok}', ['as' => 'profileSectionForm ', 'uses' =>'UserController@profileSectionForm']);   //User Profile Section Forms
+
+        Route::get('/profile/savetypeitem', ['as' => 'saveTypeItem', 'uses' =>'UserController@saveTypeItem']);   //User Profile Page
+
+        Route::post('/deleteexperience', ['as' => 'deleteExperience',   'uses' => 'UserController@deleteExperience']);    //Delete User Experience
+
 });
 
 //----------------------GroupController----------------------------------------------

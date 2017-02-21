@@ -80,6 +80,7 @@ function profile_section_array($id) {
     elseif($id == 5) {
         $array = [24,0,13,21,22];  //Business Associate
     }
+    return $array;
 }
 
 function price_calculator($price,$discount) {

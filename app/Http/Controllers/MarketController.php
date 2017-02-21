@@ -164,7 +164,6 @@ class MarketController extends Controller
 		$user = Auth::user();
 		$id 	= $request->id;
 		$type 	= $request->type;
-
 		if($type == 'delete') {
 			Market::where('posted_by', $user->id)
 					->where('id', $id)

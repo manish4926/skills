@@ -150,7 +150,7 @@ class InternshipController extends Controller
 		}
 		elseif($type == 'publish' OR $type == 'unpublish') {
 			$status = ($type == 'publish' ? 1 : 0);
-			Market::where('posted_by', $user->id)
+			Internship::where('posted_by', $user->id)
 					->where('id', $id)
             		->update(['status' => $status]);
 

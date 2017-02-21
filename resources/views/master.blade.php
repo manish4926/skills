@@ -12,17 +12,12 @@
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
-{{--
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap-grid.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/bootstrap/bootstrap.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">--}}
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}">
         <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.css') }}">
-
 
         <!-- Pre Template Themes -->
         <link rel="stylesheet" type="text/css" href="{{ asset('css/csscustom.css') }}">
@@ -31,7 +26,6 @@
         
         
         <!-- Scripts -->
-
         @include('partials.myjs')
         @stack('topscripts')
     </head>
@@ -461,7 +455,7 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
                       <div class="liem-content">
                          <div class="avatar-wrapper" id="nav1">
                            <a href="#">
-                             <img class="img-rounded" src="{{asset('img/profile')}}/{{ $user->profile_pic ? $user->profile_pic : "blank.png" }}">
+                             <img class="img-rounded" src="{{asset('img/profile/')}}/{{ $user->profile_pic ? $user->profile_pic : "blank.png" }}">
                            </a>
                          </div>
                           <div class="opensans block-links" id="nav2">
@@ -492,8 +486,8 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
 
         <!-- Bottom Scripts -->
         <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
         <script src="{{ asset('js/toastr.js') }}"></script>
         <!-- Pre Template Theme -->
         <script src="{{ asset('js/morphext.js') }}"></script>
