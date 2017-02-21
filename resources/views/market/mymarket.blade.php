@@ -20,7 +20,7 @@
 	<div class="row">
 		<div class="col-md-2 col-xs-4">
 			<img src="{{ asset('img/books/' . explode(",",$item->images)[0]) }}"  border="0"></div>
-				<div class="col-md-9 col-xs-8 opensans">
+		<div class="col-md-9 col-xs-8 opensans">
 
 				{{ $item->post_title }}
 				<br /> <br />

@@ -115,6 +115,31 @@ function updatemarketstatus(id,type) {
 
 /* End Market JS*/
 
+/* Scholarship JS*/
+
+function updatescholarshipstatus(id,type) {
+  $.ajax({
+    type: "POST",
+    url: '{{ route('updateScholarshipStatus') }}',
+    data: { id: id,type: type, '_token': $('input[name=_token]').val()} ,
+    success: function(data)
+    {
+      if(data == 'Error Occured')
+      {
+        toastr["error"](data);
+      }
+      else {
+        toastr["success"](data);
+      }
+      
+    }
+
+  });
+}
+
+
+/* End Scholarship JS*/
+
 /* File Uploader*/
 function loadCSSIfNotAlreadyLoadedForSomeReason () {
   var ss = document.styleSheets;

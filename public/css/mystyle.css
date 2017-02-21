@@ -8,6 +8,11 @@ ul {
   list-style-type: none;
 }
 
+.nav-tabs.nav-justified>li>a {
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
 .search_bar ul {
 	padding: 0;
 	background-color: #005baa;

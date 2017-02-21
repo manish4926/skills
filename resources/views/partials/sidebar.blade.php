@@ -12,7 +12,7 @@
 				</div>
 		        <div class="opensans">
 		        {{ $user->name }}<br>
-		        <a href="#">Edit Profile</a>
+		        <a href="{{ route('userProfile', ['id' => $user->id ]) }}">Edit Profile</a>
 		        </div>
 			</div>
 			<div class="sidenav">

@@ -58,6 +58,16 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
+//----------------------UserController----------------------------------------------
+Route::group(['middleware' => 'auth'], function () {
+
+        Route::get('/profile/u{id}', ['as' => 'userProfile', 'uses' =>'UserController@profile']);   //User Profile Page
+
+        Route::post('/profile/changeimage', ['as' => 'updateProfilePic', 'uses' =>'UserController@updateProfilePic']);   //User Profile Page
+        
+
+});
+
 //----------------------GroupController----------------------------------------------
 Route::group(['middleware' => 'auth'], function () {
 
@@ -105,13 +115,21 @@ Route::group(['prefix' => 'scholarship','middleware' => 'auth'], function () {
 
         Route::get('/', ['as' => 'scholarship', 'uses' =>'ScholarshipController@scholarship']);   //Scholarship Home Page
 
+        Route::get('/myscholarships', ['as' => 'myScholarship', 'uses' =>'ScholarshipController@myScholarship']);   //My Scholarships (Institutes/Schools)
+
         Route::get('/{id?}/item/{slug?}', ['as' => 'scholarshipDetail', 'uses' =>'ScholarshipController@scholarshipDetail']);   //Scholarship Details
 
         Route::get('/add/{type?}', ['as' => 'addScholarship', 'uses' =>'ScholarshipController@addscholarship']);   //Add Scholarship (Normal and Linked)
 
         Route::post('/add/submit', ['as' => 'addScholarshipSubmit', 'uses' =>'ScholarshipController@addScholarshipSubmit']);   //Add Scholarship Submit (Normal and Linked)
 
-        Route::get('/edit/{type?}/{id?}', ['as' => 'editScholarship', 'uses' =>'ScholarshipController@editScholarship']);   //Edit Scholarship (Normal and Linked)
+        Route::get('/edit/{type?}/{id?}', ['as' => 'editScholarship', 'uses' =>'ScholarshipController@editscholarship']);   //Edit Scholarship (Normal and Linked)
 
         Route::post('/edit/submit', ['as' => 'editScholarshipSubmit', 'uses' =>'ScholarshipController@editScholarshipSubmit']);   //Edit Scholarship Submit (Normal and Linked)
+
+        Route::get('/edit/{id?}', ['as' => 'editScholarship', 'uses' =>'ScholarshipController@editScholarship']);   //Edit Scholarship (Normal and Linked)
+
+        Route::post('/edit/submit', ['as' => 'editScholarshipSubmit', 'uses' =>'ScholarshipController@editScholarshipSubmit']);   //Edit Scholarship Submit (Normal and Linked)
+
+        Route::post('/update/status', ['as' => 'updateScholarshipStatus', 'uses' =>'ScholarshipController@updateScholarshipStatus']);   //Edit Product Submit
 });
