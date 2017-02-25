@@ -24,15 +24,21 @@ class MainController extends Controller
 		if (Auth::check()) {
 		    return redirect()->route('dashboard');
 		}
+
     	return view('home',compact('request'));
 	}
 
 	public function dashboard(Request $request)		//Dashboard
 	{
 		$user = Auth::user();
-
     	return view('dashboard',compact('user','request'));
 	}
+
+	public function sendMessage(Request $request)		//Send Message
+	{
+		
+	}
+
 
 	
 }

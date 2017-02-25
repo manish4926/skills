@@ -36,9 +36,9 @@
 				        <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
 				        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Followers</a></li>
 				        <li><a href="{{ route('groups') }}"><i class="glyphicon glyphicon-record"></i> Groups</a></li>
-				        <li><a href="#"><i class="glyphicon glyphicon-ok"></i> Buy Educatonal Items</a></li>
+				        <li><a href="{{ route('marketplace') }}"><i class="glyphicon glyphicon-ok"></i> Buy Educatonal Items</a></li>
 				        <li><a href="{{ route('addMarket') }}"><i class="glyphicon glyphicon-usd"></i> Sell Educatonal Items</a></li>
-				        <li><a href="#"><i class="glyphicon glyphicon-folder-open"></i> My Educatonal Items</a></li>
+				        <li><a href="{{ route('myMarket') }}"><i class="glyphicon glyphicon-folder-open"></i> My Educatonal Items</a></li>
 				        <li><a href="#"><i class="glyphicon glyphicon-record"></i> Manage My Scholarships</a></li>
 				        <li><a href="#"><i class="glyphicon glyphicon-record"></i> Manage My Interships</a></li>
 				        <li><a href="#"><i class="glyphicon glyphicon-blackboard"></i> Practice Tests</a></li>

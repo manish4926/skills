@@ -54,7 +54,7 @@
 </style>
 @endpush
 
-{!! Form::open(['url' => '/market/add', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '']) !!}
+{!! Form::open(['route' => 'addMarketSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '']) !!}
 <input name="post_status" id="post_status" type="hidden" value="1">
 <input name="images_uploaded" id="images_uploaded" type="hidden" value="">
 <br />
@@ -141,7 +141,7 @@
 <!--IMAGE UPLOAD-->
 <div class="upload_div">
 
-{!! Form::open(['url' => '/upimages_market', 'id' => 'multiple_upload_form' , 'name' => 'multiple_upload_form', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
+{!! Form::open(['route' => 'addMarketImageSubmit', 'id' => 'multiple_upload_form' , 'name' => 'multiple_upload_form', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
 
 <input type="hidden" name="image_form_submit" value="1"/>
 

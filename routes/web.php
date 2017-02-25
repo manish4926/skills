@@ -52,6 +52,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/dashboard', ['as' => 'dashboard', 'uses' =>'MainController@dashboard']);	//Home Page After Login
 
+        Route::post('/message/send', ['as' => 'sendMessage', 'uses' =>'MainController@sendMessage']);   //Send Message
+
 });
 
 //----------------------GroupController----------------------------------------------
@@ -71,13 +73,39 @@ Route::group(['middleware' => 'auth'], function () {
 
 
 //----------------------MarketController----------------------------------------------
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['prefix' => 'market','middleware' => 'auth'], function () {
 
-        Route::get('market/add', ['as' => 'addMarket', 'uses' =>'MarketController@add']);   //Add New Product to Market
+        Route::get('/', ['as' => 'marketplace', 'uses' =>'MarketController@marketplace']);   //Marketplace
 
-        Route::post('market/add/submit', ['as' => 'addMarketSubmit', 'uses' =>'MarketController@addSubmit']);   //Add Product Submit
+        Route::get('/{id?}/item/{slug?}', ['as' => 'productDetail', 'uses' =>'MarketController@productDetail']);   //Product Detail
 
-        Route::post('market/add/imageupload', ['as' => 'addMarketImageSubmit', 'uses' =>'MarketController@addImageSubmit']);   //Add Product Submit
+        Route::get('/add', ['as' => 'addMarket', 'uses' =>'MarketController@add']);   //Add New Product to Market
+
+        Route::post('/add/submit', ['as' => 'addMarketSubmit', 'uses' =>'MarketController@addSubmit']);   //Add Product Submit
+
+        Route::post('/add/imageupload', ['as' => 'addMarketImageSubmit', 'uses' =>'MarketController@addImageSubmit']);   //Add Image Upload Submit
+
+        Route::get('/mymarket', ['as' => 'myMarket', 'uses' =>'MarketController@myMarket']);   //My Market
+
+        Route::get('/edit/{id?}', ['as' => 'editMarket', 'uses' =>'MarketController@edit']);   //Add New Product to Market
+
+        Route::post('/edit/submit', ['as' => 'editMarketSubmit', 'uses' =>'MarketController@editSubmit']);   //Edit Product Submit
+
+        Route::post('/update/status', ['as' => 'updateMarketStatus', 'uses' =>'MarketController@updateMarketStatus']);   //Edit Product Submit
+
+
+
+});
+
+
+//----------------------ScholarshipController----------------------------------------------
+Route::group(['prefix' => 'scholarship','middleware' => 'auth'], function () {
+
+        Route::get('/', ['as' => 'scholarship', 'uses' =>'ScholarshipController@scholarship']);   //Scholarship Home Page
+
+        Route::get('/add', ['as' => 'addScholarship', 'uses' =>'ScholarshipController@addscholarship']);   //Add Scholarship 
+
+        Route::get('/add/linked', ['as' => 'addLinkedScholarship', 'uses' =>'ScholarshipController@addLinkedScholarship']);   //Add Linked Scholarship
 
 
 });

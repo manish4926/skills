@@ -87,9 +87,33 @@ function $post_unfollow()
       //$(this).parents('div').fadeOut;
     }
 
-});
-
+  });
 }
+
+/* Market JS*/
+
+function updatemarketstatus(id,type) {
+  $.ajax({
+    type: "POST",
+    url: '{{ route('updateMarketStatus') }}',
+    data: { id: id,type: type, '_token': $('input[name=_token]').val()} ,
+    success: function(data)
+    {
+      if(data == 'Error Occured')
+      {
+        toastr["error"](data);
+      }
+      else {
+        toastr["success"](data);
+      }
+      
+    }
+
+  });
+}
+
+
+/* End Market JS*/
 
 /* File Uploader*/
 function loadCSSIfNotAlreadyLoadedForSomeReason () {
