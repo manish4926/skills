@@ -1,6 +1,6 @@
 <div class="form-group col-md-12" style="width:98%;float:left;">
     <lable>Organisation Name <small style="color:red;">*</small></lable>
-    <input name="first_name" required type="text" value="{{$user->name }}" placeholder="Organisation Name" class="form-control input-sm">
+    <input name="name" required type="text" value="{{$user->name }}" placeholder="Organisation Name" class="form-control input-sm">
 </div>
 
 <div class="form-group col-md-6" style="width:45%;float:left;">
@@ -32,7 +32,7 @@
 <div class="form-group col-md-4">
   <lable>State</lable>
   <select name="c_state" id="c_state" class="form-control input-md">
-    <option value="" disabled="">Select State</option>
+    <option value="">Select State</option>
     <?php $selectState = $user->user_profile() ? $user->user_profile()->c_state : ""; ?>
     @foreach($states as $state)
     <option {{ $selectState == $state->states ? "selected" : ""}}>{{ $state->states }}</option>
@@ -60,12 +60,12 @@
 
 <div class="form-group col-md-6">
     <lable>Telephone</lable>
-    <input name="p_mobile" id="p_mobile"  type="text" value="{{ $user->user_profile() ? $user->user_profile()->telephone : "" }}" placeholder="" class="form-control input-sm">
+    <input name="p_mobile" id="p_mobile"  type="text" value="{{ $user->user_profile() ? $user->user_profile()->telephone : "" }}" placeholder="Office Telephone" class="form-control input-sm">
 </div>
           
 <div class="form-group col-md-6">
     <lable>Email Address</lable>
-    <input name="p_email" id="p_email" required  type="email"  value="{{ $user->user_profile() ? $user->user_profile()->office_email : "" }}" placeholder="" class="form-control input-sm">
+    <input name="p_email" id="p_email" required  type="email"  value="{{ $user->user_profile() ? $user->user_profile()->office_email : "" }}" placeholder="Office Landline" class="form-control input-sm">
 </div>
 
 <div class="clear clearfix"></div>

@@ -3,7 +3,7 @@
 @section('basecontent')
 <div class="col-md-12">
 <br>
-<h4 class="opensans" style="font-family: 'PT Sans';color: #000000;margin-top: 4px;margin-left:5px;">Submitted Scholarships</h4>
+<h4 class="opensans" style="font-family: 'PT Sans';color: #000000;margin-top: 4px;margin-left:5px;">Submitted Internships</h4>
 <!-- Nav tabs -->
 <ul class="nav nav-tabs nav-justified" role="tablist">
 	<li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
@@ -15,43 +15,43 @@
 
 <div role="tabpanel" class="tab-pane fade in active" id="general">
 	
-	@foreach($generalScholarships as $generalScholarship )
+	@foreach($generalInternships as $generalInternship )
 	<div class="col-md-12 cards">
 	<div class="col-md-2">
-		<img src="{{asset('img/profile')}}/{{ $generalScholarship->account_image ? $user->account_image : "blank.png" }}">
+		<img src="{{asset('img/profile')}}/{{ $generalInternship->account_image ? $user->account_image : "blank.png" }}">
 	</div>
 	<div class="col-md-5">
-	<a style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('scholarshipDetail', ['id' => $generalScholarship->id,'slug' => $generalScholarship->slug]) }}">{{ $generalScholarship->title }}</a> 
+	<a style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('internshipsDetail', ['id' => $generalInternship->id,'slug' => $generalInternship->slug]) }}">{{ $generalInternship->title }}</a> 
 		
 		
-		<div>{{ $generalScholarship->updated_at->diffForHumans() }}</div>
-			<div><span style="width:90px; display: inline-block;"><strong>Amount:</strong></span><i class="fa fa-inr themecolor"></i> &nbsp;{{$generalScholarship->scholarship_amount}} </div>
-			<?php $start_date1= date('d-m-Y', strtotime($generalScholarship->scholar_start_date)); ?> 
+		<div>{{ $generalInternship->updated_at->diffForHumans() }}</div>
+			<div><span style="width:90px; display: inline-block;"><strong>Amount:</strong></span><i class="fa fa-inr themecolor"></i> &nbsp;{{$generalInternship->internships_amount}} </div>
+			<?php $start_date1= date('d-m-Y', strtotime($generalInternship->intern_start_date)); ?> 
 
 		<div><span style="width:90px; display: inline-block;"><strong>Start Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $start_date1 }}</div>
-		<?php $end_date1= date('d-m-Y', strtotime($generalScholarship->scholar_end_date)); ?> 
+		<?php $end_date1= date('d-m-Y', strtotime($generalInternship->intern_end_date)); ?> 
 		<div><span style="width:90px; display: inline-block;"><strong>End Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $end_date1 }}</div>
-		<div><span style="width:90px; display: inline-block;"><strong>Duration:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $generalScholarship->duration }} weeks</div>
-		<div><span style="width:90px; display: inline-block;"><strong>Location:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $generalScholarship->location }}</div>
-		<div><span style="width:90px; display: inline-block;"><strong>Last Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ date('d-m-Y', strtotime($generalScholarship->last_date)) }}</div>
+		<div><span style="width:90px; display: inline-block;"><strong>Duration:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $generalInternship->duration }} weeks</div>
+		<div><span style="width:90px; display: inline-block;"><strong>Location:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $generalInternship->location }}</div>
+		<div><span style="width:90px; display: inline-block;"><strong>Last Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ date('d-m-Y', strtotime($generalInternship->last_date)) }}</div>
 	</div>
 	<div class="col-md-3"><br>
-		<a class="btn btn-default" href="{{ route('editScholarship', ['id' => $generalScholarship->id]) }}" role="button">Edit</a>&emsp;
-		<a class="btn btn-danger" onclick="updatescholarshipstatus({{ $generalScholarship->id }},'delete')" role="button">Delete</a><br><br>
-		@if($generalScholarship->status == 0)
+		<a class="btn btn-default" href="{{ route('editInternship', ['id' => $generalInternship->id]) }}" role="button">Edit</a>&emsp;
+		<a class="btn btn-danger" onclick="updateinternshipsstatus({{ $generalInternship->id }},'delete')" role="button">Delete</a><br><br>
+		@if($generalInternship->status == 0)
 
-		<a class="btn btn-success" onclick="updatescholarshipstatus({{ $generalScholarship->id }},'publish')" role="button">Publish</a>
+		<a class="btn btn-success" onclick="updateinternshipsstatus({{ $generalInternship->id }},'publish')" role="button">Publish</a>
 
 		@else
 
-		<a class="btn btn-warning" onclick="updatescholarshipstatus({{ $generalScholarship->id }},'unpublish')" role="button">&emsp; Unpublish &emsp;</a>
+		<a class="btn btn-warning" onclick="updateinternshipsstatus({{ $generalInternship->id }},'unpublish')" role="button">&emsp; Unpublish &emsp;</a>
 
 		@endif
 	</div>
 	<div class="col-md-2">
-		@if($generalScholarship->status == 0)
+		@if($generalInternship->status == 0)
 		<span class="label label-success" style="background-color: #999999; color: #ffffff; float:right;">Draft</span>
-		@elseif($generalScholarship->daysleft < 0)
+		@elseif($generalInternship->daysleft < 0)
 		<span class="label label-success" style="background-color: #999999; color: #ffffff; float:right;">Closed</span>
 		@else
 		<span class="label label-success" style="background-color: #29af97; color: #ffffff; float:right;">Active</span>
@@ -60,18 +60,18 @@
 	</div>
 	@endforeach
 
-	@if($generalScholarships->total() > 10)
+	@if($generalInternships->total() > 10)
 	<ul class="pagination">
-	<li class="{{ $generalScholarships->currentPage() == $generalScholarships->firstItem() ? "disabled" : "" }}">
-	  <a href="{{ route('scholarship', ['page' => $generalScholarships->currentPage()-1]) }}" aria-label="Previous">
+	<li class="{{ $generalInternships->currentPage() == $generalInternships->firstItem() ? "disabled" : "" }}">
+	  <a href="{{ route('internships', ['page' => $generalInternships->currentPage()-1]) }}" aria-label="Previous">
 	    <span aria-hidden="true">&laquo;</span>
 	  </a>
 	</li>
-	@for($i = 1; $i <= $generalScholarships->total(); $i++)
-	    <li class="{{ $i == $generalScholarships->currentPage() ? 'active' : ""}}"><a href="{{ route('scholarship', ['page' => $i]) }}">{{ $i }}</a></li>
+	@for($i = 1; $i <= $generalInternships->total(); $i++)
+	    <li class="{{ $i == $generalInternships->currentPage() ? 'active' : ""}}"><a href="{{ route('internships', ['page' => $i]) }}">{{ $i }}</a></li>
 	@endfor
-	<li class="{{ $generalScholarships->currentPage() == $generalScholarships->lastPage() ? "disabled" : "" }}">
-	  <a href="{{ route('scholarship', ['page' => $generalScholarships->currentPage()+1]) }}" aria-label="Next">
+	<li class="{{ $generalInternships->currentPage() == $generalInternships->lastPage() ? "disabled" : "" }}">
+	  <a href="{{ route('internships', ['page' => $generalInternships->currentPage()+1]) }}" aria-label="Next">
 	    <span aria-hidden="true">&raquo;</span>
 	  </a>
 	</li>
@@ -81,43 +81,43 @@
 </div>
 <div role="tabpanel" class="tab-pane fade" id="linked">
 	
-	@foreach($linkedScholarships as $linkedScholarship )
+	@foreach($linkedInternships as $linkedInternship )
 	<div class="col-md-12 cards">
 	<div class="col-md-2">
-		<img src="{{asset('img/profile')}}/{{ $linkedScholarship->account_image ? $user->account_image : "blank.png" }}">
+		<img src="{{asset('img/profile')}}/{{ $linkedInternship->account_image ? $user->account_image : "blank.png" }}">
 	</div>
 	<div class="col-md-5">
-	<a style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('scholarshipDetail', ['id' => $linkedScholarship->id,'slug' => $linkedScholarship->slug]) }}">{{ $linkedScholarship->title }}</a> 
+	<a style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('internshipsDetail', ['id' => $linkedInternship->id,'slug' => $linkedInternship->slug]) }}">{{ $linkedInternship->title }}</a> 
 		
-		<div>{{ $linkedScholarship->updated_at->diffForHumans() }}</div>
-			<div><span style="width:90px; display: inline-block;"><strong>Amount:</strong></span><i class="fa fa-inr themecolor"></i> &nbsp;{{$linkedScholarship->scholarship_amount}} </div>
-			<?php $start_date1= date('d-m-Y', strtotime($linkedScholarship->scholar_start_date)); ?> 
+		<div>{{ $linkedInternship->updated_at->diffForHumans() }}</div>
+			<div><span style="width:90px; display: inline-block;"><strong>Amount:</strong></span><i class="fa fa-inr themecolor"></i> &nbsp;{{$linkedInternship->internships_amount}} </div>
+			<?php $start_date1= date('d-m-Y', strtotime($linkedInternship->intern_start_date)); ?> 
 
 		<div><span style="width:90px; display: inline-block;"><strong>Start Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $start_date1 }}</div>
-		<?php $end_date1= date('d-m-Y', strtotime($linkedScholarship->scholar_end_date)); ?> 
+		<?php $end_date1= date('d-m-Y', strtotime($linkedInternship->intern_end_date)); ?> 
 		<div><span style="width:90px; display: inline-block;"><strong>End Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $end_date1 }}</div>
-		<div><span style="width:90px; display: inline-block;"><strong>Duration:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $linkedScholarship->duration }} weeks</div>
-		<div><span style="width:90px; display: inline-block;"><strong>Location:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $linkedScholarship->location }}</div>
-		<div><span style="width:90px; display: inline-block;"><strong>Last Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ date('d-m-Y', strtotime($linkedScholarship->last_date)) }}</div>
+		<div><span style="width:90px; display: inline-block;"><strong>Duration:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $linkedInternship->duration }} weeks</div>
+		<div><span style="width:90px; display: inline-block;"><strong>Location:</strong></span><i class="fa fa-calendar themecolor"></i> {{ $linkedInternship->location }}</div>
+		<div><span style="width:90px; display: inline-block;"><strong>Last Date:</strong></span><i class="fa fa-calendar themecolor"></i> {{ date('d-m-Y', strtotime($linkedInternship->last_date)) }}</div>
 
 	</div>
 	<div class="col-md-3"><br>
-		<a class="btn btn-default" href="{{ route('editScholarship', ['id' => $linkedScholarship->id]) }}" role="button">Edit</a>&emsp;
-		<a class="btn btn-danger" onclick="updatescholarshipstatus({{ $linkedScholarship->id }},'delete')" role="button">Delete</a><br><br>
-		@if($linkedScholarship->status == 0)
+		<a class="btn btn-default" href="{{ route('editInternship', ['id' => $linkedInternship->id]) }}" role="button">Edit</a>&emsp;
+		<a class="btn btn-danger" onclick="updateinternshipsstatus({{ $linkedInternship->id }},'delete')" role="button">Delete</a><br><br>
+		@if($linkedInternship->status == 0)
 
-		<a class="btn btn-success" onclick="updatescholarshipstatus({{ $linkedScholarship->id }},'publish')" role="button">Publish</a>
+		<a class="btn btn-success" onclick="updateinternshipsstatus({{ $linkedInternship->id }},'publish')" role="button">Publish</a>
 
 		@else
 
-		<a class="btn btn-warning" onclick="updatescholarshipstatus({{ $linkedScholarship->id }},'unpublish')" role="button">&emsp; Unpublish &emsp;</a>
+		<a class="btn btn-warning" onclick="updateinternshipsstatus({{ $linkedInternship->id }},'unpublish')" role="button">&emsp; Unpublish &emsp;</a>
 
 		@endif
 	</div>
 	<div class="col-md-2">
-		@if($linkedScholarship->status == 0)
+		@if($linkedInternship->status == 0)
 		<span class="label label-success" style="background-color: #999999; color: #ffffff; float:right;">Draft</span>
-		@elseif($linkedScholarship->daysleft < 0)
+		@elseif($linkedInternship->daysleft < 0)
 		<span class="label label-success" style="background-color: #999999; color: #ffffff; float:right;">Closed</span>
 		@else
 		<span class="label label-success" style="background-color: #29af97; color: #ffffff; float:right;">Active</span>
@@ -126,18 +126,18 @@
 	</div>
 	@endforeach
 
-	@if($linkedScholarships->total() > 10)
+	@if($linkedInternships->total() > 10)
 	<ul class="pagination">
-	<li class="{{ $linkedScholarships->currentPage() == $linkedScholarships->firstItem() ? "disabled" : "" }}">
-	  <a href="{{ route('scholarship', ['page' => $linkedScholarships->currentPage()-1]) }}" aria-label="Previous">
+	<li class="{{ $linkedInternships->currentPage() == $linkedInternships->firstItem() ? "disabled" : "" }}">
+	  <a href="{{ route('internships', ['page' => $linkedInternships->currentPage()-1]) }}" aria-label="Previous">
 	    <span aria-hidden="true">&laquo;</span>
 	  </a>
 	</li>
-	@for($i = 1; $i <= $linkedScholarships->total(); $i++)
-	    <li class="{{ $i == $linkedScholarships->currentPage() ? 'active' : ""}}"><a href="{{ route('scholarship', ['page' => $i]) }}">{{ $i }}</a></li>
+	@for($i = 1; $i <= $linkedInternships->total(); $i++)
+	    <li class="{{ $i == $linkedInternships->currentPage() ? 'active' : ""}}"><a href="{{ route('internships', ['page' => $i]) }}">{{ $i }}</a></li>
 	@endfor
-	<li class="{{ $linkedScholarships->currentPage() == $linkedScholarships->lastPage() ? "disabled" : "" }}">
-	  <a href="{{ route('scholarship', ['page' => $linkedScholarships->currentPage()+1]) }}" aria-label="Next">
+	<li class="{{ $linkedInternships->currentPage() == $linkedInternships->lastPage() ? "disabled" : "" }}">
+	  <a href="{{ route('internships', ['page' => $linkedInternships->currentPage()+1]) }}" aria-label="Next">
 	    <span aria-hidden="true">&raquo;</span>
 	  </a>
 	</li>

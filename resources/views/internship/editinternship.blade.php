@@ -2,48 +2,48 @@
 
 @section('basecontent')
 
-{!! Form::open(['route' => 'addScholarshipSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '', 'enctype'=>'multipart/form-data']) !!}
+{!! Form::open(['route' => 'addInternshipSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '', 'enctype'=>'multipart/form-data']) !!}
 <input name="post_status" id="post_status" type="hidden" value="1">
-<input name="post_id" id="post_id" type="hidden" value="{{ $scholarship->id }}">
+<input name="post_id" id="post_id" type="hidden" value="{{ $internship->id }}">
 <div style=" width: 100%; min-height:200px; margin-top: 20px;">
-	@if(empty($scholarship->link))
-	<h4 class="sectionhead">SUBMIT A NEW SCHOLARSHIP</h4>
-	@elseif(!empty($scholarship->link))
-	<h4 class="sectionhead">SUBMIT A LINKED SCHOLARSHIP</h4>
+	@if(empty($internship->link))
+	<h4 class="sectionhead">SUBMIT A NEW INTERNSHIP</h4>
+	@elseif(!empty($internship->link))
+	<h4 class="sectionhead">SUBMIT A LINKED INTERNSHIP</h4>
 	@endif
-	<h4 class="sectionhead"><i class="glyphicon glyphicon-file"></i>Scholarship Summary</h4>
+	<h4 class="sectionhead"><i class="glyphicon glyphicon-file"></i>Internship Summary</h4>
 <div>
 
 <div class="form-group">
-	<input type="text" name="title" placeholder="*Scholarship Title" value="{{ $scholarship->title }}" class="form-control input-sm">
+	<input type="text" name="title" placeholder="*Internship Title" value="{{ $internship->title }}" class="form-control input-sm">
 </div>
-@if(empty($scholarship->link))
+@if(empty($internship->link))
 <input type="hidden" name="link">
-@elseif(!empty($scholarship->link))
+@elseif(!empty($internship->link))
 <div class="form-group">
-	<input type="text" name="link" placeholder="Scholarship Link" value="{{ $scholarship->link }}" class="form-control input-sm">
+	<input type="text" name="link" placeholder="Internship Link" value="{{ $internship->link }}" class="form-control input-sm">
 </div>
 @endif
 
 <div class="form-group">
-    <input name="location" id="city" type="text" value="{{ $scholarship->location }}" placeholder="*City" class="form-control input-sm">
+    <input name="location" id="city" type="text" value="{{ $internship->location }}" placeholder="*City" class="form-control input-sm">
 </div>
 
 <div class="form-group">
 	<select class="form-control gray" name="state" id="state" >
 		@foreach(state() as $key =>$states) 
 
-            <option value="{{ $key }}" {{ $scholarship->state == $key ? "selected" : ""  }}>{{ $key }}</option>
+            <option value="{{ $key }}" {{ $internship->state == $key ? "selected" : ""  }}>{{ $key }}</option>
         @endforeach
 	</select>
 </div>
 
 <div class="form-group">
-    <input name="amount" id="amount" type="text" value="{{ $scholarship->scholarship_amount }}" placeholder="*Scholarship Amount (INR)" class="form-control input-sm">
+    <input name="amount" id="amount" type="text" value="{{ $internship->stipend_amount }}" placeholder="*Stipend (INR)" class="form-control input-sm">
 </div>
 
 <div class="form-group">
-    <input name="openings_count" id="openings_count" type="text" value="{{ $scholarship->openings_count }}" placeholder="*Number of Open Scholarships " class="form-control input-sm">
+    <input name="openings_count" id="openings_count" type="text" value="{{ $internship->openings_count }}" placeholder="*Number of Open Internships " class="form-control input-sm">
 </div>
 
 
@@ -51,44 +51,41 @@
 <!--Start-Application Submission Dead Line Date-->
 <div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Application Submission Dead Line Date</h4></div><br/>
 	<div class="form-group">
-    	<input name="last_date" id="last_date" type="text" value="{{ $scholarship->last_date }}" placeholder="End Date " class="form-control input-sm">
+    	<input name="last_date" id="last_date" type="text" value="{{ $internship->last_date }}" placeholder="End Date " class="form-control input-sm">
 	</div>
 <!--End-Application Submission Dead Line Date-->
 
-<div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Scholarship Duration</h4></div><br/>
+<div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Internship Duration</h4></div><br/>
 <div class="form-group">
-	<input name="coursestartdate" id="coursestartdate" type="text" value="{{ $scholarship->scholar_start_date }}" placeholder="Scholarship Start Date " class="form-control input-sm"><br>
-	<input name="courseenddate" id="courseenddate" type="text" value="{{ $scholarship->scholar_end_date }}" placeholder="Scholarship End Date " class="form-control input-sm">
+	<input name="coursestartdate" id="coursestartdate" type="text" value="{{ $internship->intern_start_date }}" placeholder="Internship Start Date " class="form-control input-sm"><br>
+	<input name="courseenddate" id="courseenddate" type="text" value="{{ $internship->intern_end_date }}" placeholder="Internship End Date " class="form-control input-sm">
 </div>
 
 
 <div class="form-group" >
-	<textarea name="description" id="description" class="form-control input-sm" placeholder="*Brief Summary" style="height:190px;">{{ $scholarship->brief_summary }}</textarea>
+	<textarea name="description" id="description" class="form-control input-sm" placeholder="*Brief Summary" style="height:190px;">{{ $internship->brief_summary }}</textarea>
 </div>
 
 <div style="margin-bottom: 55px; width: 100%;">
 	
-	<h4 class="sectionhead">Scholarship Details</h4>
+	<h4 class="sectionhead">Internship Details</h4>
 
 	<div class="form-group">
-		<textarea name="requirements" id="requirements" class="form-control input-sm" placeholder="Requirements to Apply" style="height:190px;">{{ $scholarship->requirements }}</textarea>
+		<textarea name="qualifications" id="qualifications" class="form-control input-sm" placeholder="Requirements to Apply" style="height:190px;">{{ $internship->qualifications }}</textarea>
 	</div>
 
 	<div class="form-group">
-		<textarea name="prerequisits" id="pre" class="form-control input-sm" placeholder="Scholarship Prerequisits" style="height:190px;">{{ $scholarship->prerequisits }}</textarea>
+		<textarea name="prerequisits" id="pre" class="form-control input-sm" placeholder="Internship Prerequisits" style="height:190px;">{{ $internship->prerequisits }}</textarea>
 	</div>
 
 	<div class="form-group">
-		<textarea name="details" id="details" class="form-control input-sm" placeholder="Scholarship Details" style="height:190px;">{{ $scholarship->details }}</textarea>
+		<textarea name="details" id="details" class="form-control input-sm" placeholder="Internship Details" style="height:190px;">{{ $internship->details }}</textarea>
 	</div>
 
 	<div class="form-group">
-		<textarea name="about_corp" id="about" class="form-control input-sm" placeholder="About Company/School" style="height:190px;">{{ $scholarship->about_company }}</textarea>
+		<textarea name="about_corp" id="about" class="form-control input-sm" placeholder="About Company/School" style="height:190px;">{{ $internship->about_company }}</textarea>
 	</div>
 	
-	<div class="form-group">
-		<textarea name="application_info" id="app_info" class="form-control input-sm" placeholder="Application info" style="height:190px;">{{ $scholarship->application_info }}</textarea>
-	</div>
 
 	<div class="form-group"> <h4 class="sectionhead">Attachment Files </h4>
 
@@ -116,11 +113,11 @@
 	</div>
 
 	<div class="form-group">
-		<textarea name="criteria" id="criteria" class="form-control input-sm" placeholder="Selection Criteria" style="height:190px;">{{ $scholarship->selection_criteria }}</textarea>
+		<textarea name="deliverables" id="deliverables" class="form-control input-sm" placeholder="Deliverables" style="height:190px;">{{ $internship->selection_criteria }}</textarea>
 	</div>
 
 	<div class="form-group">
-		<textarea name="other" id="other" class="form-control input-sm" placeholder="Other" style="height:190px;">{{ $scholarship->others }}</textarea>
+		<textarea name="other" id="other" class="form-control input-sm" placeholder="Other" style="height:190px;">{{ $internship->others }}</textarea>
 	</div>
 </div>
 
@@ -140,13 +137,13 @@
 				</div>
 
 				<div class="form-group">
-				    <input name="contact_name" id="contact_name" type="text" value="{{ $scholarship->name }}" placeholder="*Name" class="form-control input-sm">
+				    <input name="contact_name" id="contact_name" type="text" value="{{ $internship->name }}" placeholder="*Name" class="form-control input-sm">
 				</div>
 				<div class="form-group"> 
-				    <input name="contact_phone" id="contact_phone" type="text" value="{{ $scholarship->phone }}" placeholder="*Phone" class="form-control input-sm">
+				    <input name="contact_phone" id="contact_phone" type="text" value="{{ $internship->phone }}" placeholder="*Phone" class="form-control input-sm">
 				</div>
 				<div class="form-group">
-					<input name="contact_email" id="contact_email" type="text" value="{{ $scholarship->email }}" placeholder="*Email" class="form-control input-sm">
+					<input name="contact_email" id="contact_email" type="text" value="{{ $internship->email }}" placeholder="*Email" class="form-control input-sm">
 				</div>
 			</div>
 
@@ -159,7 +156,7 @@
 
 
 <div style="margin-top: 15px; align:center">
-	<input id="submit" class="btn rightNavActive" type="submit" value="Submit Scholarship" onclick="submit(id);"/>
+	<input id="submit" class="btn rightNavActive" type="submit" value="Submit Internship" onclick="submit(id);"/>
 		<input id="submit" class="btn rightNavActive" type="submit" value="Save as Draft" onclick="submit(id);" style=" margin-left: 20px;"/>
 </div>
 {!!Form::close()!!}

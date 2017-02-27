@@ -103,14 +103,14 @@
 	</div>
 	<div class="col-md-3"><br>
 		<a class="btn btn-default" href="{{ route('editScholarship', ['id' => $linkedScholarship->id]) }}" role="button">Edit</a>&emsp;
-		<a class="btn btn-danger" onclick="updatescholarshipstatus({{ $linkedScholarship->id }},'delete')" role="button">Delete</a><br><br>
+		<a class="btn btn-danger" onclick="updatescholarshipstatus.call(this,{{ $linkedScholarship->id }},'delete')" role="button">Delete</a><br><br>
 		@if($linkedScholarship->status == 0)
 
-		<a class="btn btn-success" onclick="updatescholarshipstatus({{ $linkedScholarship->id }},'publish')" role="button">Publish</a>
+		<a class="btn btn-success" onclick="updatescholarshipstatus.call(this,{{ $linkedScholarship->id }},'publish')" role="button">Publish</a>
 
 		@else
 
-		<a class="btn btn-warning" onclick="updatescholarshipstatus({{ $linkedScholarship->id }},'unpublish')" role="button">&emsp; Unpublish &emsp;</a>
+		<a class="btn btn-warning" onclick="updatescholarshipstatus.call(this,{{ $linkedScholarship->id }},'unpublish')" role="button">&emsp; Unpublish &emsp;</a>
 
 		@endif
 	</div>

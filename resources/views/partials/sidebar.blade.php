@@ -35,7 +35,7 @@
 				        <li><a href="{{ route('dashboard') }}"><i class="glyphicon glyphicon-record"></i> Home</a></li>
 				        <li><a href="#"><i class="glyphicon glyphicon-star-empty"></i> Social Activity</a></li>
 				        <li><a href="#"><i class="glyphicon glyphicon-star-empty"></i> My Activity</a></li>
-				        <li><a href="#"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
+				        <li><a href="{{ route('inbox') }}"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
 				        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Followers</a></li>
 				        <li><a href="{{ route('groups') }}"><i class="glyphicon glyphicon-record"></i> Groups</a></li>
 				        <li><a href="{{ route('marketplace') }}"><i class="glyphicon glyphicon-ok"></i> Buy Educatonal Items</a></li>

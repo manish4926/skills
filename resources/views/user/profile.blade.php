@@ -27,6 +27,41 @@
 <!--Personal Logo and buttons-->
 
 <div class="col-md-7">
+<h3 class="opensans"><b>{{$getUser->name}} </b></h3>
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->c_address))
+<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i> {{ $getUser->user_profile()->c_address." , ".$getUser->user_profile()->c_city." , ".$getUser->user_profile()->c_state." , ".$getUser->user_profile()->c_country." , ".$getUser->user_profile()->c_pincode }}</p>
+@endif
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->permanent_person))
+<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Contact Person: {{$getUser->user_profile()->permanent_person}}
+@endif
+
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->school_name))
+<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Working In Person: {{$getUser->user_profile()->school_name}}
+@endif
+
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->exp_level))
+<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Experience Level: {{$getUser->user_profile()->exp_level}}
+@endif
+
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->telephone))
+<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Contact No.: {{$getUser->user_profile()->telephone}}
+@endif
+
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->office_email))
+<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Email: {{$getUser->user_profile()->office_email}}
+@endif
+
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->website))
+<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Email: {{$getUser->user_profile()->website}}
+@endif
+
+@if(!empty($getUser->user_profile()) AND !empty($getUser->user_profile()->contact_visibility))
+
+	@if($getUser->user_profile()->contact_visibility == 1)
+	<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Email: {{$getUser->email}}
+	<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Phone: {{$getUser->phone}}
+	@endif
+@endif
 {{--
 @if($profile[0]->account_type == 1)
 @include('frontend.socialnetwork.profile_type1')

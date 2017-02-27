@@ -9,6 +9,8 @@ use DB;
 use App\Http\Requests;
 use App\Model\User;
 use App\Model\Scholarship;
+use App\Model\Applicant;
+use App\Model\Newsfeed;
 use Auth;
 use Image;
 use Session;
@@ -40,10 +42,11 @@ class ScholarshipController extends Controller
 	    $id 	= $request->id;
 		$scholarship	= Scholarship::where('id', '=', $id)
 							->first();
+		$scholarship->duration = Carbon::parse($scholarship->scholar_start_date)->diffInWeeks(Carbon::parse($scholarship->scholar_end_date));
 
+		$scholarship->daysleft = Carbon::now()->diffInDays(Carbon::parse($scholarship->last_date), false);
 
-
-	    return view('scholarship.index',compact('user','scholarship','request'));
+	    return view('scholarship.details',compact('user','scholarship','request'));
     }
 
 
@@ -111,6 +114,20 @@ class ScholarshipController extends Controller
 		$scholarship->status 				= (int)$request->post_status;
 		$scholarship->save();
 
+		$newscholarship	= Scholarship::where('posted_by', '=', $user->id)
+							->orderBy('id', 'desc')
+							->first();
+
+
+		if($newscholarship->status == 1) {
+		//Add To Newsfeeds
+		$newsfeeds = new Newsfeed;
+		$newsfeeds->userid 			= $user->id;;
+		$newsfeeds->type 			= "scholarship_added";
+		$newsfeeds->typeid 			= $newscholarship->id;
+		$newsfeeds->save();
+		}
+
     	return redirect()->route('scholarship');
     }
 
@@ -132,6 +149,15 @@ class ScholarshipController extends Controller
 					->where('id', $request->post_id)
             		->update(['title' => $request->title,'slug' => seoUrl(trim($request->title)), 'link' => $request->link, 'location' => $request->location, 'state' => $request->state, 'last_date' => $request->last_date, 'scholar_start_date' => $request->coursestartdate, 'scholar_end_date' => $request->courseenddate, 'scholarship_amount' => $request->amount, 'openings_count' => $request->openings_count, 'brief_summary' => $request->description, 'requirements' => $request->requirements, 'prerequisits' => $request->prerequisits, 'details' => $request->details, 'about_company' => $request->about_corp, 'application_info' => $request->application_info, 'selection_criteria' => $request->criteria, 'others' => $request->other, 'name' => $request->contact_name, 'email' => $request->contact_email, 'phone' => $request->contact_phone, 'status' => (int)$request->post_status]);
 
+        if((int)$request->post_status == 1) {
+		//Add To Newsfeeds
+		$newsfeeds = new Newsfeed;
+		$newsfeeds->userid 			= $user->id;;
+		$newsfeeds->type 			= "scholarship_added";
+		$newsfeeds->typeid 			= $request->post_id;
+		$newsfeeds->save();
+		}
+
     	return redirect()->route('myScholarship');
     }
 
@@ -142,7 +168,7 @@ class ScholarshipController extends Controller
 		$type 	= $request->type;
 
 		if($type == 'delete') {
-			Market::where('posted_by', $user->id)
+			Scholarship::where('posted_by', $user->id)
 					->where('id', $id)
             		->delete();
 
@@ -154,9 +180,31 @@ class ScholarshipController extends Controller
 					->where('id', $id)
             		->update(['status' => $status]);
 
+           	if($status == 1) {
+			//Add To Newsfeeds
+			$newsfeeds = new Newsfeed;
+			$newsfeeds->userid 			= $user->id;;
+			$newsfeeds->type 			= "scholarship_added";
+			$newsfeeds->typeid 			= $id;
+			$newsfeeds->save();
+			}
+
             return "Status Sucessfully Updated";
 		}
 		return "Error Occured";
+
+	}
+
+	public function applyScholarship(Request $request)		//Dashboard
+	{
+		$user = Auth::user();
+		$applicant = new Applicant;
+		$scholarship->userid 				= $user->id;
+		$scholarship->application_id 		= $request->application_id;
+		$scholarship->type 					= 'scholarship';
+		$scholarship->files 				= $request->files_uploaded;
+		$scholarship->save();
+		return "Success";
 
 	}
 }

@@ -12,6 +12,7 @@ use App\Model\Group;
 use App\Model\GroupMember;
 use App\Model\IndianCities;
 use App\Model\ProfileText;
+use App\Model\UserProfile;
 use Auth;
 use Image;
 use Session;
@@ -53,6 +54,61 @@ class UserController extends Controller
 		$states = IndianCities::select('states')->groupBy('states')->get();
 						
     	return view('user.personalinformation',compact('user','states'));
+	}
+
+	public function personalInformationSubmit(Request $request)		//Edit Personal Information
+	{
+		$user = Auth::user();
+
+		$countUserProfile = UserProfile::where('user_id','=',$user->id)
+								->count();
+
+		if($countUserProfile == 0) {
+
+		$userprofile = new UserProfile;
+		$userprofile->user_id 				= $user->id;
+		$userprofile->gender 				= (int)$request->gender;
+		$userprofile->dob 					= $request->dob;
+		$userprofile->basic_education 		= $request->basic_education;
+		$userprofile->p_address 			= $request->p_address;
+		$userprofile->p_state 				= $request->p_state;
+		$userprofile->p_city 				= $request->p_city;
+		$userprofile->p_country 			= $request->p_country;
+		$userprofile->p_pincode 			= $request->p_pincode;
+		$userprofile->c_address 			= $request->c_address;
+		$userprofile->c_state 				= $request->c_state;
+		$userprofile->c_city 				= $request->c_city;
+		$userprofile->c_country 			= $request->c_country;
+		$userprofile->c_pincode 			= $request->c_pincode;
+		$userprofile->website 				= $request->website;
+		$userprofile->youtube 				= $request->youtube;
+		$userprofile->exp_level 			= $request->exp_level;
+		$userprofile->contact_visibility 	= (int)$request->allow_contact;
+
+		$userprofile->telephone 			= $request->p_mobile;
+		$userprofile->office_email 			= $request->p_email;
+		$userprofile->school_category 		= $request->category_school;
+		$userprofile->permanent_person 		= $request->p_person;
+		$userprofile->save();
+
+		$name = !empty($request->first_name) ? $request->first_name." ".$request->last_name : $request->name;
+		User::where('id', $user->id)
+            		->update(['firstname' => $request->first_name, 'lastname' => $request->last_name, 'name' => $name, 'phone' => $request->p_mobile]);
+
+		}
+		else
+		{
+			$name = !empty($request->first_name) ? $request->first_name." ".$request->last_name : $request->name;
+			//update
+			UserProfile::where('user_id', $user->id)
+            				->update(['gender' => (int)$request->gender, 'dob' => $request->dob, 'basic_education' => $request->basic_education, 'p_address' => $request->p_address, 'p_state' => $request->p_state, 'p_city' => $request->p_city, 'p_country' => $request->p_country, 'p_pincode' => $request->p_pincode, 'c_address' => $request->c_address, 'c_state' => $request->c_state, 'c_city' => $request->c_city, 'c_country' => $request->c_country, 'c_pincode' => $request->c_pincode, 'website' => $request->website, 'youtube' => $request->youtube, 'exp_level' => $request->exp_level, 'contact_visibility' => (int)$request->allow_contact, 'telephone' => $request->p_mobile, 'office_email' => $request->p_email, 'school_category' => $request->category_school, 'permanent_person' => $request->p_person]);
+
+			User::where('id', $user->id)
+            		->update(['firstname' => $request->first_name, 'lastname' => $request->last_name, 'name' => $name, 'phone' => $request->p_mobile]);
+		}				
+
+		Session::flash('successMessage', 'Profile Successfully Updated');
+    	return redirect()->route('personalInformation');
 	}
 
 	public function updatePassword(Request $request)

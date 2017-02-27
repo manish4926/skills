@@ -16,7 +16,7 @@
 
 	    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
 		    <div class="panel-body">
-		    {!! Form::open(['route' => 'home', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '']) !!}
+		    {!! Form::open(['route' => 'personalInformationSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '']) !!}
 
 			@if($user->user_roles()->id == 2 OR $user->user_roles()->id == 3)	
 

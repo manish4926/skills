@@ -74,4 +74,15 @@ class User extends Authenticatable
         $query = $this->profile()->first();
         return $query;
     }
+
+    public function follower()
+    {
+        return $this->hasMany('App\Model\Follower','user_id','id');
+    }
+
+    public function getfollowers($id)
+    {
+        $query = $this->follower()->where('follower_id','=',$id)->count();
+        return $query;
+    }
 }

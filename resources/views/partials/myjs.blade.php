@@ -147,6 +147,22 @@ function updatescholarshipstatus(id,type) {
       }
       else {
         toastr["success"](data);
+        if(type == 'publish') {
+          $this.addClass('btn-warning'); 
+          $this.removeClass('btn-success'); 
+          $this.text('Unpublish'); 
+          $this.attr('onclick', "updatemarketstatus.call(this,"+id+",'unpublish')");
+          
+        } else if(type == 'unpublish') {
+          $this.addClass('btn-success'); 
+          $this.removeClass('btn-warning'); 
+          $this.text('Publish'); 
+          $this.attr('onclick', "updatemarketstatus.call(this,"+id+",'publish')");
+          
+        } else if(type == 'delete') {
+          $this.closest('.col-md-12').hide();
+        }
+
       }
       
     }
@@ -156,6 +172,63 @@ function updatescholarshipstatus(id,type) {
 
 
 /* End Scholarship JS*/
+
+/* Scholarship JS*/
+
+function followUser(id,type) {
+  $.ajax({
+    type: "POST",
+    url: '{{ route('updateScholarshipStatus') }}',
+    data: { id: id,type: type, '_token': $('input[name=_token]').val()} ,
+    success: function(data)
+    {
+      if(data == 'Error Occured')
+      {
+        toastr["error"](data);
+      }
+      else {
+        toastr["success"](data);
+        if(type == 'follow') {
+          $this.addClass('btn-warning'); 
+          $this.removeClass('btn-success'); 
+          $this.text('Unfollow'); 
+          $this.attr('onclick', "followUser.call(this,"+id+",'unfollow')");
+          
+        } else if(type == 'unfollow') {
+          $this.addClass('btn-success'); 
+          $this.removeClass('btn-warning'); 
+          $this.text('Follow'); 
+          $this.attr('onclick', "followUser.call(this,"+id+",'follow')");
+          
+        } 
+
+      }
+      
+    }
+
+  });
+}
+
+
+/* End Scholarship JS*/
+
+/*Import Contact Details*/
+function importDetails() {
+  var name  = '{{!empty($user) ? $user->name : ""}}';
+  var email = '{{!empty($user) ? $user->email : ""}}';
+  var phone = '{{!empty($user) ? $user->phone : ""}}';
+  $('#contact_name').val(name);
+  $('#contact_email').val(email);
+  $('#contact_phone').val(phone);
+}
+/*End Import Contact Details*/
+
+function switchSearch(id) {
+  $("#search_type").val(id);
+  $(".query").focus();
+  $('#imgnav').attr("src", "http://educonnectin.com/layout/icons/"+id+".png");
+}
+
 
 /* File Uploader*/
 function loadCSSIfNotAlreadyLoadedForSomeReason () {

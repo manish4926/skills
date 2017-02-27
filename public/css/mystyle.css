@@ -364,6 +364,65 @@ margin: 10px;
   margin-bottom: 10px;
 }
 
+/*Messages*/
+.message {
+  margin:12px;
+}
+
+.message img{
+  float:left;
+  margin-top: -5px;
+}
+
+.message p {
+  color: #acacac;
+  font-size: 12px;
+  height: 16px;
+  overflow: hidden;
+  position: relative;
+  width: 250px;
+}
+
+.message .timeago {
+  float: right;
+  font-size: 11px;
+  margin-top: -10px;
+}
+
+.message i {
+  color: #29af97;
+  float: right;
+  font-size: 33px;
+  margin-right: 11px;
+  margin-top: -49px;
+}
+
+.sectionTitle{
+    font-size: 17px;
+    font-weight: normal;
+    color: #6e6e6e;
+    font-family: 'PT Sans';
+    background-color: #ffffff;
+    width: 100%;
+    min-width: 100%;
+    padding: 10px;
+    display: inline-block;
+
+}
+
+.sectionBody{
+    background-color: #ffffff;
+    width: 100%;
+    margin-top: 1px;
+    padding: 10px 10px 10px 10px;
+}
+
+.gray{
+    background-color: #F9F9F9;
+}
+
+
+
 /* Side Nav Bar*/
 @media (min-width: 768px) {
   .sidenav .navbar-collapse {

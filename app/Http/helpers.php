@@ -127,7 +127,7 @@ function timestampToDate($date,$addDays = 0){
         $date = date('d/m/Y',strtotime("+".$addDays." days",$date));
     }
     else{
-        $date = date('d/m/Y',strtotime($date));
+        $date = date('d M Y',strtotime($date));
     }
     return $date;
 }

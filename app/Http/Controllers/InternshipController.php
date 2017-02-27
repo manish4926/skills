@@ -9,6 +9,8 @@ use DB;
 use App\Http\Requests;
 use App\Model\User;
 use App\Model\Internship;
+use App\Model\Applicant;
+use App\Model\Newsfeed;
 use Auth;
 use Image;
 use Session;
@@ -40,8 +42,9 @@ class InternshipController extends Controller
 	    $id 	= $request->id;
 		$internship	= Internship::where('id', '=', $id)
 							->first();
+		$internship->duration = Carbon::parse($internship->scholar_start_date)->diffInWeeks(Carbon::parse($internship->scholar_end_date));
 
-
+		$internship->daysleft = Carbon::now()->diffInDays(Carbon::parse($internship->last_date), false);
 
 	    return view('internship.index',compact('user','internship','request'));
     }
@@ -92,17 +95,16 @@ class InternshipController extends Controller
 		$internship->location 				= $request->location;
 		$internship->state 					= $request->state;
 		$internship->last_date 				= $request->last_date;
-		$internship->scholar_start_date 	= $request->coursestartdate;
-		$internship->scholar_end_date 		= $request->courseenddate;
-		$internship->internship_amount 		= $request->amount;
+		$internship->intern_start_date 		= $request->coursestartdate;
+		$internship->intern_end_date 		= $request->courseenddate;
+		$internship->stipend_amount 		= $request->amount;
 		$internship->openings_count 		= $request->openings_count;
 		$internship->brief_summary 			= $request->description;
-		$internship->requirements 			= $request->requirements;
+		$internship->qualifications 		= $request->qualifications;
 		$internship->prerequisits 			= $request->prerequisits;
 		$internship->details 				= $request->details;
 		$internship->about_company 			= $request->about_corp;
-		$internship->application_info 		= $request->application_info;
-		$internship->selection_criteria 	= $request->criteria;
+		$internship->deliverables 			= $request->deliverables;
 		$internship->others 				= $request->other;
 		$internship->name 					= $request->contact_name;
 		$internship->email 					= $request->contact_email;
@@ -110,6 +112,20 @@ class InternshipController extends Controller
 		$internship->posted_by 				= $user->id;
 		$internship->status 				= (int)$request->post_status;
 		$internship->save();
+
+		$newinternship	= Internship::where('posted_by', '=', $user->id)
+							->orderBy('id', 'desc')
+							->first();
+
+
+		if($newscholarship->status == 1) {
+		//Add To Newsfeeds
+		$newsfeeds = new Newsfeed;
+		$newsfeeds->userid 			= $user->id;;
+		$newsfeeds->type 			= "internship_added";
+		$newsfeeds->typeid 			= $newscholarship->id;
+		$newsfeeds->save();
+		}
 
     	return redirect()->route('internship');
     }
@@ -119,7 +135,7 @@ class InternshipController extends Controller
 	{
 	    $user 			= Auth::user();
 		$id 			= $request->id;
-		$internship	= Internship::where('id', '=', $id)
+		$internship		= Internship::where('id', '=', $id)
 							->first();
 
 	    return view('internship.editinternship',compact('user','internship','request'));
@@ -130,7 +146,16 @@ class InternshipController extends Controller
 	    $user = Auth::user();
 		Internship::where('posted_by', $user->id)
 					->where('id', $request->post_id)
-            		->update(['title' => $request->title,'slug' => seoUrl(trim($request->title)), 'link' => $request->link, 'location' => $request->location, 'state' => $request->state, 'last_date' => $request->last_date, 'scholar_start_date' => $request->coursestartdate, 'scholar_end_date' => $request->courseenddate, 'scholarship_amount' => $request->amount, 'openings_count' => $request->openings_count, 'brief_summary' => $request->description, 'requirements' => $request->requirements, 'prerequisits' => $request->prerequisits, 'details' => $request->details, 'about_company' => $request->about_corp, 'application_info' => $request->application_info, 'selection_criteria' => $request->criteria, 'others' => $request->other, 'name' => $request->contact_name, 'email' => $request->contact_email, 'phone' => $request->contact_phone, 'status' => (int)$request->post_status]);
+            		->update(['title' => $request->title,'slug' => seoUrl(trim($request->title)), 'link' => $request->link, 'location' => $request->location, 'state' => $request->state, 'last_date' => $request->last_date, 'intern_start_date' => $request->coursestartdate, 'intern_end_date' => $request->courseenddate, 'stipend_amount' => $request->amount, 'openings_count' => $request->openings_count, 'brief_summary' => $request->description, 'requirements' => $request->requirements, 'prerequisits' => $request->prerequisits, 'details' => $request->details, 'about_company' => $request->about_corp, 'deliverables' => $request->deliverables, 'others' => $request->other, 'name' => $request->contact_name, 'email' => $request->contact_email, 'phone' => $request->contact_phone, 'status' => (int)$request->post_status]);
+
+        if((int)$request->post_status == 1) {
+		//Add To Newsfeeds
+		$newsfeeds = new Newsfeed;
+		$newsfeeds->userid 			= $user->id;;
+		$newsfeeds->type 			= "internship_added";
+		$newsfeeds->typeid 			= $request->post_id;
+		$newsfeeds->save();
+		}
 
     	return redirect()->route('myInternship');
     }
@@ -142,7 +167,7 @@ class InternshipController extends Controller
 		$type 	= $request->type;
 
 		if($type == 'delete') {
-			Market::where('posted_by', $user->id)
+			Internship::where('posted_by', $user->id)
 					->where('id', $id)
             		->delete();
 
@@ -153,6 +178,15 @@ class InternshipController extends Controller
 			Internship::where('posted_by', $user->id)
 					->where('id', $id)
             		->update(['status' => $status]);
+
+            if($status == 1) {
+			//Add To Newsfeeds
+			$newsfeeds = new Newsfeed;
+			$newsfeeds->userid 			= $user->id;;
+			$newsfeeds->type 			= "internship_added";
+			$newsfeeds->typeid 			= $id;
+			$newsfeeds->save();
+			}
 
             return "Status Sucessfully Updated";
 		}

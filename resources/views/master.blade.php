@@ -413,14 +413,14 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
               </div>
 
               <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                <li><a onclick="switchSearch('6')" href="#"><img src="{{ asset('img/icons/1.png') }}" alt="" border="0"> All</a></li>
-                <li><a nclick="switchSearch('0')" href="#"><img src="{{ asset('img/icons/2.png') }}" alt="" border="0"> MarketPlace</a></li>
-                <li><a onclick="switchSearch('1')" href="#"><img src="{{ asset('img/icons/3.png') }}" alt="" border="0"> Students</a></li>
-                <li><a onclick="switchSearch('2')" href="#"><img src="{{ asset('img/icons/4.png') }}" alt="" border="0"> Teachers</a></li>
-                <li><a onclick="switchSearch('3')" href="#"><img src="{{ asset('img/icons/5.png') }}" alt="" border="0"> Institutes</a></li>
-                <li><a onclick="switchSearch('4')" href="#"><img src="{{ asset('img/icons/6.png') }}" alt="" border="0"> Groups</a></li>
-                <li><a onclick="switchSearch('5')" href="#"><img src="{{ asset('img/icons/7.png') }}" alt="" border="0"> Scholarships</a></li>
-                <li><a onclick="switchSearch('7')" href="#"><img src="{{ asset('img/icons/8.png') }}" alt="" border="0"> Internships</a></li>
+                <li><a onclick="switchSearch('7')" href="#"><img src="{{ asset('img/icons/7.png') }}" alt="" border="0"> All</a></li>
+                <li><a onclick="switchSearch('0')" href="#"><img src="{{ asset('img/icons/0.png') }}" alt="" border="0"> MarketPlace</a></li>
+                <li><a onclick="switchSearch('1')" href="#"><img src="{{ asset('img/icons/1.png') }}" alt="" border="0"> Students</a></li>
+                <li><a onclick="switchSearch('2')" href="#"><img src="{{ asset('img/icons/2.png') }}" alt="" border="0"> Teachers</a></li>
+                <li><a onclick="switchSearch('3')" href="#"><img src="{{ asset('img/icons/3.png') }}" alt="" border="0"> Institutes</a></li>
+                <li><a onclick="switchSearch('4')" href="#"><img src="{{ asset('img/icons/4.png') }}" alt="" border="0"> Groups</a></li>
+                <li><a onclick="switchSearch('5')" href="#"><img src="{{ asset('img/icons/5.png') }}" alt="" border="0"> Scholarships</a></li>
+                <li><a onclick="switchSearch('6')" href="#"><img src="{{ asset('img/icons/6.png') }}" alt="" border="0"> Internships</a></li>
               </ul>
 
             </div>
@@ -428,7 +428,7 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
             <div id="custom-search-input">
               <div class="input-group col-md-9">
 
-                {!! Form::open(array('route' => 'home', 'method' => 'get' , 'id' =>'searchfrm')) !!}
+                {!! Form::open(array('route' => 'search', 'method' => 'get' , 'id' =>'searchfrm')) !!}
                     <input  name="query" style="font-family: 'pt sans';font-size: 17px;" type="text" class="query form-control form-control-nc" placeholder="Search for Books , Teacher , School ..." />
                     <input name="search_type" id="search_type" type="hidden" value="6">
                 {!! Form::close() !!}

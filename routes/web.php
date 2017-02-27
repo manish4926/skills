@@ -52,12 +52,19 @@ Route::group(['middleware' => 'auth'], function () {
 
 	Route::get('/dashboard', ['as' => 'dashboard', 'uses' =>'MainController@dashboard']);	//Home Page After Login
 
+        Route::get('/inbox', ['as' => 'inbox', 'uses' =>'MainController@getMessages']);   //Messages List
+
+        Route::get('/inbox/{id?}/conversation', ['as' => 'getMessagesConversation', 'uses' =>'MainController@getMessagesConversation']);   //Message Conversation
+
         Route::post('/message/send', ['as' => 'sendMessage', 'uses' =>'MainController@sendMessage']);   //Send Message
 
-        Route::post('/upload/file', ['as' => 'uploadFiles', 'uses' =>'MainController@uploadFiles']);   //Send Message
+        Route::post('/upload/file', ['as' => 'uploadFiles', 'uses' =>'MainController@uploadFiles']);   //Upload File 
+
+        Route::get('/download/{file?}', ['as' => 'downloadFile', 'uses' =>'MainController@downloadFile']);   //Download File
+
+        Route::get('/search/{query?}', ['as' => 'search', 'uses' =>'MainController@search']);   //Search
 
 
-        Route::get('/download/{file?}', ['as' => 'downloadFile', 'uses' =>'MainController@downloadFile']);   //Send Message
 
 });
 
@@ -69,6 +76,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/profile/changeimage', ['as' => 'updateProfilePic', 'uses' =>'UserController@updateProfilePic']);   //User Profile Page
         
         Route::get('/profile/info', ['as' => 'personalInformation', 'uses' =>'UserController@personalInformation']);   //User Profile Page
+
+        Route::post('/profile/info/submit', ['as' => 'personalInformationSubmit', 'uses' =>'UserController@personalInformationSubmit']);   //Update Personal Information
 
         Route::post('/updatepassword', ['as' => 'updatePassword',   'uses' => 'UserController@updatePassword']);    //Account Information
 
@@ -146,7 +155,7 @@ Route::group(['prefix' => 'scholarship','middleware' => 'auth'], function () {
 
         Route::post('/add/submit', ['as' => 'addScholarshipSubmit', 'uses' =>'ScholarshipController@addScholarshipSubmit']);   //Add Scholarship Submit (Normal and Linked)
 
-        Route::get('/edit/{type?}/{id?}', ['as' => 'editScholarship', 'uses' =>'ScholarshipController@editscholarship']);   //Edit Scholarship (Normal and Linked)
+        Route::get('/edit/{id?}', ['as' => 'editScholarship', 'uses' =>'ScholarshipController@editscholarship']);   //Edit Scholarship (Normal and Linked)
 
         Route::post('/edit/submit', ['as' => 'editScholarshipSubmit', 'uses' =>'ScholarshipController@editScholarshipSubmit']);   //Edit Scholarship Submit (Normal and Linked)
 

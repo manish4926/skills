@@ -20,12 +20,12 @@
 
 <div class="form-group col-md-6">
   <lable>Date of birth</lable>
-  <input name="dob" id="dob" type="text" value="" placeholder="Date of Birth " class="form-control input-sm">
+  <input name="dob" id="dob" type="text" value="{{ $user->user_profile()->dob }}" placeholder="Date of Birth " class="form-control input-sm">
 </div>
 
 <div class="form-group col-md-6">
   <lable>Mobile Number</lable>
-  <input name="p_mobile" id="p_mobile" type="text" value="" placeholder="Mobile Number" class="form-control input-sm">
+  <input name="p_mobile" id="p_mobile" type="text" value="{{ $user->phone }}" placeholder="Mobile Number" class="form-control input-sm">
 </div>
 
 <div class="form-group col-md-6">
@@ -51,7 +51,7 @@
 <div class="form-group col-md-4">
   <lable>State</lable>
   <select name="p_state" id="p_state" class="form-control input-md">
-    <option value="" disabled="">Select State</option>
+    <option value="" >Select State</option>
     <?php $selectState = $user->user_profile() ? $user->user_profile()->p_state : ""; ?>
     @foreach($states as $state)
     <option {{ $selectState == $state->states ? "selected" : ""}}>{{ $state->states }}</option>
@@ -89,7 +89,7 @@
 <div class="form-group col-md-4">
   <lable>State</lable>
   <select name="c_state" id="c_state" class="form-control input-md">
-    <option value="" disabled="">Select State</option>
+    <option value="">Select State</option>
     <?php $selectState = $user->user_profile() ? $user->user_profile()->c_state : ""; ?>
     @foreach($states as $state)
     <option {{ $selectState == $state->states ? "selected" : ""}}>{{ $state->states }}</option>

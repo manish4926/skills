@@ -2,7 +2,7 @@
 
 @section('basecontent')
 
-{!! Form::open(['route' => 'addScholarshipSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '', 'enctype'=>'multipart/form-data']) !!}
+{!! Form::open(['route' => 'addInternshipSubmit', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '', 'enctype'=>'multipart/form-data']) !!}
 <input name="post_status" id="post_status" type="hidden" value="1">
 <div style=" width: 100%; min-height:200px; margin-top: 20px;">
 	@if($type == 'new')
@@ -10,17 +10,17 @@
 	@elseif($type == 'linked')
 	<h4 class="sectionhead">SUBMIT A LINKED SCHOLARSHIP</h4>
 	@endif
-	<h4 class="sectionhead"><i class="glyphicon glyphicon-file"></i>Scholarship Summary</h4>
+	<h4 class="sectionhead"><i class="glyphicon glyphicon-file"></i>Internship Summary</h4>
 <div>
 
 <div class="form-group">
-	<input type="text" name="title" placeholder="*Scholarship Title" class="form-control input-sm">
+	<input type="text" name="title" placeholder="*Internship Title" class="form-control input-sm">
 </div>
 @if($type == 'new')
 <input type="hidden" name="link">
 @elseif($type == 'linked')
 <div class="form-group">
-	<input type="text" name="link" placeholder="Scholarship Link" class="form-control input-sm">
+	<input type="text" name="link" placeholder="Internship Link" class="form-control input-sm">
 </div>
 @endif
 
@@ -37,11 +37,11 @@
 </div>
 
 <div class="form-group">
-    <input name="amount" id="amount" type="text" value="" placeholder="*Scholarship Amount (INR)" class="form-control input-sm">
+    <input name="amount" id="amount" type="text" value="" placeholder="*Stipend (INR)" class="form-control input-sm">
 </div>
 
 <div class="form-group">
-    <input name="openings_count" id="openings_count" type="text" value="" placeholder="*Number of Open Scholarships " class="form-control input-sm">
+    <input name="openings_count" id="openings_count" type="text" value="" placeholder="*Number of Open Internships " class="form-control input-sm">
 </div>
 
 
@@ -53,10 +53,10 @@
 	</div>
 <!--End-Application Submission Dead Line Date-->
 
-<div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Scholarship Duration</h4></div><br/>
+<div style="display: inline-block; margin-right: 50px;"><h4 class="sectionhead">Internship Duration</h4></div><br/>
 <div class="form-group">
-	<input name="coursestartdate" id="coursestartdate" type="text" value="" placeholder="Scholarship Start Date " class="form-control input-sm"><br>
-	<input name="courseenddate" id="courseenddate" type="text" value="" placeholder="Scholarship End Date " class="form-control input-sm">
+	<input name="coursestartdate" id="coursestartdate" type="text" value="" placeholder="Internship Start Date " class="form-control input-sm"><br>
+	<input name="courseenddate" id="courseenddate" type="text" value="" placeholder="Internship End Date " class="form-control input-sm">
 </div>
 
 
@@ -66,27 +66,24 @@
 
 <div style="margin-bottom: 55px; width: 100%;">
 	
-	<h4 class="sectionhead">Scholarship Details</h4>
+	<h4 class="sectionhead">Internship Details</h4>
 
 	<div class="form-group">
-		<textarea name="requirements" id="requirements" class="form-control input-sm" placeholder="Requirements to Apply" style="height:190px;"></textarea>
+		<textarea name="qualifications" id="qualifications" class="form-control input-sm" placeholder="Qualifications" style="height:190px;"></textarea>
 	</div>
 
 	<div class="form-group">
-		<textarea name="prerequisits" id="pre" class="form-control input-sm" placeholder="Scholarship Prerequisits" style="height:190px;"></textarea>
+		<textarea name="prerequisits" id="pre" class="form-control input-sm" placeholder="Internship Prerequisits" style="height:190px;"></textarea>
 	</div>
 
 	<div class="form-group">
-		<textarea name="details" id="details" class="form-control input-sm" placeholder="Scholarship Details" style="height:190px;"></textarea>
+		<textarea name="details" id="details" class="form-control input-sm" placeholder="Project Details" style="height:190px;"></textarea>
 	</div>
 
 	<div class="form-group">
-		<textarea name="about_corp" id="about" class="form-control input-sm" placeholder="About Company/School" style="height:190px;"></textarea>
+		<textarea name="about_corp" id="about" class="form-control input-sm" placeholder="About Company" style="height:190px;"></textarea>
 	</div>
 	
-	<div class="form-group">
-		<textarea name="application_info" id="app_info" class="form-control input-sm" placeholder="Application info" style="height:190px;"></textarea>
-	</div>
 
 	<div class="form-group"> <h4 class="sectionhead">Attachment Files </h4>
 
@@ -114,7 +111,7 @@
 	</div>
 
 	<div class="form-group">
-		<textarea name="criteria" id="criteria" class="form-control input-sm" placeholder="Selection Criteria" style="height:190px;"></textarea>
+		<textarea name="deliverables" id="deliverables" class="form-control input-sm" placeholder="Deliverables" style="height:190px;"></textarea>
 	</div>
 
 	<div class="form-group">
@@ -157,7 +154,7 @@
 
 
 <div style="margin-top: 15px; align:center">
-	<input id="submit" class="btn rightNavActive" type="submit" value="Submit Scholarship" onclick="submit(id);"/>
+	<input id="submit" class="btn rightNavActive" type="submit" value="Submit Internship" onclick="submit(id);"/>
 		<input id="submit" class="btn rightNavActive" type="submit" value="Save as Draft" onclick="submit(id);" style=" margin-left: 20px;"/>
 </div>
 {!!Form::close()!!}
