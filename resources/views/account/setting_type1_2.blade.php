@@ -20,7 +20,7 @@
 
 <div class="form-group col-md-6">
   <lable>Date of birth</lable>
-  <input name="dob" id="dob" type="text" value="{{ $user->user_profile()->dob }}" placeholder="Date of Birth " class="form-control input-sm">
+  <input name="dob" id="dob" type="text" value="{{ $user->user_profile() ? $user->user_profile()->dob : "" }}" placeholder="Date of Birth " class="form-control input-sm">
 </div>
 
 <div class="form-group col-md-6">

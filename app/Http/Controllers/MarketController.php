@@ -21,12 +21,31 @@ class MarketController extends Controller
     public function marketplace(Request $request)		//Dashboard
 	{
 		$user = Auth::user();
-
-		//dd(substr(hash('sha256', mt_rand() . microtime()), 0, 20));
-		$market= Market::where('status', '=', 1)
+		$type = $request->type;
+		if(!empty($type))
+		{
+			if($type == 'Educational+DVD+Software')
+			{
+				$type = 'Educational DVD/Software';
+			}
+			else {
+				$type = urldecode($type);
+			}
+			$market= Market::where('category', '=', $type)
+							->where('status', '=', 1)
 							->orderBy('priority', 'asc')
 							->orderBy('id', 'desc')
 							->paginate(10);
+		}
+		else
+		{
+			$market= Market::where('status', '=', 1)
+							->orderBy('priority', 'asc')
+							->orderBy('id', 'desc')
+							->paginate(10);
+		}
+		//dd(substr(hash('sha256', mt_rand() . microtime()), 0, 20));
+		
 
 
 		$latest 	= Market::where('status', '=', 1)

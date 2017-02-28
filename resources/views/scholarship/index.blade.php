@@ -7,7 +7,7 @@
 	@foreach($scholarships as $scholarship )
 	<div class="col-md-12 cards">
 	<div class="col-md-2">
-		<img src="{{asset('img/profile')}}/{{ $scholarship->account_image ? $user->account_image : "blank.png" }}">
+		<img src="{{asset('img/profile')}}/{{ $scholarship->account_image ? $scholarship->account_image : "blank.png" }}">
 	</div>
 	<div class="col-md-10">
 	<a style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('scholarshipDetail', ['id' => $scholarship->id,'slug' => $scholarship->slug]) }}">{{ $scholarship->title }}</a> 

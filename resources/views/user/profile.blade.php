@@ -13,13 +13,13 @@
 	</div>
 	<a href="{{ route('personalInformation') }}" class="btn btn-sm btn-default ProfileChangeImage" type="button" style="border-radius: 3px;font-size: 13px;margin-top:6px;font-family: tahoma;">Edit Personal Information</a>
 	@else
-		 @if($isfollow == 0)
+		 @if($user->getfollowers($getUser->id) == 0)
 
-		 <button id="btnadd" class="btn btn-sm btn-success ProfileChangeImage" onclick="" type="button" style="border-radius: 3px;font-size: 13px;margin-top:6px;font-family: tahoma;"><i class="glyphicon glyphicon-plus"></i> Follow</button>
+		 <button id="btnadd" class="btn btn-sm btn-success ProfileChangeImage" onclick="followUser.call(this,{{ $getUser->id }},'follow')" type="button" style="border-radius: 3px;font-size: 13px;margin-top:6px;font-family: tahoma;"><i class="glyphicon glyphicon-plus"></i> Follow</button>
 
 	     @else
 
-		 <button id="btnremove" class="btn btn-sm btn-default ProfileChangeImage ProfileChangeImageActive" onclick="" type="button" style="border-radius: 3px;font-family: tahoma;font-size: 13px;margin-top:6px;"><i class="glyphicon glyphicon-check"></i> Unfollow</button>
+		 <button id="btnremove" class="btn btn-sm btn-default ProfileChangeImage ProfileChangeImageActive" onclick="followUser.call(this,{{ $getUser->id }},'unfollow')" type="button" style="border-radius: 3px;font-family: tahoma;font-size: 13px;margin-top:6px;"><i class="glyphicon glyphicon-check"></i> Unfollow</button>
 
 	     @endif	
 	@endif
@@ -62,17 +62,6 @@
 	<p class="opensans"><i class="glyphicon glyphicon-map-marker" style="font-size:14px;"></i>Phone: {{$getUser->phone}}
 	@endif
 @endif
-{{--
-@if($profile[0]->account_type == 1)
-@include('frontend.socialnetwork.profile_type1')
-@elseif($profile[0]->account_type == 2)
-@include('frontend.socialnetwork.profile_type2')
-@elseif($profile[0]->account_type == 3)
-@include('frontend.socialnetwork.profile_type3')
-@elseif($profile[0]->account_type == 4)
-@include('frontend.socialnetwork.profile_type4')
-@endif
---}}
 </div>
 
 

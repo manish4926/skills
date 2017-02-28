@@ -145,7 +145,7 @@ class GroupController extends Controller
 							->count();
 
 		foreach($groupposts as $grouppost){
-			$grouppost->timeago = Carbon::now()->diffForHumans($grouppost->updated_at);
+			$grouppost->timeago = $grouppost->updated_at->diffForHumans();
 		}
 
 		
@@ -229,7 +229,7 @@ class GroupController extends Controller
             "user_id" 		=> $getpost->posted_by,
             "post_text" 	=> $getpost->message,
             "user_name" 	=> $user->name,
-            "post_date" 	=> Carbon::now()->diffForHumans($getpost->updated_at),
+            "post_date" 	=> $getpost->updated_at->diffForHumans(),
             "user_image" 	=> $user->profile_pic,
             "post_images" 	=> $getpost->images,
             "post_files" 	=> $getpost->files,
@@ -245,10 +245,8 @@ class GroupController extends Controller
 		$members 	= GroupMember::where('group_id', $request->id)
 							->orderBy('id', 'desc')
 							->get();
-
 		$group 		= Group::where('group_id', $request->id)
 							->first();
-
 		return view('group.groupmembers',compact('user','group','members','request'));					
 	}
 }

@@ -176,9 +176,11 @@ function updatescholarshipstatus(id,type) {
 /* Scholarship JS*/
 
 function followUser(id,type) {
+  $this = $(this);
+
   $.ajax({
     type: "POST",
-    url: '{{ route('updateScholarshipStatus') }}',
+    url: '{{ route('followUser') }}',
     data: { id: id,type: type, '_token': $('input[name=_token]').val()} ,
     success: function(data)
     {
@@ -187,7 +189,7 @@ function followUser(id,type) {
         toastr["error"](data);
       }
       else {
-        toastr["success"](data);
+        //toastr["success"](data);
         if(type == 'follow') {
           $this.addClass('btn-warning'); 
           $this.removeClass('btn-success'); 

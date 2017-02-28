@@ -13,6 +13,8 @@ use App\Model\GroupMember;
 use App\Model\IndianCities;
 use App\Model\ProfileText;
 use App\Model\UserProfile;
+use App\Model\Follower;
+use App\Model\Newsfeed;
 use Auth;
 use Image;
 use Session;
@@ -137,6 +139,65 @@ class UserController extends Controller
         
 		
 		return redirect()->back();
+	}
+
+	public function followUser(Request $request)
+	{
+		$user = Auth::user();
+		$id 	= $request->id;
+		$type 	= $request->type;
+
+		if(empty($id) OR empty($type))
+		{
+			return "Error Occured";	
+		}
+		
+		$status = ($type == 'publish' ? 1 : 0);
+		if($type == 'follow')
+		{
+			$followuser = new Follower;
+			$followuser->follower_id 	= $id;
+			$followuser->user_id 		= $user->id;
+			$followuser->save();
+
+			//Add To Newsfeeds
+			$newsfeeds = new Newsfeed;
+			$newsfeeds->userid 			= $user->id;;
+			$newsfeeds->type 			= "user_follow";
+			$newsfeeds->typeid 			= $id;
+			$newsfeeds->save();
+			
+		} else
+		{
+			Follower::where('user_id', $user->id)
+						->where('follower_id', $id)
+            			->delete();
+		}
+        return "Status Sucessfully Updated";
+		
+		
+	}
+
+	public function newsfeeds(Request $request)
+	{
+		$user = Auth::user();
+		$newsfeeds = Newsfeed::get();
+		foreach($newsfeeds as $newsfeed){
+			$newsfeed->timeago = $newsfeed->updated_at->diffForHumans();
+		}
+
+		return view('newsfeeds',compact('user','newsfeeds'));
+	}
+
+	public function myActivity(Request $request)
+	{
+		$user = Auth::user();
+		$newsfeeds = Newsfeed::get();
+		foreach($newsfeeds as $newsfeed){
+			$newsfeed->timeago = $newsfeed->updated_at->diffForHumans();
+		}
+
+		return view('myactivity',compact('user','newsfeeds'));
 	}
 
 	public function profileSection($id,$section_id)

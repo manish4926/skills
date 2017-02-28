@@ -118,12 +118,12 @@ class InternshipController extends Controller
 							->first();
 
 
-		if($newscholarship->status == 1) {
+		if($newinternship->status == 1) {
 		//Add To Newsfeeds
 		$newsfeeds = new Newsfeed;
 		$newsfeeds->userid 			= $user->id;;
 		$newsfeeds->type 			= "internship_added";
-		$newsfeeds->typeid 			= $newscholarship->id;
+		$newsfeeds->typeid 			= $newinternship->id;
 		$newsfeeds->save();
 		}
 

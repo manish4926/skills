@@ -1,6 +1,21 @@
 @extends('partials.sidebar')
 
 @section('basecontent')
+<div class="col-m-12">
+    <div class="col-md-6 catbuttons">
+        <a href="{{ route('addInternship')}}">
+        <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+        <span>Add Internship</span>
+        </a>
+    </div>
+    <div class="col-md-6 catbuttons">
+        <a href="{{ route('addInternship',['type'=>'linked'])}}">
+        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+        <span>Add Linked Internship</span>
+        </a>
+    </div>
+    
+</div>
 <div class="col-md-12">
 <br>
 <h4 class="opensans" style="font-family: 'PT Sans';color: #000000;margin-top: 4px;margin-left:5px;">Submitted Internships</h4>

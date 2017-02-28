@@ -4,37 +4,37 @@
 <div class="clear clearfix"></div>
 <div class="col-m-12">
     <div class="col-md-4 catbuttons">
-        <a href="#">
+        <a href="{{ route('marketplace', ['type' => urlencode('Educational DVD Software') ]) }}">
         <i class="fa fa-paper-plane-o" aria-hidden="true"></i>
         <span>Educational DVD/Software</span>
         </a>
     </div>
     <div class="col-md-4 catbuttons">
-        <a href="#">
+        <a href="{{ route('marketplace', ['type' => urlencode('Competitive Examination books') ]) }}">
         <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
         <span>Competitive Examination books</span>
         </a>
     </div>
     <div class="col-md-4 catbuttons">
-        <a href="#">
+        <a href="{{ route('marketplace', ['type' => urlencode('Tutorial Hours') ]) }}">
         <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
         <span>Tutorial Hours</span>
         </a>
     </div>
     <div class="col-md-4 catbuttons">
-        <a href="#">
+        <a href="{{ route('marketplace', ['type' => urlencode('Education stuff') ]) }}">
         <i class="fa fa-graduation-cap" aria-hidden="true"></i>
         <span>Education stuff</span>
         </a>
     </div>
     <div class="col-md-4 catbuttons">
-        <a href="#">
+        <a href="{{ route('marketplace', ['type' => urlencode('Notes') ]) }}">
         <i class="fa fa-sticky-note-o" aria-hidden="true"></i>
         <span>Notes</span>
         </a>
     </div>
     <div class="col-md-4 catbuttons">
-        <a href="#">
+        <a href="{{ route('marketplace', ['type' => urlencode('Books') ]) }}">
         <i class="fa fa-book" aria-hidden="true"></i>
         <span>Books</span>
         </a>

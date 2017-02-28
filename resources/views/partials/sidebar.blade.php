@@ -33,15 +33,14 @@
 				    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 				      <ul class="nav navbar-nav">
 				        <li><a href="{{ route('dashboard') }}"><i class="glyphicon glyphicon-record"></i> Home</a></li>
-				        <li><a href="#"><i class="glyphicon glyphicon-star-empty"></i> Social Activity</a></li>
-				        <li><a href="#"><i class="glyphicon glyphicon-star-empty"></i> My Activity</a></li>
+				        <li><a href="{{ route('newsfeeds') }}"><i class="glyphicon glyphicon-star-empty"></i> Social Activity</a></li>
+				        <li><a href="{{ route('myActivity') }}"><i class="glyphicon glyphicon-star-empty"></i> My Activity</a></li>
 				        <li><a href="{{ route('inbox') }}"><i class="glyphicon glyphicon-envelope"></i> Message</a></li>
-				        <li><a href="#"><i class="glyphicon glyphicon-user"></i> Followers</a></li>
+				        <li><a href="{{ route('followers') }}"><i class="glyphicon glyphicon-user"></i> Followers</a></li>
 				        <li><a href="{{ route('groups') }}"><i class="glyphicon glyphicon-record"></i> Groups</a></li>
 				        <li><a href="{{ route('marketplace') }}"><i class="glyphicon glyphicon-ok"></i> Buy Educatonal Items</a></li>
 				        <li><a href="{{ route('addMarket') }}"><i class="glyphicon glyphicon-usd"></i> Sell Educatonal Items</a></li>
 				        <li><a href="{{ route('myMarket') }}"><i class="glyphicon glyphicon-folder-open"></i> My Educatonal Items</a></li>
-
 				        @if($user->user_roles()->name == 'school' or $user->user_roles()->name == 'business')
 				        <li><a href="{{ route('myScholarship') }}"><i class="glyphicon glyphicon-record"></i> Manage My Scholarships</a></li>
 				        <li><a href="{{ route('myInternship') }}"><i class="glyphicon glyphicon-record"></i> Manage My Interships</a></li>

@@ -64,7 +64,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::get('/search/{query?}', ['as' => 'search', 'uses' =>'MainController@search']);   //Search
 
-
+        Route::get('/connections', ['as' => 'followers', 'uses' =>'MainController@followers']);   //Followers/Followings
 
 });
 
@@ -88,6 +88,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/profile/savetypeitem', ['as' => 'saveTypeItem', 'uses' =>'UserController@saveTypeItem']);   //User Profile Page
 
         Route::post('/deleteexperience', ['as' => 'deleteExperience',   'uses' => 'UserController@deleteExperience']);    //Delete User Experience
+
+        Route::post('/followuser', ['as' => 'followUser',   'uses' => 'UserController@followUser']);    //Follow/Unfollow User
+
+        Route::get('/newsfeeds', ['as' => 'newsfeeds', 'uses' =>'UserController@newsfeeds']);   //Newsfeeds
+
+        Route::get('/myactivity', ['as' => 'myActivity', 'uses' =>'UserController@myActivity']);   //My Activities
+        
 
 });
 
@@ -119,7 +126,7 @@ Route::group(['middleware' => 'auth'], function () {
 //----------------------MarketController----------------------------------------------
 Route::group(['prefix' => 'market','middleware' => 'auth'], function () {
 
-        Route::get('/', ['as' => 'marketplace', 'uses' =>'MarketController@marketplace']);   //Marketplace
+        Route::get('/{type?}', ['as' => 'marketplace', 'uses' =>'MarketController@marketplace']);   //Marketplace
 
         Route::get('/{id?}/item/{slug?}', ['as' => 'productDetail', 'uses' =>'MarketController@productDetail']);   //Product Detail
 

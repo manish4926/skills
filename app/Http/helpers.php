@@ -168,4 +168,23 @@ function fileDownload($file)
 
     return response()->download($filepath, $filename.'.'.$fileext, $headers);
 }
+
+function getUsertype($roleid) {
+    switch ($roleid) {
+        case "2":
+            return "Student";
+            break;
+        case "3":
+            return "Teacher";
+            break;
+        case "4":
+            return "Institute/School";
+            break;
+        case "5":
+            return "Business Associate";
+            break;
+        default:
+            return "Student";
+    }
+}
 ?>

@@ -79,14 +79,15 @@
 		<div class="col-md-10 col-xs-8" style="padding:0px 0 0 10px;">
 		<a class="scholar_link" style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('userProfile', ['id' => $student->id ]) }}">{{ $student->name }}</a>
 		<div style="float:left; width:100%; font-size: 12px; margin-top:5px;">{{ !empty($student->user_profile()) ? $student->user_profile()->basic_education : "" }}</div>
-		 <div style="float:left; width:100%; font-size: 12px; margin-top:5px;"><strong>Location: {{ !empty($student->user_profile()) ? $student->user_profile()->location : "" }}</strong>&nbsp;&nbsp;<i class="fa fa-map-marker" style="color:#29af97;"></i>&nbsp; {{ !empty($student->user_profile()) ? $student->user_profile()->address : "" }}</div>
+		 <div style="float:left; width:100%; font-size: 12px; margin-top:5px;"><strong> {{ !empty($student->user_profile()) ? 'Location: <i class="fa fa-map-marker" style="color:#29af97;"></i>&nbsp;'.$student->user_profile()->location : "" }}</strong>&nbsp;&nbsp; {{ !empty($student->user_profile()) ? $student->user_profile()->address : "" }}</div>
 
 		<div style="float:left; width:100%;  margin-top:5px;">
 		<span style="float:right; width:auto; margin-top: -30px;">
-		@if($user->getfollowers($school->id) == 0)
-		<a class="btn btn-success" onclick="followUser.call(this,3,'follow')" role="button">Follow </a>
+
+		@if($user->getfollowers($student->id) == 0)
+		<a class="btn btn-success" onclick="followUser.call(this,{{ $student->id }},'follow')" role="button">Follow </a>
 		@else
-		<a class="btn btn-warning" onclick="followUser.call(this,3,'unfollow')" role="button">Unfollow </a>
+		<a class="btn btn-warning" onclick="followUser.call(this,{{ $student->id }},'unfollow')" role="button">Unfollow </a>
 		@endif
 		</span>
 		              
@@ -114,14 +115,14 @@
 		<div class="col-md-10 col-xs-8" style="padding:0px 0 0 10px;">
 		<a class="scholar_link" style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('userProfile', ['id' => $teacher->id ]) }}">{{ $teacher->name }}</a>
 		<div style="float:left; width:100%; font-size: 12px; margin-top:5px;">{{ !empty($teacher->user_profile()) ? $teacher->user_profile()->basic_education : "" }}</div>
-		 <div style="float:left; width:100%; font-size: 12px; margin-top:5px;"><strong>Location: {{ !empty($teacher->user_profile()) ? $teacher->user_profile()->location : "" }}</strong>&nbsp;&nbsp;<i class="fa fa-map-marker" style="color:#29af97;"></i>&nbsp; {{ !empty($teacher->user_profile()) ? $teacher->user_profile()->address : "" }}</div>
+		 <div style="float:left; width:100%; font-size: 12px; margin-top:5px;"><strong>{{ !empty($teacher->user_profile()) ? 'Location: <i class="fa fa-map-marker" style="color:#29af97;"></i>&nbsp;'.$teacher->user_profile()->location : "" }}</strong>&nbsp;&nbsp; {{ !empty($teacher->user_profile()) ? $teacher->user_profile()->address : "" }}</div>
 
 		<div style="float:left; width:100%;  margin-top:5px;">
 		<span style="float:right; width:auto; margin-top: -30px;">
-		@if($user->getfollowers($school->id) == 0)
-		<a class="btn btn-success" onclick="followUser.call(this,3,'follow')" role="button">Follow </a>
+		@if($user->getfollowers($teacher->id) == 0)
+		<a class="btn btn-success" onclick="followUser.call(this,{{$teacher->id}},'follow')" role="button">Follow </a>
 		@else
-		<a class="btn btn-warning" onclick="followUser.call(this,3,'unfollow')" role="button">Unfollow </a>
+		<a class="btn btn-warning" onclick="followUser.call(this,{{$teacher->id}},'unfollow')" role="button">Unfollow </a>
 		@endif
 		</span>
 		              
@@ -134,7 +135,7 @@
     </div>
     <div role="tabpanel" class="tab-pane" id="3">
     	<h4 class="opensans search_heading" style="float: left;">Search Results</h4>
-        <h5 class="opensans search_result_heading" style="float: right;">{{ $teachersCount }} Results</h5>
+        <h5 class="opensans search_result_heading" style="float: right;">{{ $schoolsCount }} Results</h5>
 
         <table style="width: 100%; float:none; margin: 0;">
 		<tbody>
@@ -149,14 +150,14 @@
 		<div class="col-md-10 col-xs-8" style="padding:0px 0 0 10px;">
 		<a class="scholar_link" style="font-family: 'PT Sans';font-size: 15px; font-weight:400; line-height:1.2em; color: #2bbba1; margin:0 0 15px 0;" href="{{ route('userProfile', ['id' => $school->id ]) }}">{{ $school->name }}</a>
 		<div style="float:left; width:100%; font-size: 12px; margin-top:5px;">{{ !empty($school->user_profile()) ? $school->user_profile()->basic_education : "" }}</div>
-		 <div style="float:left; width:100%; font-size: 12px; margin-top:5px;"><strong>{{ !empty($school->user_profile()) ? "Location: ".$school->user_profile()->location : "" }}</strong>&nbsp;&nbsp;<i class="fa fa-map-marker" style="color:#29af97;"></i>&nbsp; {{ !empty($school->user_profile()) ? $school->user_profile()->address : "" }}</div>
+		 <div style="float:left; width:100%; font-size: 12px; margin-top:5px;">{{ !empty($school->user_profile()) ? '<strong>Location: </strong>&nbsp;&nbsp;<i class="fa fa-map-marker" style="color:#29af97;"></i>&nbsp;'.$school->user_profile()->location : "" }} {{ !empty($school->user_profile()) ? $school->user_profile()->address : "" }}</div>
 
 		<div style="float:left; width:100%;  margin-top:5px;">
 		<span style="float:right; width:auto; margin-top: -30px;">
 		@if($user->getfollowers($school->id) == 0)
-		<a class="btn btn-success" onclick="followUser.call(this,3,'follow')" role="button">Follow </a>
+		<a class="btn btn-success" onclick="followUser.call(this,{{$school->id}},'follow')" role="button">Follow </a>
 		@else
-		<a class="btn btn-warning" onclick="followUser.call(this,3,'unfollow')" role="button">Unfollow </a>
+		<a class="btn btn-warning" onclick="followUser.call(this,{{$school->id}},'unfollow')" role="button">Unfollow </a>
 		@endif
 		</span>
 		              
@@ -171,6 +172,20 @@
     <div role="tabpanel" class="tab-pane" id="4">
     	<h4 class="opensans search_heading" style="float: left;">Search Results</h4>
         <h5 class="opensans search_result_heading" style="float: right;">{{ $groupsCount }} Results</h5>
+
+        @foreach($groups as $group)
+          <div class="col-md-12">
+            <div  class="col-md-2 col-xs-4">
+              <a href="#" class="thumbnail img-responsive"><img src="{{ asset('img/groups/'.$group->group_image) }}"/></a>
+            </div>
+
+              <div  class="col-md-7 col-xs-8">
+                <h5 class="opensans" style="margin: 0;"><a href="{{ route('groupdetail', ['id' => $group->group_id ]) }}" title="">{{ $group->group_name }}</a></h5>
+                <p class="opensans" style="font-size:13px;">{{ substr($group->description,0,100) }}</p>
+              </div>
+          </div>
+          @endforeach
+
     </div>
     <div role="tabpanel" class="tab-pane" id="5">
     	<h4 class="opensans search_heading" style="float: left;">Search Results</h4>

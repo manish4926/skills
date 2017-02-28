@@ -56,8 +56,6 @@ a:focus {
                 <h5 class="opensans" style="margin: 0;"><a href="{{ route('groupdetail', ['id' => $cgroups->group_id ]) }}" title="">{{ $cgroups->group_name }}</a></h5>
                 <p class="opensans" style="font-size:13px;">{{ substr($cgroups->description,0,100) }}</p>
               </div>
-
-              
           </div>
           @endforeach
           <hr>
