@@ -160,14 +160,14 @@
                     <span class="glyphicon glyphicon-chevron-down"></span>              
                 </span>                  
                 <ul class="dropdown-menu" style="margin-top: -7px;" aria-labelledby="dropdownMenu2540">
-                    @if($user->id == $group->group_admin_id OR $user->id == $newsfeed->posted_by)
+                    @if($user->id == $newsfeed->userid)
                     <li><a onclick="_deletePost({{ $newsfeed->id }})">Delete</a></li>
                     @endif
                 </ul>             
             </div>                
             <div class="panel-heading" id="sharea_{{ $newsfeed->id }}">                   
-                <img class="pull-left" style="width:48px;height:48px;" src="{{ asset('img/profile/'.$newsfeed->getUser()->profile_pic) }}">                     
-                <h5><a href="#">{{ $newsfeed->getUser()->name}}</a>  
+                <img class="pull-left" style="width:48px;height:48px;" src="{{ asset('img/profile/'.$newsfeed->post_admin()->profile_pic) }}">                     
+                <h5><a href="#">{{ $newsfeed->post_admin()->name}}</a>  
                 <span>Added 2 new photos.</span></h5>                        
                 <h5><span class="timeago">{{ $newsfeed->timeago }}</span></h5>           
             </div>                  

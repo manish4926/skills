@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
 
-        <title>Skills2Career</title>
+        <title>Skills2Connect</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
@@ -14,15 +14,16 @@
         <!-- Styles -->
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery-ui.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/font-awesome.min.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/mystyle.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.css') }}">
+        {{ HTML::style('css/jquery-ui.css') }}
+        {{ HTML::style('css/font-awesome.min.css') }}
+        {{ HTML::style('css/mystyle.css') }}
+        {{ HTML::style('css/toastr.css') }}
+        {{ HTML::style('css/parsley.css') }}
 
         <!-- Pre Template Themes -->
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/csscustom.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/overrides.css') }}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.cssemoticons.css') }}">
+        {{ HTML::style('css/csscustom.css') }}
+        {{ HTML::style('css/overrides.css') }}
+        {{ HTML::style('css/jquery.cssemoticons.css') }}
         
         
         <!-- Scripts -->
@@ -49,8 +50,10 @@
         @endif
         
 
-
+{{--
   <style>
+}
+}
 
 
 
@@ -368,47 +371,30 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
 
 .nav-pills > li + li{margin-top:-3px;}
 
- </style>
-
-
-
-
+</style>
 
 
 
 <style>
+@media (max-width: 767px){
+.navbar-default .navbar-brand{top: 16%!important;}
 
-   @media (max-width: 767px){
-
-       .navbar-default .navbar-brand{top: 16%!important;}
-
-   .search_bar {top: 45%!important;} }
-
-    </style>
-
+.search_bar {top: 45%!important;} }
+</style>
+--}}
 
 <span id='topnavloader'>
-
-  <input name="go_to_after_login" id="go_to_after_login" type="hidden" value="">
-
   <nav class="navbar navbar-default" style="height: 70px;">
-
     <div class="container headerpadding">
-
       <div class="row">
-
         <div class="col-md-3">
-
           <a href="{{ route('dashboard') }}" class="navbar-brand"><img style="margin-left: 5px;" src="{{ asset('img/logo.png') }}" alt="" border="0"></a>
 
         </div>
 
         <div class="col-md-9" id="div_f068_0">
-
           <div class="search_bar">
-
             <div class="dropdown">
-
               <div class="search_icon edu-bg-blue dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><img id="imgnav" src="{{ asset('img/icons/1.png') }}" alt="" border="0">
               </div>
 
@@ -459,7 +445,7 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
                            </a>
                          </div>
                           <div class="opensans block-links" id="nav2">
-                           <a href="#">{{ $user->name }}</a>
+                           <a href="#">{{ ucfirst($user->name) }}</a>
                            <a href="{{ route('logoutMethod') }}">Logout</a>
                         </div>
                       </div>
@@ -485,18 +471,19 @@ a.btn_sign_up:hover{background:#c60000; color:#fff;}
 @include('partials.header_modals')
 
         <!-- Bottom Scripts -->
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
-        <script src="{{ asset('js/jquery-ui.min.js') }}"></script>
-        <script src="{{ asset('js/toastr.js') }}"></script>
+        {{ HTML::script('js/jquery.min.js') }}
+        {{ HTML::script('js/bootstrap.min.js') }}
+        {{ HTML::script('js/jquery-ui.min.js') }}
+        {{ HTML::script('js/toastr.js') }}
+        {{ HTML::script('js/parsley.min.js') }}
         <!-- Pre Template Theme -->
-        <script src="{{ asset('js/morphext.js') }}"></script>
+        <!--<script src="{{ asset('js/morphext.js') }}"></script>
         <script src="{{ asset('js/ekko-lightbox.min.js') }}"></script>
         <script src="{{ asset('js/jquery.timeago.js') }}"></script>
         <script src="{{ asset('js/jquery.form.js') }}"></script>
         <script src="{{ asset('js/flip.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
-        <script src="{{ asset('js/jquery.cssemoticons.js') }}"></script>
+        <script src="{{ asset('js/jquery.cssemoticons.js') }}"></script>-->
 
 
         <!-- End Pre Template Theme -->
