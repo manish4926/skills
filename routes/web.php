@@ -94,8 +94,11 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/newsfeeds', ['as' => 'newsfeeds', 'uses' =>'UserController@newsfeeds']);   //Newsfeeds
 
         Route::get('/myactivity', ['as' => 'myActivity', 'uses' =>'UserController@myActivity']);   //My Activities
-        
 
+        Route::post('/newsfeeds/post/submit', ['as' => 'newsFeedPostSubmit', 'uses' =>'UserController@newsFeedPostSubmit']);   //Newsfeed Post Submit
+
+        Route::post('/newsfeeds/imageupload', ['as' => 'addNewsFeedPostImageSubmit', 'uses' =>'UserController@addNewsFeedPostImageSubmit']);   //Add Image Upload Submit to Newsfeed
+        
 });
 
 //----------------------GroupController----------------------------------------------
@@ -120,6 +123,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::post('/group/post/submit', ['as' => 'groupPostSubmit', 'uses' =>'GroupController@groupPostSubmit']);   //Group POst Submit
 
         Route::get('/group/members/g{id}', ['as' => 'viewGroupMembers', 'uses' =>'GroupController@viewGroupMembers']);   //View Group Members
+
+        Route::post('/group/post/forwardpost', ['as' => 'forwardPost', 'uses' =>'GroupController@forwardPost']);   //Group POst Submit
+        
 });
 
 

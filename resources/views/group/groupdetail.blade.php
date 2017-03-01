@@ -72,7 +72,7 @@
 <!-- End Modal -->
 
 
-{!! Form::open(['url' => '/share', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
+{!! Form::open(['id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => '']) !!}
 	<input name="user_id" type="hidden" value="{{$user->id}}">
 	<input name="newsfeed_id" type="hidden" value="{{$user->id}}">
 	<input name="group_id" type="hidden" value="{{$group->group_id}}">
@@ -85,7 +85,7 @@
     </div>
     <div class="panel-footer panel-footer2">
 		<div class="form-group" style="float:right;">
-			<button type="button" id="mypostbutton" onclick="do_it()" class="btn btn-success" style="background-color: #29af97;"><i class="glyphicon glyphicon-share-alt"></i> &nbsp; Post &nbsp;</button>
+			<a id="mypostbutton" onclick="do_it()" class="btn btn-success" style="background-color: #29af97;"><i class="glyphicon glyphicon-share-alt"></i> &nbsp; Post &nbsp;</a>
 		</div>
 		<div class="btn-group" style="float:left;">
 			<a href="" class="btn btn-default"  onclick="document.getElementById('images').click(); return false" style="margin-right: 5px;"><i style="font-size: 18px;" class="glyphicon glyphicon-camera"></i></a>
@@ -109,6 +109,7 @@
 
 
 	</div>
+{!! Form::close() !!}
     <div id="groupposts">
         @foreach($groupposts as $grouppost)
         <div class="panel-default panel-google-plus" style="box-shadow:0; margin-top: 10px;">                 
@@ -122,22 +123,33 @@
                     @endif
                 </ul>             
             </div>                
-            <div class="panel-heading" id="sharea_2540">                   
+            <div class="panel-heading" id="sharea_{{ $grouppost->id }}">                   
                 <img class="pull-left" style="width:48px;height:48px;" src="{{ asset('img/profile/'.$grouppost->getUser()->profile_pic) }}">                     
-                <h5><a href="http://educonnectin.com/profile/u3974">Ravi Dev</a>  
+                <h5><a href="#">{{ $grouppost->getUser()->name}}</a>  
                 <span>Added 2 new photos.</span></h5>                        
                 <h5><span class="timeago">{{ $grouppost->timeago }}</span></h5>           
             </div>                  
             <div class="panel-body" id="shareb_2540">                    
-                <p id="emo2540"></p> 
+                <p id="emo2540">{{ $grouppost->message }}</p> 
+                @if(!empty($grouppost->images))
                 @foreach($images = explode(",", $grouppost->images) as $image)
                 <span>
                     <img class="img-thumbnail img-responsive" style="height:250px;width:250px;float:left;margin-left:5px;" src="{{ asset('img/grouppost/'.$image) }}" border="0">
                 </span>
                 @endforeach
-                @if($grouppost->files != null)
+                @endif
+                @if(!empty($grouppost->files))
+                <?php $file = json_decode($grouppost->files,true); 
+                if(isset($file['files']))
+                {
+                    $filename = $file['files'][0]['name'];
+                }
+                else {
+                    $filename = "Download";
+                }
+                ?>
                 <div class="col-md-12">
-                <div id="files2540" style="float: left; margin-top: 15px; display:inline-block;"><a  href="{{ route('downloadFile', ['file' => urlencode(base64_encode($grouppost->files))]) }}">Download</a></div>      
+                <div id="files2540" style="float: left; margin-top: 15px; display:inline-block;"><a  href="{{ route('downloadFile', ['file' => urlencode(base64_encode($grouppost->files))]) }}">{{$filename}}</a></div>      
                 </div>
                 @endif
             </div>                 
@@ -155,7 +167,7 @@
         </div>
         @endforeach
     </div>
-{!! Form::close() !!}
+
 
 <!--IMAGE UPLOAD-->
 <div class="upload_div">
@@ -215,6 +227,37 @@
 
 <!-- Modal -->
 
+<!-- Modal -->
+
+<div class="modal fade" id="forwardpost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+    {!! Form::open(['route' => 'forwardPost', 'id' => 'frmpost', 'method'=>'post', 'class' => 'facebook-share-box']) !!}
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Forward This Post</h4>
+      </div>
+      <div class="modal-body">
+      
+      
+      <input name="share_id" id="share_id" type="hidden" value="0">
+      <textarea name="subtext" id="subtext" class="form-control input-sm" style="height: 64px;margin-bottom: 10px;" placeholder="Post Announcements to Followers" rows=5 cols=20></textarea>
+      <div class='panel panel-default panel-google-plus'>
+      <div id="share_cont_a" class='panel-heading'></div>
+      <div id="share_cont_b" class='panel-body'></div>
+      </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close" >Close</button>
+        <input type="submit" class="btn btn-primary" id="sharebtn" value="Forward now">
+      </div>
+      {!! Form::close() !!}
+    </div>
+  </div>
+</div>
+
+
 @push('bottomscripts')
 <script language="javaScript" type="text/javascript">
 
@@ -240,7 +283,8 @@ function do_it()
             var newpost = "";
             newpost = 0;
             if(obj != 0) {
-                built_post(obj.post_id,
+                //console.log(obj);
+                /*built_post(obj.post_id,
                 obj.user_name,
                 obj.user_image,
                 obj.user_id,
@@ -248,27 +292,14 @@ function do_it()
                 obj.post_date,
                 obj.post_type,
                 obj.post_images,
-                '',
-                '',
-                0,
                 obj.group_id,
-                '',
-                '',
-                '',
-                '',
-                '',
-                obj.post_files);
+                obj.post_files);*/
+                location.reload();
             }
         }
     });
-    location.reload();
+    
 }
-
-
-
-
-
-
 
 
 function getComments(id)
@@ -286,6 +317,17 @@ function getComments(id)
     });
 setTimeout(function() { getComments(id) }, 5000);
 }
+
+ function sharethis(id)
+{
+     $('#share_id').val(id);
+var a = $('#sharea_'+id).html();
+var b = $('#shareb_'+id).html();
+$('#share_cont_a').html(a);
+$('#share_cont_b').html(b);
+$('#forwardpost').modal('show');
+}
+
 
 
 function do_comment(id)

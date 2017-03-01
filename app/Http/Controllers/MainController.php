@@ -208,7 +208,8 @@ class MainController extends Controller
 	public function downloadFile($file) {
 
 		$file = urldecode(base64_decode($file));
-		$file = json_decode(json_decode($file,true),true)['files'][0];
+		//dd(json_decode($file,true)['files'][0]);
+		$file = json_decode($file,true)['files'][0];
 
 	    $filename = $file['name'];
 	    $fileext = $file['extension'];
@@ -217,7 +218,7 @@ class MainController extends Controller
 
     	$filepath = public_path('img/files/' . $file['path']);
 
-    	return response()->download($filepath);
+    	return response()->download($filepath,$filename);
 	}
 	
 }

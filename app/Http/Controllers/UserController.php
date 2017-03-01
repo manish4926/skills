@@ -181,7 +181,8 @@ class UserController extends Controller
 	public function newsfeeds(Request $request)
 	{
 		$user = Auth::user();
-		$newsfeeds = Newsfeed::get();
+		$newsfeeds = Newsfeed::orderBy('id', 'desc')
+							->get();
 		foreach($newsfeeds as $newsfeed){
 			$newsfeed->timeago = $newsfeed->updated_at->diffForHumans();
 		}
@@ -192,12 +193,95 @@ class UserController extends Controller
 	public function myActivity(Request $request)
 	{
 		$user = Auth::user();
-		$newsfeeds = Newsfeed::get();
+		$newsfeeds = Newsfeed::orderBy('id', 'desc')
+								->get();
 		foreach($newsfeeds as $newsfeed){
 			$newsfeed->timeago = $newsfeed->updated_at->diffForHumans();
 		}
 
 		return view('myactivity',compact('user','newsfeeds'));
+	}
+
+	public function newsFeedPostSubmit(Request $request)		//Newsfeed Post Submit
+	{
+		$user 		= Auth::user();
+		$user_id 			= $request->user_id;
+        $post_get_images 	= $request->images_uploaded;
+        $post_get_files 	= $request->files_uploaded;
+        $post_text 			= $request->post_text;
+
+        if ($post_text == "" && $post_get_images == "" && $post_get_files == "") {
+            return 0;
+            exit();
+        }
+
+        $newsfeed = new Newsfeed;
+		$newsfeed->userid 			= $user->id;
+		$newsfeed->type 				= 'newsfeed';
+		$newsfeed->typeid 			= $user->id;
+		$newsfeed->text 				= $post_text;
+		$newsfeed->images 			= $post_get_images;
+		$newsfeed->files 				= $post_get_files;
+		$newsfeed->save();
+
+		$getpost = Newsfeed::where('userid', $user->id)
+								->orderBy('id', 'desc')
+								->first();
+
+		$array = array(
+            "post_id" 		=> $getpost->id,
+            "user_id" 		=> $getpost->userid,
+            "post_text" 	=> $getpost->text,
+            "user_name" 	=> $user->name,
+            "post_date" 	=> $getpost->updated_at->diffForHumans(),
+            "user_image" 	=> $user->profile_pic,
+            "post_images" 	=> $getpost->images,
+            "post_files" 	=> $getpost->files,
+            );
+
+            return json_encode($array);
+	}
+
+	public function addNewsFeedPostImageSubmit(Request $request)		//Image Upload
+	{
+		//Upload Image
+		$images_arr = array();
+		foreach($_FILES['images']['name'] as $key=>$val){
+			$image_name = $_FILES['images']['name'][$key];
+			$tmp_name 	= $_FILES['images']['tmp_name'][$key];
+			$size 		= $_FILES['images']['size'][$key];
+			$type 		= $_FILES['images']['type'][$key];
+			$error 		= $_FILES['images']['error'][$key];
+	        $userfile_extn = explode(".", strtolower($image_name));
+	        $rand = rand(500,1000000000);
+	        $time = time();
+	        $newFilename = $time."-".$rand.".".end($userfile_extn);
+	        
+			
+	    	$target_file =  public_path('img/posts/' . $newFilename);
+			if(move_uploaded_file($_FILES['images']['tmp_name'][$key],$target_file)){
+				$images_arr[] = $target_file;
+			}
+
+		}
+
+		//Generate images view
+		if(!empty($images_arr))
+		{
+			$count=0;
+			foreach($images_arr as $k=>$image_src){
+			$count++;
+			$id = str_replace("/","",substr($image_src, strrpos($image_src, '/')));
+			?>
+
+	          	<div class="imgContain" id="ssl<?php echo md5($id); ?>" onclick="$('#ssl<?php echo md5($id); ?>').remove()">
+	     		<img class="grayscale" style="float: left;height: 70px;margin: 3px;width: 70px;border: 2px solid #ffffff;border-radius: 5px;" src="<?php echo asset('img/posts/' . $id) ; ?>" alt="">
+	          	<div class="textHover" align="center"><img src="<?php echo asset('img/icons/trash.png'); ?>" border="0"></div>
+	          	<input name="images_ids[]" type="hidden" value="<?php echo $id; ?>">
+	          	</div>
+			<?php 
+			}
+		}
 	}
 
 	public function profileSection($id,$section_id)

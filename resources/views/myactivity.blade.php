@@ -67,7 +67,7 @@
 <!--Personal Logo and buttons-->
 <div class="clearfix"></div>
 
-{!! Form::open(['url' => '/share', 'id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
+{!! Form::open(['id' => 'frmpost', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
   <input name="user_id" type="hidden" value="{{$user->id}}">
   <input name="images_uploaded" id="images_uploaded" type="hidden" value="">
 
@@ -153,6 +153,60 @@
             </div>
           </div>
           @endif
+        @elseif($newsfeed->type == "newsfeed")
+          <div class="panel-default panel-google-plus" style="box-shadow:0; margin-top: 10px;">                 
+            <div class="dropdown" style="float: right;">                   
+                <span class="dropdown-toggle btn" type="button" id="dropdownMenu2540" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">                 
+                    <span class="glyphicon glyphicon-chevron-down"></span>              
+                </span>                  
+                <ul class="dropdown-menu" style="margin-top: -7px;" aria-labelledby="dropdownMenu2540">
+                    @if($user->id == $group->group_admin_id OR $user->id == $newsfeed->posted_by)
+                    <li><a onclick="_deletePost({{ $newsfeed->id }})">Delete</a></li>
+                    @endif
+                </ul>             
+            </div>                
+            <div class="panel-heading" id="sharea_{{ $newsfeed->id }}">                   
+                <img class="pull-left" style="width:48px;height:48px;" src="{{ asset('img/profile/'.$newsfeed->getUser()->profile_pic) }}">                     
+                <h5><a href="#">{{ $newsfeed->getUser()->name}}</a>  
+                <span>Added 2 new photos.</span></h5>                        
+                <h5><span class="timeago">{{ $newsfeed->timeago }}</span></h5>           
+            </div>                  
+            <div class="panel-body" id="shareb_2540">                    
+                <p id="emo2540">{{ $newsfeed->message }}</p> 
+                @if(!empty($newsfeed->images))
+                @foreach($images = explode(",", $newsfeed->images) as $image)
+                <span>
+                    <img class="img-thumbnail img-responsive" style="height:250px;width:250px;float:left;margin-left:5px;" src="{{ asset('img/newsfeed/'.$image) }}" border="0">
+                </span>
+                @endforeach
+                @endif
+                @if(!empty($newsfeed->files))
+                <?php $file = json_decode($newsfeed->files,true); 
+                if(isset($file['files']))
+                {
+                    $filename = $file['files'][0]['name'];
+                }
+                else {
+                    $filename = "Download";
+                }
+                ?>
+                <div class="col-md-12">
+                <div id="files2540" style="float: left; margin-top: 15px; display:inline-block;"><a  href="{{ route('downloadFile', ['file' => urlencode(base64_encode($newsfeed->files))]) }}">{{$filename}}</a></div>      
+                </div>
+                @endif
+            </div>                 
+            <div class="panel-footer">                    
+                <a style=" border-bottom: 1px solid #29af97;cursor: pointer;font-family: tahoma;font-size: 12px;" type="button" data-toggle="modal" data-target="#myModal" onclick="sharethis({{ $newsfeed->id }})" class=""> Forward</a> - 
+                <a style=" border-bottom: 1px solid #29af97;cursor: pointer;font-family: tahoma;font-size: 12px;" type="button" onclick="show_comment_box({{ $newsfeed->id }})" class=""> Comment </a>                  
+            </div>                
+            <div align="left"><span style="color:#29af97;" class="pull-left commentleft"><img src="http://educonnectin.com/layout/images/comment.jpg" border="0">&nbsp;<span id="likes" style="font-size: 12px; text-transform: none;"></span></span><span style="color:#29af97;" onclick="show_comment_box({{ $newsfeed->id }})" class="pull-right commentright">View All Comments</span></div>       
+            <div class="clear clearfix"></div>
+            <div id="comments_" style="">
+                <div id="formcomment_" style="padding:10px;">
+                <input id="commentform_" onkeydown="if (event.keyCode == 13) { do_comment({{ $newsfeed->id }}); return false; }" class="form-control" style="border-radius: 0;font-size: 12px;width: 100%;" placeholder="Write your comment." type="text" value=""> 
+                </div>
+            </div>           
+        </div>
         @endif
         @endforeach
     </div>
@@ -160,7 +214,7 @@
 
 <!--IMAGE UPLOAD-->
 <div class="upload_div">
-{!! Form::open(['route' => 'addGroupPostImageSubmit', 'id' => 'multiple_upload_form' , 'name' => 'multiple_upload_form', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
+{!! Form::open(['route' => 'addNewsFeedPostImageSubmit', 'id' => 'multiple_upload_form' , 'name' => 'multiple_upload_form', 'files'=> true, 'form-horizontal', 'class' => 'facebook-share-box']) !!}
   
     <input type="file" name="images[]" accept=".jpg, .jpeg, .png"  id="images" style="visibility: hidden; width: 1px; height: 1px"  multiple >
   <div class="uploading none" style="display:none;">
@@ -176,7 +230,7 @@
 
 function do_it()
 {
-    var url = "{{ route('groupPostSubmit') }}";
+    var url = "{{ route('newsFeedPostSubmit') }}";
     var values = $("input[name='images_ids[]']").map(function(){return $(this).val();}).get();
     $("#images_uploaded").val(""+values+"");
 

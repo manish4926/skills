@@ -59,7 +59,7 @@ class GroupController extends Controller
 
 		//Add To Newsfeeds
 		$newsfeeds = new Newsfeed;
-		$newsfeeds->userid 			= $user->id;;
+		$newsfeeds->userid 			= $user->id;
 		$newsfeeds->type 			= "group_created";
 		$newsfeeds->typeid 			= $getLastGroup->group_id;
 		$newsfeeds->save();
@@ -138,6 +138,7 @@ class GroupController extends Controller
 							->first();
 
 		$groupposts 	= GroupPost::where('group_id', $request->id)
+							where('type', 1)
 							->orderBy('id', 'desc')
 							->get();
 
@@ -222,8 +223,6 @@ class GroupController extends Controller
 								->orderBy('id', 'desc')
 								->first();
 
-
-
 		$array = array(
             "post_id" 		=> $getpost->id,
             "user_id" 		=> $getpost->posted_by,
@@ -249,4 +248,20 @@ class GroupController extends Controller
 							->first();
 		return view('group.groupmembers',compact('user','group','members','request'));					
 	}
+
+	public function forwardPost(Request $request)
+	{
+		$user 		= Auth::user();
+
+		//Add To Newsfeeds
+		$newsfeeds = new Newsfeed;
+		$newsfeeds->userid 			= $user->id;
+		$newsfeeds->type 			= "post_shared";
+		$newsfeeds->typeid 			= $request->share_id;
+		$newsfeeds->save();
+
+		Session::flash('successMessage', 'Post Forwarded Successfully');
+		return redirect()->back();				
+	}
+
 }
